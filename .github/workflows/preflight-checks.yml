@@ -1,0 +1,99 @@
+# GitHub Workflow to run preflight checks to validate if Gruntwork is ready to initiate the Reference Architecture
+# deployment.
+name: RefArch initiate preflight checks
+
+# Run on all branches, but only on pull requests against the base branch.
+on:
+  push:
+    branches:
+      - "*"
+
+permissions:
+  # Allow assuming the IAM role
+  id-token: write
+  # Allow checking out the repo
+  contents: read
+  # Allow writing commit status checks
+  checks: write
+  # Allow writing comments on PRs
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Do not run on template repository
+      shell: bash
+      # This workflow runs when we detect a change to main, but we don't want to run this actions on the origin
+      # template repository. To support this, we use the GitHub rest API to identify if the current repository is a
+      # template repository or not and if it is, exit the workflow.
+      run: |
+        curl --silent -X GET \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.baptiste-preview+json" \
+          https://api.github.com/repos/$GITHUB_REPOSITORY \
+          | jq --exit-status '.is_template == false';
+
+    - uses: actions/checkout@v3
+
+    - name: Check if .repo_token file exists
+      shell: bash
+      run: |
+        [[ -f .repo_token ]]
+
+
+  initiate_preflight_check:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: create GitHub checks for preflight check run
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        gh api -X POST \
+          -f name='Preflight checks' \
+          -f head_sha='${{ github.sha }}' \
+          -f status=queued \
+          repos/gruntwork-clients/"${{ github.event.repository.name }}"/check-runs \
+
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@master
+      with:
+        role-to-assume: "arn:aws:iam::583800379690:role/allow-auto-deploy-from-github-actions-v2"
+        role-session-name: "github-actions-${{ github.run_id }}"
+        aws-region: us-east-1
+
+    - name: login to ecr
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: invoke preflight checks
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: infrastructure-deployer
+        IMAGE_TAG: v0.47.11
+        DEPLOY_RUNNER_REGION: us-east-1
+        INVOKER_FUNCTION_ARN: "arn:aws:lambda:us-east-1:583800379690:function:refarch-deployer-edr-v2-invoker"
+        REPO_NAME: "${{ github.event.repository.name }}"
+        REF: "${{ github.ref_name }}"
+      run: |
+        docker run \
+          -e AWS_ACCESS_KEY_ID \
+          -e AWS_SECRET_ACCESS_KEY \
+          -e AWS_SESSION_TOKEN \
+          "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" \
+          --aws-region "$DEPLOY_RUNNER_REGION" --invoker-function-id "$INVOKER_FUNCTION_ARN" --no-wait \
+          -- refarch-deployer-runner run-refarch-preflight \
+             --infra-live-repo-name "$REPO_NAME" \
+             --ref "$REF" \
+             --repo-token "$(cat .repo_token)"
+
+    - name: post comment on PR
+      if: ${{ github.ref_name != 'main' }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        gh pr comment "${{ github.ref_name }}" \
+          -b "Started Preflight Checks for this PR. Look for a GitHub commit status check indicating success or failure on ${{ github.sha }}."
