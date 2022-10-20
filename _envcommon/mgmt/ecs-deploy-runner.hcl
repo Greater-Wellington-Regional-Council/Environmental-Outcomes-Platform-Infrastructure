@@ -188,21 +188,4 @@ inputs = {
   # Configure opt in regions for each multi region service based on locally configured setting.
   kms_grant_opt_in_regions = local.opt_in_regions
 
-  # The following configuration provisions EC2 instances to use with the ECS deploy runner. Fargate workers are pay per
-  # use and generally preferable, but they are limited to minimal resources in new accounts (2vCPUs, 4GB RAM). When
-  # deploying many infrastructure resources at once this may not be enough for terragrunt to be able to deploy
-  # everything. We recommend using EC2 based workers for the initial deployment and setup, and once you have launched,
-  # to spin down the EC2 workers by removing the following input to replace them with purely Fargate workers.
-  ec2_worker_pool_configuration = {
-    ami_filters = {
-      owners = [local.common_vars.locals.account_ids.shared]
-      filters = [
-        {
-          name   = "name"
-          values = ["ecs-deploy-runner-worker-v0.95.0-*"]
-        },
-      ]
-    }
-    instance_type = "m5.2xlarge"
-  }
 }
