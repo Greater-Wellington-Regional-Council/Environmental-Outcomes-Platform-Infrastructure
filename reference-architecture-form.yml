@@ -15,23 +15,23 @@
 # TODO: Enter the name of your organization. This will be used to generate a prefix name for every resource.
 # Example:
 #   CompanyName: "gruntwork"
-CompanyName: "replace-me"
+CompanyName: "gwrceop"
 
 # TODO: Enter the primary AWS region where you want to deploy the Reference Architecture.
 # You can always add more regions to your architecture later by following the patterns from this initial deployment.
 # Example:
 #   PrimaryRegion: "us-east-1"
-PrimaryRegion: "replace-me"
+PrimaryRegion: "ap-southeast-2"
 
 # TODO: Enter the https URL to your infrastructure-live repository
 # Example:
 #   InfraLiveRepoURL: "https://github.com/your-company/infrastructure-live.git"
-InfraLiveRepoURL: "replace-me"
+InfraLiveRepoURL: "https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure"
 
 # TODO: Enter the ssh URL to the infrastructure-live repository
 # Example:
 #   InfraLiveRepoSSHURL: "git@github.com:your-company/infrastructure-live.git"
-InfraLiveRepoSSHURL: "replace-me"
+InfraLiveRepoSSHURL: "git@github.com:Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure.git"
 
 # TODO: Confirm the default branch setting of your infrastructure-live repository.
 # The default branch of the infrastructure-live repository. This branch is the only branch that the Gruntwork Pipelines
@@ -73,10 +73,9 @@ AdminIAMUsers:
   #   - Username: "grunty"
   #     Email: "grunty@gruntwork.io"
   #     PGPKey: "keybase:gruntwork"
-  - Username: "replace-me"
-    Email: "replace-me"
-    PGPKey: "replace-me"
-
+  - Username: "steve.mosley"
+    Email: "Steve.Mosley@gw.govt.nz"
+    PGPKey: "keybase:smozely"
 
 # Map of aws account roles (as defined in Landing Zone) to AWS account information. The following roles are supported:
 #
@@ -87,141 +86,146 @@ AdminIAMUsers:
 #                                   assume a new role in the dev account).
 # - shared   (Required, Singleton): The account where shared resources are defined. This includes AMIs and Docker
 #                                   Container Images.
-# - dev      (Optional, Singleton): Account that hosts the development environment of your application.
-# - stage    (Optional, Singleton): Account that hosts the staging (pre-production) environment of your application.
-# - prod     (Optional, Singleton): Account that hosts the production environment of your application.
+# - dev      (Optional, Multiple): Accounts that host development environments of your application.
+# - stage    (Optional, Multiple): Accounts that host staging (pre-production) environments of your application.
+# - prod     (Optional, Multiple): Accounts that host production environments of your application.
 #
 AWSAccounts:
   # Although the attribute is a list, this is only for type checking purposes. Do not add more entries to this list as
   # Gruntwork only supports one logs account.
   logs:
-      # TODO: Enter the following information in the fields below:
-      #  - The 12 digit AWS account ID of the logs account.
-      #  - Optional: enter the CIDR block to use for the mgmt VPC for the logs account. Omit if you do not have any
-      #    networking constraints. Defaults to 172.31.80.0/20
-      #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
-      #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
-      # Example:
-      #   - Name: "logs"
-      #     ID: "567890123456"
-      #     MgmtVPCCIDR: "172.31.80.0/20"
+    # TODO: Enter the following information in the fields below:
+    #  - The 12 digit AWS account ID of the logs account.
+    #  - Optional: enter the CIDR block to use for the mgmt VPC for the logs account. Omit if you do not have any
+    #    networking constraints. Defaults to 172.31.80.0/20
+    #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
+    #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
+    # Example:
+    #   - Name: "logs"
+    #     ID: "567890123456"
+    #     MgmtVPCCIDR: "172.31.80.0/20"
     - Name: "logs"
-      ID: "replace-me"
+      ID: "972859489186"
       #MgmtVPCCIDR: "(optional) replace-me"
       #RootUserEmail: "(only required for CIS)"
 
   # Although the attribute is a list, this is only for type checking purposes. Do not add more entries to this list as
   # Gruntwork only supports one security account.
   security:
-      # TODO: Enter the following information in the fields below:
-      #  - The 12 digit AWS account ID of the security account.
-      #  - Optional: enter the CIDR block to use for the mgmt VPC for the security account. Omit if you do not have any
-      #    networking constraints. Defaults to 172.31.80.0/20
-      #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
-      #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
-      # Example:
-      #   - Name: "security"
-      #     ID: "456789012345"
-      #     MgmtVPCCIDR: "172.31.80.0/20"
+    # TODO: Enter the following information in the fields below:
+    #  - The 12 digit AWS account ID of the security account.
+    #  - Optional: enter the CIDR block to use for the mgmt VPC for the security account. Omit if you do not have any
+    #    networking constraints. Defaults to 172.31.80.0/20
+    #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
+    #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
+    # Example:
+    #   - Name: "security"
+    #     ID: "456789012345"
+    #     MgmtVPCCIDR: "172.31.80.0/20"
     - Name: "security"
-      ID: "replace-me"
+      ID: "063810897000"
       #MgmtVPCCIDR: "(optional) replace-me"
       #RootUserEmail: "(only required for CIS)"
 
   # Although the attribute is a list, this is only for type checking purposes. Do not add more entries to this list as
   # Gruntwork only supports one shared account.
   shared:
-      # TODO: Enter the following information in the fields below:
-      #  - The 12 digit AWS account ID of the shared account.
-      #  - Optional: enter the CIDR block to use for the mgmt VPC for the shared account. Omit if you do not have any
-      #    networking constraints. Defaults to 172.31.80.0/20
-      #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
-      #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
-      # Example:
-      #   - Name: "shared"
-      #     ID: "345678901234"
-      #     MgmtVPCCIDR: "172.31.80.0/20"
+    # TODO: Enter the following information in the fields below:
+    #  - The 12 digit AWS account ID of the shared account.
+    #    There must be a Route 53 public hosted zone for this domain already configured in the shared account for this domain name.
+    #  - Optional: enter the CIDR block to use for the mgmt VPC for the shared account. Omit if you do not have any
+    #    networking constraints. Defaults to 172.31.80.0/20
+    #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
+    #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
+    # Example:
+    #   - Name: "shared"
+    #     ID: "345678901234"
+    #     MgmtVPCCIDR: "172.31.80.0/20"
     - Name: "shared"
-      ID: "replace-me"
+      ID: "898449181946"
+      #DomainName: "replace-me"
       #MgmtVPCCIDR: "(optional) replace-me"
       #RootUserEmail: "(only required for CIS)"
 
-  # The following account roles support only one entry. They can also be omitted if you have no need for the role
+  # The following account roles support more than one entry. They can also be omitted if you have no need for the role
   # (e.g., if you only want stage and prod).
   dev:
-      # TODO: Enter the following information in the fields below:
-      #  - The name of the dev account. This is used for creating the folders in your `infrastructure-live` repository.
-      #    If in doubt, just use "dev" for the name.
-      #  - The 12 digit AWS account ID.
-      #  - The domain name to use for services deployed in this account. There must be a Route 53 public hosted zone
-      #    already configured in the dev account for this domain name.
-      #  - Optional: enter the CIDR block to use for the app VPC for the dev account. Omit if you do not have any
-      #    networking constraints. Defaults to 10.0.0.0/16
-      #  - Optional: enter the CIDR block to use for the mgmt VPC for the dev account. Omit if you do not have any
-      #    networking constraints. Defaults to 172.31.80.0/20
-      #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
-      #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
-      # Example:
-      #   - Name: "dev"
-      #     ID: "234567890123"
-      #     DomainName: "gruntwork-dev.io"
-      #     AppVPCCIDR: "10.0.0.0/16"
-      #     MgmtVPCCIDR: "172.31.80.0/20"
-    - Name: "replace-me"
-      ID: "replace-me"
-      DomainName: "replace-me"
+    # TODO: Enter the following information in the fields below:
+    #  - The name of the dev account. This is used for creating the folders in your `infrastructure-live` repository.
+    #    If in doubt, just use "dev" for the name.
+    #  - The 12 digit AWS account ID.
+    #  - The domain name to use for services deployed in this account. There must be a Route 53 public hosted zone
+    #    already configured in the dev account for this domain name.
+    #  - Optional: enter the CIDR block to use for the app VPC for the dev account. Omit if you do not have any
+    #    networking constraints. Defaults to 10.0.0.0/16
+    #  - Optional: enter the CIDR block to use for the mgmt VPC for the dev account. Omit if you do not have any
+    #    networking constraints. Defaults to 172.31.80.0/20
+    #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
+    #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
+    # Replicate the info below if you have more than one dev account.
+    # Example:
+    #   - Name: "dev"
+    #     ID: "234567890123"
+    #     DomainName: "gruntwork-dev.io"
+    #     AppVPCCIDR: "10.0.0.0/16"
+    #     MgmtVPCCIDR: "172.31.80.0/20"
+    - Name: "eopdev"
+      ID: "657968434173"
+      DomainName: "gw-eop-dev.tech"
       #AppVPCCIDR: "(optional) replace-me"
       #MgmtVPCCIDR: "(optional) replace-me"
       #RootUserEmail: "(only required for CIS)"
 
   stage:
-      # TODO: Enter the following information in the fields below:
-      #  - The name of the stage account. This is used for creating the folders in your `infrastructure-live` repository.
-      #    If in doubt, just use "stage" for the name.
-      #  - The 12 digit AWS account ID.
-      #  - The domain name to use for services deployed in this account. There must be a Route 53 public hosted zone
-      #    already configured in the stage account for this domain name.
-      #  - Optional: enter the CIDR block to use for the app VPC for the stage account. Omit if you do not have any
-      #    networking constraints. Defaults to 10.2.0.0/16
-      #  - Optional: enter the CIDR block to use for the mgmt VPC for the stage account. Omit if you do not have any
-      #    networking constraints. Defaults to 172.31.80.0/20
-      #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
-      #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
-      # Example:
-      #   - Name: "stage"
-      #     ID: "123456789012"
-      #     DomainName: "gruntwork-stage.io"
-      #     AppVPCCIDR: "10.2.0.0/16"
-      #     MgmtVPCCIDR: "172.31.80.0/20"
-    - Name: "replace-me"
-      ID: "replace-me"
-      DomainName: "replace-me"
+    # TODO: Enter the following information in the fields below:
+    #  - The name of the stage account. This is used for creating the folders in your `infrastructure-live` repository.
+    #    If in doubt, just use "stage" for the name.
+    #  - The 12 digit AWS account ID.
+    #  - The domain name to use for services deployed in this account. There must be a Route 53 public hosted zone
+    #    already configured in the stage account for this domain name.
+    #  - Optional: enter the CIDR block to use for the app VPC for the stage account. Omit if you do not have any
+    #    networking constraints. Defaults to 10.2.0.0/16
+    #  - Optional: enter the CIDR block to use for the mgmt VPC for the stage account. Omit if you do not have any
+    #    networking constraints. Defaults to 172.31.80.0/20
+    #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
+    #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
+    # Replicate the info below if you have more than one stage account.
+    # Example:
+    #   - Name: "stage"
+    #     ID: "123456789012"
+    #     DomainName: "gruntwork-stage.io"
+    #     AppVPCCIDR: "10.2.0.0/16"
+    #     MgmtVPCCIDR: "172.31.80.0/20"
+    - Name: "eopstage"
+      ID: "564180615104"
+      DomainName: "gw-eop-stage.tech"
       #AppVPCCIDR: "(optional) replace-me"
       #MgmtVPCCIDR: "(optional) replace-me"
       #RootUserEmail: "(only required for CIS)"
 
   prod:
-      # TODO: Enter the following information in the fields below:
-      #  - The name of the prod account. This is used for creating the folders in your `infrastructure-live` repository.
-      #    If in doubt, just use "prod" for the name.
-      #  - The 12 digit AWS account ID.
-      #  - The domain name to use for services deployed in this account. There must be a Route 53 public hosted zone
-      #    already configured in the prod account for this domain name.
-      #  - Optional: enter the CIDR block to use for the app VPC for the prod account. Omit if you do not have any
-      #    networking constraints. Defaults to 10.4.0.0/16
-      #  - Optional: enter the CIDR block to use for the mgmt VPC for the prod account. Omit if you do not have any
-      #    networking constraints. Defaults to 172.31.80.0/20
-      #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
-      #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
-      # Example:
-      #   - Name: "prod"
-      #     ID: "012345678901"
-      #     DomainName: "gruntwork-prod.io"
-      #     AppVPCCIDR: "10.4.0.0/16"
-      #     MgmtVPCCIDR: "172.31.80.0/20"
-    - Name: "replace-me"
-      ID: "replace-me"
-      DomainName: "replace-me"
+    # TODO: Enter the following information in the fields below:
+    #  - The name of the prod account. This is used for creating the folders in your `infrastructure-live` repository.
+    #    If in doubt, just use "prod" for the name.
+    #  - The 12 digit AWS account ID.
+    #  - The domain name to use for services deployed in this account. There must be a Route 53 public hosted zone
+    #    already configured in the prod account for this domain name.
+    #  - Optional: enter the CIDR block to use for the app VPC for the prod account. Omit if you do not have any
+    #    networking constraints. Defaults to 10.4.0.0/16
+    #  - Optional: enter the CIDR block to use for the mgmt VPC for the prod account. Omit if you do not have any
+    #    networking constraints. Defaults to 172.31.80.0/20
+    #  - Required for CIS: Email address associated with the Root User of the account. This is used for setting up
+    #    cross account access for various security baseline services, like SecurityHub, Macie, and GuardDuty.
+    # Example:
+    #   - Name: "prod"
+    #     ID: "012345678901"
+    #     DomainName: "gruntwork-prod.io"
+    #     AppVPCCIDR: "10.4.0.0/16"
+    #     MgmtVPCCIDR: "172.31.80.0/20"
+    # Replicate the info below if you have more than one prod account.
+    - Name: "eopprod"
+      ID: "422253851608"
+      DomainName: "gw-eop-prod.tech"
       #AppVPCCIDR: "(optional) replace-me"
       #MgmtVPCCIDR: "(optional) replace-me"
       #RootUserEmail: "(only required for CIS)"
@@ -235,25 +239,25 @@ AWSAccounts:
 # The machine user is used to make automated commits to your VCS platform in CI/CD pipeline.
 # Example:
 #  MachineUserGitUsername: "grunty"
-MachineUserGitUsername: "replace-me"
+MachineUserGitUsername: "gwrc-eop-automation"
 
 # TODO: Enter the VCS (e.g., GitHub, GitLab, etc) user email to use for the machine user.
 # The machine user email address is needed for the Git configuration when making commits in the CI/CD pipeline.
 # Example:
 #   MachineUserGitEmail: "grunty@gruntwork.io"
-MachineUserGitEmail: "replace-me"
+MachineUserGitEmail: "steve.mosley+github@gw.govt.nz"
 
 # TODO: Enter the CI server platform. Must be one of: circleci, gitlab, github.
 # This value indicates which type of CI configuration should be generated.
 # Example:
 #   CIServerPlatform: "circleci"
-CIServerPlatform: "replace-me"
+CIServerPlatform: "github"
 
 # TODO: Enter the VCS platform used for the infrastructure-live repository. Must be one of: github, bitbucket, gitlab.
 # This value indicates how to interact with the VCS platform when configuring the CI/CD pipeline.
 # Example:
 #   VCSPlatformType: "github"
-VCSPlatformType: "replace-me"
+VCSPlatformType: "github"
 
 # TODO: Enter the ARN of a secrets manager entry in the SHARED ACCOUNT that contains the Personal Access Token to access your VCS platform (github, bitbucket, or gitlab).
 # This is used for cloning your infrastructure-live repository in the CI/CD pipeline.
@@ -269,6 +273,7 @@ VCSPlatformType: "replace-me"
 #     has write_repository permissions.
 #     - api
 #     - read_user
+#     - read_api
 # Bitbucket
 # - Repositories:Write
 #     NOTE: The following additional permissions are only necessary in the initial setup to upload a SSH key for the user.
@@ -278,7 +283,7 @@ VCSPlatformType: "replace-me"
 # IMPORTANT: This is NOT THE ACTUAL SECRET! This should be the ARN of a Secrets Manager secret entry. Refer to the README for details.
 #   Example:
 #     VCSPATSecretsManagerARN: "arn:aws:secretsmanager:us-east-1:012345678901:secret:MyVCSPAT-MywxYE"
-VCSPATSecretsManagerARN: "replace-me"
+VCSPATSecretsManagerARN: "arn:aws:secretsmanager:ap-southeast-2:898449181946:secret:MachineUserGitHubPAT-w1bDpA"
 
 # A Personal Access Token for the Machine User in GitHub that is used to access Gruntwork repositories. This only needs to be
 # provided if you are not using GitHub for your VCS platform. Set to empty string (e.g. "") if using github for VCSPlatformType.
@@ -287,7 +292,7 @@ VCSPATSecretsManagerARN: "replace-me"
 # IMPORTANT: This is NOT THE ACTUAL SECRET! This should be the ARN of a Secrets Manager secret entry. Refer to the README for details.
 # Example:
 #   GitHubPATSecretsManagerARN: "arn:aws:secretsmanager:us-east-1:012345678901:secret:GitHubPAT-MywxYE"
-GitHubPATSecretsManagerARN: "replace-me"
+GitHubPATSecretsManagerARN: ""
 
 #############################################################################################################
 # CERTIFICATE AUTHORITY FIELDS
@@ -305,13 +310,13 @@ GitHubPATSecretsManagerARN: "replace-me"
 #     OrgUnit: IT
 #     Email: "support@gruntwork.io"
 CACertFields:
-  Country: replace-me
-  State: replace-me
-  Locality: replace-me
-  Org: replace-me
-  OrgUnit: replace-me
+  Country: "NZ"
+  State: "WG"
+  Locality: "Wellington"
+  Org: "Engineering"
+  OrgUnit: "ICT"
   # TODO: Use a generic email address for your organization or team, not an individually identifiable email address.
-  Email: "replace-me"
+  Email: "steve.mosley+aws_certs@gw.govt.nz"
 
 #############################################################################################################
 # CUSTOMIZATION OPTIONS
@@ -348,14 +353,14 @@ BastionType: "openvpn"
 # TODO: Enter the server cluster type to use. Must be one of: ecs, eks, eks-fargate, asg, none.
 # Example:
 #   AppServerClusterType: "ecs"
-AppServerClusterType: "replace-me"
+AppServerClusterType: "ecs"
 
 # TODO: Enter the RDS database server type to use. Must be one of: mysql, postgres, sqlserver, mariadb, aurora-mysql, aurora-postgresql, none.
 # Example:
 #   DatabaseType: "aurora-postgresql"
-DatabaseType: "replace-me"
+DatabaseType: "aurora-postgresql"
 
 # TODO: Enter the Elasticache server type to use. Must be one of: redis, memcached, none.
 # Example:
 #   CacheType: "redis"
-CacheType: "replace-me"
+CacheType: "redis"
