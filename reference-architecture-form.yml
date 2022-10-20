@@ -314,10 +314,10 @@ CACertFields:
   Country: "NZ"
   State: "WG"
   Locality: "Wellington"
-  Org: "Engineering"
+  Org: "GWRC"
   OrgUnit: "ICT"
   # TODO: Use a generic email address for your organization or team, not an individually identifiable email address.
-  Email: "steve.mosley+aws_certs@gw.govt.nz"
+  Email: "eop_tech@gw.govt.nz"
 
 #############################################################################################################
 # CUSTOMIZATION OPTIONS
