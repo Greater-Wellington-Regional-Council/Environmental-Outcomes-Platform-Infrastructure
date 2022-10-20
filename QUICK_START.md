@@ -3,9 +3,9 @@
 Congratulations, your Reference Architecture is deployed! You can find all the code, configuration, and documentation in this repository. You can model your own deployments on this pattern.
 
 ## Check out the sample apps
+- [https://gruntwork-sample-app.gw-eop-prod.tech](https://gruntwork-sample-app.gw-eop-prod.tech)
 - [https://gruntwork-sample-app.gw-eop-dev.tech](https://gruntwork-sample-app.gw-eop-dev.tech)
 - [https://gruntwork-sample-app.gw-eop-stage.tech](https://gruntwork-sample-app.gw-eop-stage.tech)
-- [https://gruntwork-sample-app.gw-eop-prod.tech](https://gruntwork-sample-app.gw-eop-prod.tech)
 
 ## Reference Architecture basics
 Here’s some important information about the Gruntwork reference architecture:
