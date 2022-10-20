@@ -1,3 +1,4 @@
+---
 #------------------------------------------------------------------------------------------------------------
 # GRUNTWORK REFERENCE ARCHITECTURE SETUP FORM
 # The following information is used to generate your reference architecture.
@@ -15,7 +16,7 @@
 # TODO: Enter the name of your organization. This will be used to generate a prefix name for every resource.
 # Example:
 #   CompanyName: "gruntwork"
-CompanyName: "gwrceop"
+CompanyName: "gwrc"
 
 # TODO: Enter the primary AWS region where you want to deploy the Reference Architecture.
 # You can always add more regions to your architecture later by following the patterns from this initial deployment.
@@ -26,7 +27,7 @@ PrimaryRegion: "ap-southeast-2"
 # TODO: Enter the https URL to your infrastructure-live repository
 # Example:
 #   InfraLiveRepoURL: "https://github.com/your-company/infrastructure-live.git"
-InfraLiveRepoURL: "https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure"
+InfraLiveRepoURL: "https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure.git"
 
 # TODO: Enter the ssh URL to the infrastructure-live repository
 # Example:
