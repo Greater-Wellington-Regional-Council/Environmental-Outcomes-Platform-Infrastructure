@@ -1,3 +1,0 @@
-AWSAccountName: logs
-AccountRole: logs
-IncludeAccountBaselineApp: true
