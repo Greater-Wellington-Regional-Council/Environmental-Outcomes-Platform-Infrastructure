@@ -1,0 +1,133 @@
+AMIEncryptionKMSKeyARN: arn:aws:kms:ap-southeast-2:898449181946:alias/ami-encryption
+AMIUserAccounts:
+    - eopdev
+    - eopstage
+    - eopprod
+AWSAccounts:
+    eopdev:
+        id: "657968434173"
+        root_user_email: ""
+        deploy_order: 0
+    eopprod:
+        id: "422253851608"
+        root_user_email: ""
+        deploy_order: 0
+    eopstage:
+        id: "564180615104"
+        root_user_email: ""
+        deploy_order: 0
+    logs:
+        id: "972859489186"
+        root_user_email: ""
+        deploy_order: 0
+    security:
+        id: "063810897000"
+        root_user_email: ""
+        deploy_order: 0
+    shared:
+        id: "898449181946"
+        root_user_email: ""
+        deploy_order: 0
+AWSDefaultRegion: ap-southeast-2
+AWSRegion: ap-southeast-2
+AdditionalDockerImageRepos:
+    - https://github.com/gruntwork-io/terraform-aws-ci.git
+AdditionalPlanAndApplyRepos:
+    - https://github.com/gruntwork-clients/infrastructure-live-greater-wellington-regional-council.git
+AllowedApplyGitRefs:
+    - main
+    - origin/main
+    - main
+    - origin/main
+AppServerClusterType: ecs
+AppVPCCIDRBlock: ""
+AppVPCCIDRMap:
+    eopdev: 10.0.0.0/16
+    eopprod: 10.4.0.0/16
+    eopstage: 10.2.0.0/16
+AuroraEngine: aurora-postgresql
+AutoDeployRoleNames:
+    - allow-auto-deploy-from-other-accounts
+CACertFields:
+    ca_country: NZ
+    ca_email: eop_tech@gw.govt.nz
+    ca_locality: Wellington
+    ca_org: GWRC
+    ca_org_unit: ICT
+    ca_state: WG
+CIServer: github
+CacheEngine: redis
+CloudTrailKMSKeyARN: arn:aws:kms:ap-southeast-2:972859489186:alias/cloudtrail-gwrc
+CompanyName: gwrc
+CompanyVCSPlatform: github
+DeployRunnerImageTag: v0.50.4
+DockerImageBuildPATSecretsManagerARN: arn:aws:secretsmanager:ap-southeast-2:898449181946:secret:MachineUserGitHubPAT-w1bDpA
+ECSDeployRunnerRegion: ap-southeast-2
+EncryptBoot: true
+GitHubPATSecretsManagerARN: arn:aws:secretsmanager:ap-southeast-2:898449181946:secret:MachineUserGitHubPAT-w1bDpA
+IAMUsers:
+    ci-machine-user:
+        create_access_keys: false
+        create_login_profile: false
+        groups:
+            - _account.eopdev-auto-deploy
+            - _account.eopprod-auto-deploy
+            - _account.eopstage-auto-deploy
+            - _account.logs-auto-deploy
+            - _account.security-auto-deploy
+            - _account.shared-auto-deploy
+    steve.mosley:
+        create_access_keys: false
+        create_login_profile: true
+        groups:
+            - _all-accounts
+            - full-access
+            - ssh-grunt-sudo-users
+        pgp_key: keybase:smozely
+IncludeASGCluster: false
+IncludeAurora: true
+IncludeBastionHost: false
+IncludeECSCluster: true
+IncludeEKSCluster: false
+IncludeElasticache: true
+IncludeOpenVPN: true
+IncludeQuickStartDocs: true
+IncludeRDS: false
+IncludeServiceQuotas: false
+InfraLiveRepoSSHURL: git@github.com:Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure.git
+InfraLiveRepoURL: https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure.git
+IsExample: false
+KanikoImageTag: v0.50.4
+KubergruntVersion: v0.9.1
+MachineUserGitEmail: steve.mosley+github@gw.govt.nz
+MachineUserGitUsername: gwrc-eop-automation
+MgmtVPCCIDRBlock: ""
+MgmtVPCCIDRMap:
+    eopdev: 172.31.80.0/20
+    eopprod: 172.31.80.0/20
+    eopstage: 172.31.80.0/20
+    logs: 172.31.80.0/20
+    security: 172.31.80.0/20
+    shared: 172.31.80.0/20
+NetworkBastionType: openvpn-server
+PrimaryIAMEmail: Steve.Mosley@gw.govt.nz
+PrimaryIAMUsername: steve.mosley
+ResourceNamePrefix: gwrc
+SSHIPAllowList:
+    - 0.0.0.0/0
+SampleAppURLs:
+    - https://gruntwork-sample-app.gw-eop-dev.tech
+    - https://gruntwork-sample-app.gw-eop-stage.tech
+    - https://gruntwork-sample-app.gw-eop-prod.tech
+SharedSecretsKMSKeyARN: arn:aws:kms:ap-southeast-2:898449181946:alias/shared-secrets
+TerraformVersion: 1.1.9
+TerragruntVersion: v0.38.6
+UsingCISCompliance: false
+VPNIPAllowList:
+    - 0.0.0.0/0
+ecs-deploy-runner-ec2-ami-build.AMIUserAccounts:
+    - security
+    - eopdev
+    - eopstage
+    - eopprod
+    - logs

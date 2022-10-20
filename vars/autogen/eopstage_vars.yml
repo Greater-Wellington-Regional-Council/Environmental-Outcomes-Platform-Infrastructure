@@ -1,0 +1,7 @@
+AWSAccountName: eopstage
+AccountDomainName: gw-eop-stage.tech
+AccountRole: stage
+DBSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:564180615104:secret:RDSDBConfig-roeweY
+IncludeAccountBaselineApp: true
+ecs-sample-app-backend.TLSSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:564180615104:secret:SampleAppBackEndCA-FaoQJf
+ecs-sample-app-frontend.TLSSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:564180615104:secret:SampleAppFrontEndCA-STLp8Z

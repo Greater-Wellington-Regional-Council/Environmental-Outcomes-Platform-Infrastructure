@@ -1,0 +1,7 @@
+AWSAccountName: eopdev
+AccountDomainName: gw-eop-dev.tech
+AccountRole: dev
+DBSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD
+IncludeAccountBaselineApp: true
+ecs-sample-app-backend.TLSSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:SampleAppBackEndCA-yT4JVB
+ecs-sample-app-frontend.TLSSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:SampleAppFrontEndCA-i7ZkZE

@@ -1,0 +1,7 @@
+AWSAccountName: eopprod
+AccountDomainName: gw-eop-prod.tech
+AccountRole: prod
+DBSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:422253851608:secret:RDSDBConfig-ZgtELd
+IncludeAccountBaselineApp: true
+ecs-sample-app-backend.TLSSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:422253851608:secret:SampleAppBackEndCA-jn57ir
+ecs-sample-app-frontend.TLSSecretsManagerArn: arn:aws:secretsmanager:ap-southeast-2:422253851608:secret:SampleAppFrontEndCA-HTPbz0
