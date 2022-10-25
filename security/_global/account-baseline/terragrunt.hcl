@@ -180,8 +180,8 @@ inputs = {
 
   # Configures the max session duration for roles that humans use to be 8 hours
   max_session_duration_human_users = 28800
-  # IAM users
 
+  # IAM users
   users = local.users
 
   # Configure opt in regions for each multi region service based on locally configured setting.

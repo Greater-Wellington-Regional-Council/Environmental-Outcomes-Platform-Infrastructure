@@ -1,6 +1,4 @@
 ci-machine-user:
-  create_access_keys: false
-  create_login_profile: false
   groups:
     - _account.eopdev-auto-deploy
     - _account.eopprod-auto-deploy
@@ -10,26 +8,18 @@ ci-machine-user:
     - _account.shared-auto-deploy
 
 steve.mosley@gw.govt.nz:
-  create_access_keys: false
-  create_login_profile: true
   groups:
     - _all-accounts
     - full-access
     - ssh-grunt-sudo-users
 
-steve.mosley:
-  create_access_keys: false
-  create_login_profile: true
+martin.peak@gw.govt.nz:
   groups:
-    - _all-accounts
-    - full-access
-    - ssh-grunt-sudo-users
-  pgp_key: keybase:smozely
-
-steve.mosley@gwrc.govt.nz:
-  create_access_keys: false
-  create_login_profile: true
-  groups:
-    - _all-accounts
-    - full-access
+    - iam-user-self-mgmt
+    - _account.eopdev-dev
+    - _account.eopstage-dev
+    - _account.logs-read-only
+    - _account.shared-read-only
+    - _account.security-read-only
+    - _account.eopprod-read-only
     - ssh-grunt-sudo-users
