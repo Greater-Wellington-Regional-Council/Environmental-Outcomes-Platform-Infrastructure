@@ -18,7 +18,7 @@ Here’s some important information about the Gruntwork reference architecture:
 
 # Your next steps
 
-## 1. Migrate the repo
+## 1. Migrate the repo - Done
 To make it easier to deploy the Reference Architecture, we initially host the code in the https://github.com/gruntwork-clients/infrastructure-live-greater-wellington-regional-council.git repository for you. However, once deployed, you should migrate the code to an `infrastructure-live` repository in your own version control system. The best way to do this is by switching the remote url. For example, if you're using GitHub:
 
     git clone https://github.com/gruntwork-clients/infrastructure-live-greater-wellington-regional-council.git infrastructure-live
@@ -26,10 +26,10 @@ To make it easier to deploy the Reference Architecture, we initially host the co
     git remote set-url origin https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure.git
     git push origin main
 
-## 2. Secure each account's root user
+## 2. Secure each account's root user - Done
 Be sure to enable MFA ([instructions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html#enable-virt-mfa-for-root)) on the root user each AWS account, as the root user can bypass just about any other security restrictions you put in place. You can find more info in our [Gruntwork Security Best Practices doc](https://docs.google.com/document/u/1/d/e/2PACX-1vTikva7hXPd2h1SSglJWhlW8W6qhMlZUxl0qQ9rUJ0OX22CQNeM-91w4lStRk9u2zQIn6lPejUbe-dl/pub).
 
-## 3. Login as your IAM user
+## 3. Login as your IAM user - Done (via click-ops)
 Now that you've locked down the root users, you'll need to login as your IAM user. The IAM users live in the **security account**.
 
 * Your PGP encrypted IAM User password is located in [`ADMIN_IAM_USER_PASSWORDS`](./ADMIN_IAM_USER_PASSWORDS) at the root of this repo.
