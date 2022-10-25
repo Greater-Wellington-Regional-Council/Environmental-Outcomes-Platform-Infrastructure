@@ -25,7 +25,7 @@ name: gruntwork-pipelines
 on:
   push:
     paths-ignore:
-      - '.github/**'
+      - ".github/**"
 
 env:
   GRUNTWORK_INSTALLER_VERSION: v0.0.38
@@ -34,7 +34,6 @@ env:
   # Disables the use of the Amazon EC2 instance metadata service (IMDS).
   # Forces the AWS CLI to use the env vars defined above for credentials.
   AWS_EC2_METADATA_DISABLED: true
-
 
 jobs:
   plan_and_deploy:
@@ -58,12 +57,12 @@ jobs:
         env:
           GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Notify Slack of upcoming plan
-        uses: slackapi/slack-github-action@v1.15.0
-        with:
-          payload: "{\"status\":\"Preparing to run plan.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify Slack of upcoming plan
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   with:
+      #     payload: "{\"status\":\"Preparing to run plan.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: run build scripts
         id: build-script
@@ -83,29 +82,29 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Notify Slack of failed plan
-        uses: slackapi/slack-github-action@v1.15.0
-        if: failure() && steps.plan.outcome == 'failure'
-        with:
-          payload: "{\"status\":\"Plan failed.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify Slack of failed plan
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   if: failure() && steps.plan.outcome == 'failure'
+      #   with:
+      #     payload: "{\"status\":\"Plan failed.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Notify Slack of successful plan
-        uses: slackapi/slack-github-action@v1.15.0
-        if: success() && steps.plan.outcome == 'success'
-        with:
-          payload: "{\"status\":\"Plan successful!\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify Slack of successful plan
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   if: success() && steps.plan.outcome == 'success'
+      #   with:
+      #     payload: "{\"status\":\"Plan successful!\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Notify Slack of upcoming deploy
-        uses: slackapi/slack-github-action@v1.15.0
-        if: github.ref == 'refs/heads/main'
-        with:
-          payload: "{\"status\":\"Preparing to deploy.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify Slack of upcoming deploy
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   if: github.ref == 'refs/heads/main'
+      #   with:
+      #     payload: "{\"status\":\"Preparing to deploy.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: run deploy
         id: deploy
@@ -117,18 +116,18 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Notify Slack of failed deploy
-        uses: slackapi/slack-github-action@v1.15.0
-        if: github.ref == 'refs/heads/main' && failure() && steps.deploy.outcome == 'failure'
-        with:
-          payload: "{\"status\":\"Deploy failed.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify Slack of failed deploy
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   if: github.ref == 'refs/heads/main' && failure() && steps.deploy.outcome == 'failure'
+      #   with:
+      #     payload: "{\"status\":\"Deploy failed.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Notify Slack of successful deploy
-        uses: slackapi/slack-github-action@v1.15.0
-        if: github.ref == 'refs/heads/main' && success() && steps.deploy.outcome == 'success'
-        with:
-          payload: "{\"status\":\"Deploy successful!\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify Slack of successful deploy
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   if: github.ref == 'refs/heads/main' && success() && steps.deploy.outcome == 'success'
+      #   with:
+      #     payload: "{\"status\":\"Deploy successful!\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
