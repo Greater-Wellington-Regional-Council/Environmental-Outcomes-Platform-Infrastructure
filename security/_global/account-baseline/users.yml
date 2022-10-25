@@ -8,6 +8,15 @@ ci-machine-user:
     - _account.logs-auto-deploy
     - _account.security-auto-deploy
     - _account.shared-auto-deploy
+
+steve.mosley@gw.govt.nz:
+  create_access_keys: false
+  create_login_profile: true
+  groups:
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
+
 steve.mosley:
   create_access_keys: false
   create_login_profile: true
