@@ -2,18 +2,25 @@ ci-machine-user:
   create_access_keys: false
   create_login_profile: false
   groups:
-  - _account.eopdev-auto-deploy
-  - _account.eopprod-auto-deploy
-  - _account.eopstage-auto-deploy
-  - _account.logs-auto-deploy
-  - _account.security-auto-deploy
-  - _account.shared-auto-deploy
+    - _account.eopdev-auto-deploy
+    - _account.eopprod-auto-deploy
+    - _account.eopstage-auto-deploy
+    - _account.logs-auto-deploy
+    - _account.security-auto-deploy
+    - _account.shared-auto-deploy
 steve.mosley:
   create_access_keys: false
   create_login_profile: true
   groups:
-  - _all-accounts
-  - full-access
-  - ssh-grunt-sudo-users
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
   pgp_key: keybase:smozely
 
+steve.mosley@gwrc.govt.nz:
+  create_access_keys: false
+  create_login_profile: true
+  groups:
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
