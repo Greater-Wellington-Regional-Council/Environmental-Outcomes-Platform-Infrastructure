@@ -74,7 +74,7 @@ up locally.
 * As a fallback, the click-ops option is to navigate to the AWS Console UI, login as your IAM user into the security
   account, navigate to the IAM Users page, find your IAM user, and reset your password.
 
-## 4. Revoke Gruntwork access
+## 4. Revoke Gruntwork access - Done
 We recommend that you revoke Gruntwork's access from your Git repos and AWS accounts. To do this, use the `gruntwork aws revoke` command of the [Gruntwork CLI](https://github.com/gruntwork-io/gruntwork).
 
 ## 5. Follow the guides in the documentation
