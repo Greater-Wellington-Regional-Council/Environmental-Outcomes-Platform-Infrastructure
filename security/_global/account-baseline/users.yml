@@ -17,7 +17,9 @@ martin.peak@gw.govt.nz:
   groups:
     - iam-user-self-mgmt
     - _account.eopdev-dev
+    - _account.eopdev-read-only
     - _account.eopstage-dev
+    - _account.eopstage-read-only
     - _account.logs-read-only
     - _account.shared-read-only
     - _account.security-read-only
