@@ -8,206 +8,228 @@
 RDSReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "rds:Describe*"
-  - "rds:List*"
-  - "rds:Download*"
+    - "rds:Describe*"
+    - "rds:List*"
+    - "rds:Download*"
   resources:
-  - "*"
-
+    - "*"
 
 CloudWatchEventsReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "events:Describe*"
-  - "events:List*"
+    - "events:Describe*"
+    - "events:List*"
   resources:
-  - "*"
-
+    - "*"
 
 ElasticacheReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "elasticache:Describe*"
-  - "elasticache:List*"
+    - "elasticache:Describe*"
+    - "elasticache:List*"
   resources:
-  - "*"
-
+    - "*"
 
 ECSReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "ecs:Describe*"
-  - "ecs:List*"
+    - "ecs:Describe*"
+    - "ecs:List*"
   resources:
-  - "*"
-
+    - "*"
 
 ACMReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "acm:DescribeCertificate"
-  - "acm:ListCertificates"
-  - "acm:GetCertificate"
-  - "acm:ListTagsForCertificate"
+    - "acm:DescribeCertificate"
+    - "acm:ListCertificates"
+    - "acm:GetCertificate"
+    - "acm:ListTagsForCertificate"
   resources:
-  - "*"
+    - "*"
+
 AutoScalingReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "autoscaling:Describe*"
+    - "autoscaling:Describe*"
   resources:
-  - "*"
+    - "*"
+
+CloudFrontReadOnlyAccess:
+  effect: "Allow"
+  actions:
+    - "cloudfront:DescribeFunction"
+    - "cloudfront:Get*"
+    - "cloudfront:List*"
+  resources:
+    - "*"
+
 CloudTrailReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "cloudtrail:Describe*"
-  - "cloudtrail:List*"
-  - "cloudtrail:Get*"
+    - "cloudtrail:Describe*"
+    - "cloudtrail:List*"
+    - "cloudtrail:Get*"
   resources:
-  - "*"
+    - "*"
+
 CloudWatchReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "cloudwatch:Describe*"
-  - "cloudwatch:List*"
+    - "cloudwatch:Describe*"
+    - "cloudwatch:List*"
   resources:
-  - "*"
+    - "*"
+
 CloudWatchLogsReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "logs:Get*"
-  - "logs:Describe*"
-  - "logs:List*"
-  - "logs:Filter*"
+    - "logs:Get*"
+    - "logs:Describe*"
+    - "logs:List*"
+    - "logs:Filter*"
   resources:
-  - "*"
+    - "*"
+
 ConfigReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "config:Get*"
-  - "config:Describe*"
-  - "config:List*"
-  - "config:Select*"
-  - "config:BatchGetResourceConfig"
+    - "config:Get*"
+    - "config:Describe*"
+    - "config:List*"
+    - "config:Select*"
+    - "config:BatchGetResourceConfig"
   resources:
-  - "*"
+    - "*"
+
 EC2ServiceReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "ec2:Describe*"
-  - "ec2:Get*"
+    - "ec2:Describe*"
+    - "ec2:Get*"
   resources:
-  - "*"
+    - "*"
+
 ECRReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "ecr:BatchGet*"
-  - "ecr:Describe*"
-  - "ecr:Get*"
-  - "ecr:List*"
+    - "ecr:BatchGet*"
+    - "ecr:Describe*"
+    - "ecr:Get*"
+    - "ecr:List*"
   resources:
-  - "*"
+    - "*"
+
 ELBReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "elasticloadbalancing:Describe*"
+    - "elasticloadbalancing:Describe*"
   resources:
-  - "*"
+    - "*"
+
 GuardDutyReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "guardduty:Get*"
-  - "guardduty:List*"
+    - "guardduty:Get*"
+    - "guardduty:List*"
   resources:
-  - "*"
+    - "*"
+
 IAMReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "iam:Get*"
-  - "iam:List*"
-  - "iam:PassRole*"
+    - "iam:Get*"
+    - "iam:List*"
+    - "iam:PassRole*"
   resources:
-  - "*"
+    - "*"
+
 IAMAccessAnalyzerReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "access-analyzer:List*"
-  - "access-analyzer:Get*"
-  - "access-analyzer:ValidatePolicy"
+    - "access-analyzer:List*"
+    - "access-analyzer:Get*"
+    - "access-analyzer:ValidatePolicy"
   resources:
-  - "*"
+    - "*"
+
 KMSReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "kms:Describe*"
-  - "kms:Get*"
-  - "kms:List*"
+    - "kms:Describe*"
+    - "kms:Get*"
+    - "kms:List*"
   resources:
-  - "*"
+    - "*"
+
 LambdaReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "lambda:Get*"
-  - "lambda:List*"
+    - "lambda:Get*"
+    - "lambda:List*"
   resources:
-  - "*"
+    - "*"
+
 Route53ReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "route53:Get*"
-  - "route53:List*"
-  - "route53:Test*"
-  - "route53domains:Check*"
-  - "route53domains:Get*"
-  - "route53domains:List*"
-  - "route53domains:View*"
-  - "route53resolver:Get*"
-  - "route53resolver:List*"
+    - "route53:Get*"
+    - "route53:List*"
+    - "route53:Test*"
+    - "route53domains:Check*"
+    - "route53domains:Get*"
+    - "route53domains:List*"
+    - "route53domains:View*"
+    - "route53resolver:Get*"
+    - "route53resolver:List*"
   resources:
-  - "*"
+    - "*"
+
 S3ReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "s3:Get*"
-  - "s3:List*"
+    - "s3:Get*"
+    - "s3:List*"
   resources:
-  - "*"
+    - "*"
+
 SecretsManagerReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "secretsmanager:Get*"
-  - "secretsmanager:List*"
-  - "secretsmanager:Describe*"
+    - "secretsmanager:Get*"
+    - "secretsmanager:List*"
+    - "secretsmanager:Describe*"
   resources:
-  - "*"
+    - "*"
+
 SNSReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "sns:Get*"
-  - "sns:List*"
-  - "sns:Check*"
+    - "sns:Get*"
+    - "sns:List*"
+    - "sns:Check*"
   resources:
-  - "*"
+    - "*"
+
 SQSReadOnlyAccess:
   effect: "Allow"
   actions:
-  - "sqs:Get*"
-  - "sqs:List*"
+    - "sqs:Get*"
+    - "sqs:List*"
   resources:
-  - "*"
-
+    - "*"
 
 DynamoDBLocksTableAccess:
   effect: "Allow"
   actions:
-  - "dynamodb:*"
+    - "dynamodb:*"
   resources:
-  - "arn:aws:dynamodb:*:*:table/terraform-locks"
+    - "arn:aws:dynamodb:*:*:table/terraform-locks"
 
 S3StateBucketAccess:
   effect: "Allow"
   actions:
-  - "s3:*"
+    - "s3:*"
   resources:
-  - "arn:aws:s3:::${state_bucket}"
-  - "arn:aws:s3:::${state_bucket}/*"
+    - "arn:aws:s3:::${state_bucket}"
+    - "arn:aws:s3:::${state_bucket}/*"

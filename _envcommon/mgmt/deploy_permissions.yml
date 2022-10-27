@@ -8,157 +8,176 @@
 RDSDeployAccess:
   effect: "Allow"
   actions:
-  - "rds:*"
+    - "rds:*"
   resources:
-  - "*"
-
+    - "*"
 
 CloudWatchEventsDeployAccess:
   effect: "Allow"
   actions:
-  - "events:*"
+    - "events:*"
   resources:
-  - "*"
-
+    - "*"
 
 ElasticacheDeployAccess:
   effect: "Allow"
   actions:
-  - "elasticache:*"
+    - "elasticache:*"
   resources:
-  - "*"
-
+    - "*"
 
 ECSDeployAccess:
   effect: "Allow"
   actions:
-  - "ecs:*"
+    - "ecs:*"
   resources:
-  - "*"
-
+    - "*"
 
 ACMDeployAccess:
   effect: "Allow"
   actions:
-  - "acm:*"
+    - "acm:*"
   resources:
-  - "*"
+    - "*"
+
 AutoScalingDeployAccess:
   effect: "Allow"
   actions:
-  - "autoscaling:*"
+    - "autoscaling:*"
   resources:
-  - "*"
+    - "*"
+
+CloudFrontReadOnlyAccess:
+  effect: "Allow"
+  actions:
+    - "cloudfront:*"
+  resources:
+    - "*"
+
 CloudTrailDeployAccess:
   effect: "Allow"
   actions:
-  - "cloudtrail:*"
+    - "cloudtrail:*"
   resources:
-  - "*"
+    - "*"
+
 CloudWatchDeployAccess:
   effect: "Allow"
   actions:
-  - "cloudwatch:*"
+    - "cloudwatch:*"
   resources:
-  - "*"
+    - "*"
+
 CloudWatchLogsDeployAccess:
   effect: "Allow"
   actions:
-  - "logs:*"
+    - "logs:*"
   resources:
-  - "*"
+    - "*"
+
 ConfigDeployAccess:
   effect: "Allow"
   actions:
-  - "config:*"
+    - "config:*"
   resources:
-  - "*"
+    - "*"
+
 EC2ServiceDeployAccess:
   effect: "Allow"
   actions:
-  - "ec2:*"
+    - "ec2:*"
   resources:
-  - "*"
+    - "*"
+
 ECRDeployAccess:
   effect: "Allow"
   actions:
-  - "ecr:*"
+    - "ecr:*"
   resources:
-  - "*"
+    - "*"
+
 ELBDeployAccess:
   effect: "Allow"
   actions:
-  - "elasticloadbalancing:*"
+    - "elasticloadbalancing:*"
   resources:
-  - "*"
+    - "*"
+
 GuardDutyDeployAccess:
   effect: "Allow"
   actions:
-  - "guardduty:*"
+    - "guardduty:*"
   resources:
-  - "*"
+    - "*"
+
 IAMDeployAccess:
   effect: "Allow"
   actions:
-  - "iam:*"
+    - "iam:*"
   resources:
-  - "*"
+    - "*"
+
 IAMAccessAnalyzerDeployAccess:
   effect: "Allow"
   actions:
-  - "access-analyzer:*"
+    - "access-analyzer:*"
   resources:
-  - "*"
+    - "*"
+
 KMSDeployAccess:
   effect: "Allow"
   actions:
-  - "kms:*"
+    - "kms:*"
   resources:
-  - "*"
+    - "*"
+
 LambdaDeployAccess:
   effect: "Allow"
   actions:
-  - "lambda:*"
+    - "lambda:*"
   resources:
-  - "*"
+    - "*"
+
 Route53DeployAccess:
   effect: "Allow"
   actions:
-  - "route53:*"
-  - "route53domains:*"
-  - "route53resolver:*"
+    - "route53:*"
+    - "route53domains:*"
+    - "route53resolver:*"
   resources:
-  - "*"
+    - "*"
+
 SecretsManagerDeployAccess:
   effect: "Allow"
   actions:
-  - "secretsmanager:*"
+    - "secretsmanager:*"
   resources:
-  - "*"
+    - "*"
+
 SNSDeployAccess:
   effect: "Allow"
   actions:
-  - "sns:*"
+    - "sns:*"
   resources:
-  - "*"
+    - "*"
+
 SQSDeployAccess:
   effect: "Allow"
   actions:
-  - "sqs:*"
+    - "sqs:*"
   resources:
-  - "*"
-
+    - "*"
 
 DynamoDBLocksTableAccess:
   effect: "Allow"
   actions:
-  - "dynamodb:*"
+    - "dynamodb:*"
   resources:
-  - "arn:aws:dynamodb:*:*:table/terraform-locks"
+    - "arn:aws:dynamodb:*:*:table/terraform-locks"
 
 S3DeployAccess:
   effect: "Allow"
   actions:
-  - "s3:*"
+    - "s3:*"
   resources:
-  - "*"
+    - "*"
