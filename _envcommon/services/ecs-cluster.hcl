@@ -28,8 +28,17 @@ dependency "vpc" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-dependency "network_bastion" {
+dependency "network_openvpn" {
   config_path = "${get_terragrunt_dir()}/../../networking/openvpn-server"
+
+  mock_outputs = {
+    security_group_id = "sg-abcd1234"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
+dependency "network_bastion" {
+  config_path = "${get_terragrunt_dir()}/../../networking/bastion-host"
 
   mock_outputs = {
     security_group_id = "sg-abcd1234"
@@ -121,7 +130,7 @@ inputs = {
   cluster_instance_keypair_name = "ecs-cluster-admin-v1"
 
   allow_ssh_from_cidr_blocks        = dependency.vpc.outputs.private_app_subnet_cidr_blocks
-  allow_ssh_from_security_group_ids = [dependency.network_bastion.outputs.security_group_id]
+  allow_ssh_from_security_group_ids = [dependency.network_openvpn.outputs.security_group_id, dependency.network_bastion.outputs.bastion_host_security_group_id]
 
   enable_ssh_grunt                    = true
   ssh_grunt_iam_group                 = local.common_vars.locals.ssh_grunt_users_group
