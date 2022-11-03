@@ -28,15 +28,6 @@ dependency "vpc" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-dependency "network_openvpn" {
-  config_path = "${get_terragrunt_dir()}/../../networking/openvpn-server"
-
-  mock_outputs = {
-    security_group_id = "sg-abcd1234"
-  }
-  mock_outputs_allowed_terraform_commands = ["validate", ]
-}
-
 dependency "network_bastion" {
   config_path = "${get_terragrunt_dir()}/../../networking/bastion-host"
 
@@ -45,6 +36,7 @@ dependency "network_bastion" {
   }
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
+
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -104,7 +96,7 @@ inputs = {
   # Here we allow any connection from the private app subnet tier of the VPC. You can further restrict network access by
   # security groups for better defense in depth.
   allow_connections_from_cidr_blocks     = dependency.vpc.outputs.private_app_subnet_cidr_blocks
-  allow_connections_from_security_groups = [dependency.network_openvpn.outputs.security_group_id, dependency.network_bastion.outputs.bastion_host_security_group_id]
+  allow_connections_from_security_groups = [dependency.network_bastion.outputs.bastion_host_security_group_id]
 
   # Only apply changes during the scheduled maintenance window, as certain DB changes cause degraded performance or
   # downtime. For more info, see: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Clusters.Modify.html
