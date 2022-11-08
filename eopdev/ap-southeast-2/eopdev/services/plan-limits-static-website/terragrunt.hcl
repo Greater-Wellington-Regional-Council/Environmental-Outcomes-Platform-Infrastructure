@@ -41,7 +41,7 @@ locals {
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
   restrict_bucket_access_to_cloudfront    = true
-  create_route53_entry                    = true
+  create_route53_entry                    = false
   base_domain_name                        = local.account_vars.locals.domain_name.name
   website_domain_name                     = "plan-limits.${local.account_vars.locals.domain_name.name}"
   acm_certificate_domain_name             = "${local.account_vars.locals.domain_name.name}"
