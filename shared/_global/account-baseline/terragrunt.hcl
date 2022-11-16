@@ -100,4 +100,17 @@ inputs = {
   ebs_use_existing_kms_keys = true
   ebs_kms_key_name          = "ami-encryption"
   ebs_opt_in_regions        = [local.aws_region]
+
+  auto_deploy_permissions = [
+    "iam:GetRole",
+    "iam:GetRolePolicy",
+    "ecr:GetAuthorizationToken",
+    "ecr:BatchGetImage",
+    "ecr:BatchCheckLayerAvailability",
+    "ecr:CompleteLayerUpload",
+    "ecr:GetDownloadUrlForLayer",
+    "ecr:InitiateLayerUpload",
+    "ecr:PutImage",
+    "ecr:UploadLayerPart"
+  ]
 }
