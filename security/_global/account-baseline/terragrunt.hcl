@@ -175,6 +175,8 @@ inputs = {
     "iam:GetRolePolicy",
   ]
 
+  enable_github_actions_access = true
+
   # Configures the auto deploy max session duration to be 4 hours
   max_session_duration_machine_users = 14400
 
