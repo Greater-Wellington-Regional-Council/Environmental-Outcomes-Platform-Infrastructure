@@ -21,7 +21,7 @@
 #         - Run `terragrunt apply` on each of the updated modules.
 #
 ######################################################################################################################
-name: gruntwork-pipelines
+name: Infrastructure deployment
 on:
   push:
     paths-ignore:
@@ -36,7 +36,78 @@ env:
   AWS_EC2_METADATA_DISABLED: true
 
 jobs:
-  plan_and_deploy:
+  plan:
+    runs-on: ubuntu-20.04
+    if: github.ref != 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Fetch all history
+          fetch-depth: 0
+
+      - name: Set custom ref variables
+        id: ref
+        run: |
+          echo "::set-output name=source_ref::$(./.github/scripts/source-ref.sh)"
+          echo "::set-output name=short_ref::${GITHUB_REF#refs/*/}"
+        shell: bash
+
+      - name: Install utilities
+        run: ./_ci/scripts/install.sh
+        shell: bash
+        env:
+          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: run plan
+        id: plan
+        run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ github.sha }}" plan
+        shell: bash
+        env:
+          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  apply:
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Fetch all history
+          fetch-depth: 0
+
+      - name: Set custom ref variables
+        id: ref
+        run: |
+          echo "::set-output name=source_ref::$(./.github/scripts/source-ref.sh)"
+          echo "::set-output name=short_ref::${GITHUB_REF#refs/*/}"
+        shell: bash
+
+      - name: Install utilities
+        run: ./_ci/scripts/install.sh
+        shell: bash
+        env:
+          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: run plan
+        id: plan
+        run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ github.sha }}" plan
+        shell: bash
+        env:
+          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
+      - name: run deploy
+        id: deploy
+        run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ steps.ref.outputs.short_ref }}" apply
+        shell: bash
+        env:
+          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  build_amis:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -57,13 +128,6 @@ jobs:
         env:
           GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      # - name: Notify Slack of upcoming plan
-      #   uses: slackapi/slack-github-action@v1.15.0
-      #   with:
-      #     payload: "{\"status\":\"Preparing to run plan.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
       - name: run build scripts
         id: build-script
         run: ./_ci/scripts/run-build-scripts.sh "${{ steps.ref.outputs.source_ref }}" "${{ github.sha }}"
@@ -72,62 +136,3 @@ jobs:
           GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: run plan
-        id: plan
-        run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ github.sha }}" plan
-        shell: bash
-        env:
-          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      # - name: Notify Slack of failed plan
-      #   uses: slackapi/slack-github-action@v1.15.0
-      #   if: failure() && steps.plan.outcome == 'failure'
-      #   with:
-      #     payload: "{\"status\":\"Plan failed.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      # - name: Notify Slack of successful plan
-      #   uses: slackapi/slack-github-action@v1.15.0
-      #   if: success() && steps.plan.outcome == 'success'
-      #   with:
-      #     payload: "{\"status\":\"Plan successful!\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      # - name: Notify Slack of upcoming deploy
-      #   uses: slackapi/slack-github-action@v1.15.0
-      #   if: github.ref == 'refs/heads/main'
-      #   with:
-      #     payload: "{\"status\":\"Preparing to deploy.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      - name: run deploy
-        id: deploy
-        if: github.ref == 'refs/heads/main'
-        run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ steps.ref.outputs.short_ref }}" apply
-        shell: bash
-        env:
-          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      # - name: Notify Slack of failed deploy
-      #   uses: slackapi/slack-github-action@v1.15.0
-      #   if: github.ref == 'refs/heads/main' && failure() && steps.deploy.outcome == 'failure'
-      #   with:
-      #     payload: "{\"status\":\"Deploy failed.\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      # - name: Notify Slack of successful deploy
-      #   uses: slackapi/slack-github-action@v1.15.0
-      #   if: github.ref == 'refs/heads/main' && success() && steps.deploy.outcome == 'success'
-      #   with:
-      #     payload: "{\"status\":\"Deploy successful!\",\"branch\":\"${{ steps.ref.outputs.short_ref }}\",\"repo\":\"${{ github.repository }}\",\"actor\":\"${{ github.actor }}\",\"url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
