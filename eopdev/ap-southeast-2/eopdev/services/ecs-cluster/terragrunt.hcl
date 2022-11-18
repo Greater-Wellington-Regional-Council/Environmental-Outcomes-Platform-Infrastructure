@@ -40,5 +40,5 @@ locals {
 # Module parameters to pass in. Note that these parameters are environment specific.
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
-  public_alb_sg_ids   = [dependency.alb.outputs.alb_security_group_id, dependency.alb-eop-manager.outputs.alb_security_group_id]
+  public_alb_sg_ids = [dependency.alb.outputs.alb_security_group_id, dependency.alb-eop-manager.outputs.alb_security_group_id]
 }

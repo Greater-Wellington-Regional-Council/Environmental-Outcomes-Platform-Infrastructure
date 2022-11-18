@@ -12,5 +12,5 @@ include "envcommon" {
 }
 
 inputs = {
-  alb_name = "eop-manager-dev"
+  alb_name = "eop-manager-stage"
 }
