@@ -67,53 +67,6 @@ First, make sure you've copied the repo into your own GitHub organization as a n
 1. Go to Security Credentials > Access Keys > Create Access Key.
 1. We will use these values as the `AWS_ACCESS_KEY_ID` and the `AWS_SECRET_ACCESS_KEY` below.
 
-#### Configure a Slack Workflow
-If you'd like to send Slack notifications when the pipeline is running, follow the steps in this section.
-
-1. In Slack, open the Workflow builder:
-
-   ![Slack Workflow Builder](images/github-setup/slack-workflow-1.png)
-
-1. Create a new Webhook workflow called "Gruntwork Pipelines"
-
-   ![Slack Webhook workflow](images/github-setup/slack-workflow-2.png)
-
-1. Add the following text variables to the workflow: `branch`, `status`, `url`, `repo`, and `actor`
-
-   ![Slack workflow variables](images/github-setup/slack-workflow-3.png)
-
-1. Once all of the variables are added, click Next.
-
-1. Now add another step to the workflow
-
-   ![Slack workflow add step](images/github-setup/slack-workflow-4.png)
-
-1. Add the "Send a message"  step
-
-1. Choose a channel from the dropdown menu
-
-1. In the Message Text field, paste the following contents:
-
-    ```
-    Repo: <insert the repo variable>
-    Branch: <insert the branch variable>
-    Actor:  <insert the actor variable>
-    Status: <insert the status variable>
-    Workflow URL: <<insert the url variable>
-    ```
-
-1. Use the "Insert a variable" button to insert a variable for each of the placeholders in the message above.
-
-1. Save the Send a message step.
-
-1. Hit the Publish button to make the Workflow live.
-
-1. Copy the webhook URL and save it. We will use this value below.
-
-   ![Slack workflow add step](images/github-setup/slack-workflow-5.png)
-
-1. Note that the webhook URL should be treated as sensitive. Anyone with the URL can send HTTP requests to the webhook!
-
 #### Add secrets to GitHub
 1. Open the GitHub repository and navigate to Settings => Secrets.
 
