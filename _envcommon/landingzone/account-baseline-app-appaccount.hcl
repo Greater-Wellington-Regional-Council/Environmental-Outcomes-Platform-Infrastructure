@@ -50,4 +50,11 @@ inputs = {
 
   # The ARN is a key alias, not a key ID. This variable prevents a perpetual diff when using an alias.
   cloudtrail_kms_key_arn_is_alias = true
+
+  auto_deploy_permissions = [
+    "iam:GetRole",
+    "iam:GetRolePolicy",
+    "s3:Put*",
+    "s3:ListBucket"
+  ]
 }

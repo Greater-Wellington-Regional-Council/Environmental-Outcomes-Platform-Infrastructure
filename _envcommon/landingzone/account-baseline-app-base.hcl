@@ -158,6 +158,7 @@ inputs = {
     "rds",
     "elasticache",
     "route53",
+    "s3"
   ]
 
   # A role to allow users that can view and modify AWS account billing information.
