@@ -186,7 +186,7 @@ inputs = {
       environment = [
         {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "aws"
+          value = "aws,prod"
         },
         {
           name  = "CONFIG_APP_ENVIRONMENT_NAME"
