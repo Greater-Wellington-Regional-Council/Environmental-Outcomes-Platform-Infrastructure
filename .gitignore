@@ -25,6 +25,7 @@
 build/
 */build/
 out/
+.fleet/
 
 # Terragrunt
 .terragrunt-cache
