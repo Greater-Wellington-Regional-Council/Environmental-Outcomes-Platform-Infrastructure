@@ -7,7 +7,7 @@ include "root" {
 }
 
 include "envcommon" {
-  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-manager-backend.hcl"
+  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-manager.hcl"
   expose = true
 }
 
@@ -34,7 +34,7 @@ locals {
   }
 
   # Specify the app image tag here so that it can be overridden in a CI/CD pipeline.
-  tag = "a23b80c41a770f46c76b0751971789a41d7c607d"
+  tag = "379d1a432084d6bf33fd35b4efbc583519be7408"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
