@@ -34,7 +34,7 @@ locals {
   }
 
   # Specify the app image tag here so that it can be overridden in a CI/CD pipeline.
-  tag = "8e842158ce0c928bd6a62641909997cf3fce86d5"
+  tag = "379d1a432084d6bf33fd35b4efbc583519be7408"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
