@@ -86,8 +86,9 @@ inputs = {
   instance_count = "1"
   engine_mode    = "provisioned"
 
-  enable_cloudwatch_alarms = true
-  alarms_sns_topic_arns    = [dependency.sns.outputs.topic_arn]
+  enable_cloudwatch_alarms          = true
+  alarms_sns_topic_arns             = [dependency.sns.outputs.topic_arn]
+  too_many_db_connections_threshold = 100
 
   # Here we allow any connection from the private app subnet tier of the VPC. You can further restrict network access by
   # security groups for better defense in depth.
