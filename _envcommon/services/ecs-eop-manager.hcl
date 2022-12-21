@@ -99,8 +99,8 @@ inputs = {
   ecs_cluster_arn  = dependency.ecs_fargate_cluster.outputs.arn
 
   launch_type = "FARGATE"
-  task_cpu    = 512
-  task_memory = 3072
+  task_cpu    = 1024
+  task_memory = 2048
 
   network_mode = "awsvpc"
   network_configuration = {
@@ -194,7 +194,6 @@ inputs = {
   # https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html
   _container_definitions_map = {
     (local.service_name) = {
-      memory    = 3072
       essential = true
       environment = [
         {
