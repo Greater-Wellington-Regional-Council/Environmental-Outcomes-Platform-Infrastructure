@@ -121,8 +121,8 @@ inputs = {
         from_port                = 80
         to_port                  = 80
         protocol                 = "TCP"
-        cidr_blocks              = ["0.0.0.0/0"]
-        source_security_group_id = null
+        cidr_blocks              = null
+        source_security_group_id = dependency.alb.outputs.alb_security_group_id
       }
     }
     additional_security_group_ids = []
