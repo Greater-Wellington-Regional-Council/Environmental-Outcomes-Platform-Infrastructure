@@ -48,8 +48,8 @@ jobs:
       - name: Set custom ref variables
         id: ref
         run: |
-          echo "::set-output name=source_ref::$(./.github/scripts/source-ref.sh)"
-          echo "::set-output name=short_ref::${GITHUB_REF#refs/*/}"
+          echo "source_ref=$(./.github/scripts/source-ref.sh)" >> $GITHUB_OUTPUT
+          echo "short_ref=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Install utilities
