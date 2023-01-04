@@ -2,7 +2,7 @@
 
 # Override the terraform source with the actual version we want to deploy.
 terraform {
-  source = "${include.envcommon.locals.source_base_url}?ref=v0.96.9"
+  source = "${include.envcommon.locals.source_base_url}?ref=v0.99.0"
 }
 
 # Include the root `terragrunt.hcl` configuration, which has settings common across all environments & components.
