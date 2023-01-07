@@ -247,4 +247,8 @@ inputs = {
   # to true will lead to errors in the module unless the account has been set to enable this requirement.
   config_s3_mfa_delete     = false
   cloudtrail_s3_mfa_delete = false
+
+  # Tweak the IAM password rules to conform with NZISM
+  iam_password_policy_password_reuse_prevention = 10
+  iam_password_policy_max_password_age = 90
 }
