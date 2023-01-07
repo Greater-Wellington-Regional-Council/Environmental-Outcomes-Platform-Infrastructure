@@ -104,7 +104,7 @@ function handle_updated_folders {
   local updated_folders
   updated_folders="$(
     git-updated-folders --source-ref "$source_ref" --target-ref "$ref" --terragrunt --ext yaml --ext yml --exclude-deleted \
-      | (grep -Ev '^_envcommon' || true)
+      | (grep -Ev '^_envcommon' || true) | (grep -Ev '^modules' || true)
   )"
 
   # Run plan or apply on modified modules.
