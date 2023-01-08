@@ -79,6 +79,9 @@ remote_state {
     dynamodb_table_tags = {
       "NZISM-Require-dynamodb-in-backup-plan" = "false"
     }
+    accesslogging_bucket_tags = {
+      "NZISM-Require-s3-bucket-versioning-enabled" = "false"
+    }
   }
   generate = {
     path      = "backend.tf"
