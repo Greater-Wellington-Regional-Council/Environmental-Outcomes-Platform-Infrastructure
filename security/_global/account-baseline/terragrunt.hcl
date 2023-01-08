@@ -237,4 +237,8 @@ inputs = {
     }
   }
 
+  # Tweak the IAM password rules to conform with NZISM
+  iam_password_policy_password_reuse_prevention = 10
+  iam_password_policy_max_password_age = 90
+
 }
