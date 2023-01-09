@@ -18,7 +18,7 @@ locals {
 
   # All accounts use the ECR repo in the shared account for the ecs-deploy-runner docker image.
   deploy_runner_ecr_uri             = "${local.account_ids.shared}.dkr.ecr.${local.default_region}.amazonaws.com/ecs-deploy-runner"
-  deploy_runner_container_image_tag = "v0.50.4"
+  deploy_runner_container_image_tag = "v0.50.11"
 
   # All accounts use the ECR repo in the shared account for the Kaniko docker image.
   kaniko_ecr_uri             = "${local.account_ids.shared}.dkr.ecr.${local.default_region}.amazonaws.com/kaniko"

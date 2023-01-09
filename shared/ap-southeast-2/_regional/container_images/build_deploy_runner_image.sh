@@ -12,7 +12,7 @@
 set -e
 
 readonly DOCKERFILE_REPO="https://github.com/gruntwork-io/terraform-aws-ci.git"
-readonly DOCKERFILE_REPO_REF="v0.50.6"
+readonly DOCKERFILE_REPO_REF="v0.50.11"
 readonly DOCKERFILE_CONTEXT_PATH="modules/ecs-deploy-runner/docker/deploy-runner"
 readonly DEPLOY_RUNNER_REGION="ap-southeast-2"
 readonly ECR_REPO_REGION="ap-southeast-2"
@@ -43,8 +43,8 @@ function run {
     --build-arg 'GITHUB_OAUTH_TOKEN' \
     --docker-image-tag "$ecr_repo_url:$DOCKERFILE_REPO_REF" \
     --build-arg "module_ci_tag=$DOCKERFILE_REPO_REF" \
-    --build-arg 'terraform_version=1.1.9' \
-    --build-arg 'terragrunt_version=v0.38.6' \
+    --build-arg 'terraform_version=1.3.7' \
+    --build-arg 'terragrunt_version=v0.42.7' \
     --build-arg 'kubergrunt_version=v0.9.1'
 }
 
