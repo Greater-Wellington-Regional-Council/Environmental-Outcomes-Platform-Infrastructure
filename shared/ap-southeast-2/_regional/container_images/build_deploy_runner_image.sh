@@ -12,7 +12,7 @@
 set -e
 
 readonly DOCKERFILE_REPO="https://github.com/gruntwork-io/terraform-aws-ci.git"
-readonly DOCKERFILE_REPO_REF="v0.50.6"
+readonly DOCKERFILE_REPO_REF="v0.50.11"
 readonly DOCKERFILE_CONTEXT_PATH="modules/ecs-deploy-runner/docker/deploy-runner"
 readonly DEPLOY_RUNNER_REGION="ap-southeast-2"
 readonly ECR_REPO_REGION="ap-southeast-2"
