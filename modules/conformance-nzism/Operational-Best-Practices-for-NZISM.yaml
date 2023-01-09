@@ -1,19 +1,3 @@
-##################################################################################
-#
-#   Conformance Pack:
-#     Operational Best Practices for NZISM
-#
-#   This conformance pack helps verify compliance with NZISM
-#
-#   See Parameters section for names and descriptions of required parameters.
-#
-#   Sourced from: https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-NZISM.yaml
-#   Modifications
-#     * This header added
-#     * Rules related to AWS Sagemaker have been removed
-#
-##################################################################################
-
 Parameters:
   DeployEdgeRules:
     Default: false
@@ -36,7 +20,7 @@ Resources:
         daysToExpiration: '30'
       Scope:
         ComplianceResourceTypes:
-        - AWS::ACM::Certificate
+          - AWS::ACM::Certificate
       Source:
         Owner: AWS
         SourceIdentifier: ACM_CERTIFICATE_EXPIRATION_CHECK
@@ -55,14 +39,9 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: alb-waf-enabled
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::ElasticLoadBalancingV2::LoadBalancer
-      # Scope:
-        # TagKey: NZISM-Require-alb-waf-enabled
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::ElasticLoadBalancingV2::LoadBalancer
       Source:
         Owner: AWS
         SourceIdentifier: ALB_WAF_ENABLED
@@ -72,14 +51,9 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: api-gw-cache-enabled-and-encrypted
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::ApiGateway::Stage
-      # Scope:
-        # TagKey: NZISM-Require-api-gw-cache-enabled-and-encrypted
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::ApiGateway::Stage
       Source:
         Owner: AWS
         SourceIdentifier: API_GW_CACHE_ENABLED_AND_ENCRYPTED
@@ -93,8 +67,8 @@ Resources:
         loggingLevel: 'ERROR'
       Scope:
         ComplianceResourceTypes:
-        - AWS::ApiGateway::Stage
-        - AWS::ApiGatewayV2::Stage
+          - AWS::ApiGateway::Stage
+          - AWS::ApiGatewayV2::Stage
       Source:
         Owner: AWS
         SourceIdentifier: API_GW_EXECUTION_LOGGING_ENABLED
@@ -229,7 +203,7 @@ Resources:
       ConfigRuleName: db-instance-backup-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: DB_INSTANCE_BACKUP_ENABLED
@@ -250,7 +224,7 @@ Resources:
       ConfigRuleName: dynamodb-autoscaling-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::DynamoDB::Table
+          - AWS::DynamoDB::Table
       Source:
         Owner: AWS
         SourceIdentifier: DYNAMODB_AUTOSCALING_ENABLED
@@ -260,11 +234,9 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: dynamodb-in-backup-plan
-# <EXEMPTION>
-      # Scope:
-        # TagKey: NZISM-Require-dynamodb-in-backup-plan
-        # TagValue: true
-# </EXEMPTION>
+      Scope:
+        TagKey: NZISM-Require-dynamodb-in-backup-plan
+        TagValue: true
       Source:
         Owner: AWS
         SourceIdentifier: DYNAMODB_IN_BACKUP_PLAN
@@ -276,7 +248,7 @@ Resources:
       ConfigRuleName: dynamodb-pitr-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::DynamoDB::Table
+          - AWS::DynamoDB::Table
       Source:
         Owner: AWS
         SourceIdentifier: DYNAMODB_PITR_ENABLED
@@ -288,7 +260,7 @@ Resources:
       ConfigRuleName: dynamodb-table-encrypted-kms
       Scope:
         ComplianceResourceTypes:
-        - AWS::DynamoDB::Table
+          - AWS::DynamoDB::Table
       Source:
         Owner: AWS
         SourceIdentifier: DYNAMODB_TABLE_ENCRYPTED_KMS
@@ -298,11 +270,6 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: ebs-in-backup-plan
-# <EXEMPTION>
-      # Scope:
-        # TagKey: NZISM-Require-ebs-in-backup-plan
-        # TagValue: true
-# </EXEMPTION>
       Source:
         Owner: AWS
         SourceIdentifier: EBS_IN_BACKUP_PLAN
@@ -350,7 +317,7 @@ Resources:
       ConfigRuleName: ec2-imdsv2-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::Instance
+          - AWS::EC2::Instance
       Source:
         Owner: AWS
         SourceIdentifier: EC2_IMDSV2_CHECK
@@ -362,8 +329,8 @@ Resources:
       ConfigRuleName: ec2-instance-managed-by-systems-manager
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::Instance
-        - AWS::SSM::ManagedInstanceInventory
+          - AWS::EC2::Instance
+          - AWS::SSM::ManagedInstanceInventory
       Source:
         Owner: AWS
         SourceIdentifier: EC2_INSTANCE_MANAGED_BY_SSM
@@ -375,7 +342,7 @@ Resources:
       ConfigRuleName: ec2-instance-no-public-ip
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::Instance
+          - AWS::EC2::Instance
       Source:
         Owner: AWS
         SourceIdentifier: EC2_INSTANCE_NO_PUBLIC_IP
@@ -387,7 +354,7 @@ Resources:
       ConfigRuleName: ec2-instances-in-vpc
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::Instance
+          - AWS::EC2::Instance
       Source:
         Owner: AWS
         SourceIdentifier: INSTANCES_IN_VPC
@@ -399,7 +366,7 @@ Resources:
       ConfigRuleName: ec2-managedinstance-association-compliance-status-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::SSM::AssociationCompliance
+          - AWS::SSM::AssociationCompliance
       Source:
         Owner: AWS
         SourceIdentifier: EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK
@@ -411,7 +378,7 @@ Resources:
       ConfigRuleName: ec2-managedinstance-patch-compliance-status-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::SSM::PatchCompliance
+          - AWS::SSM::PatchCompliance
       Source:
         Owner: AWS
         SourceIdentifier: EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK
@@ -423,7 +390,7 @@ Resources:
       ConfigRuleName: ecr-private-image-scanning-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::ECR::Repository
+          - AWS::ECR::Repository
       Source:
         Owner: AWS
         SourceIdentifier: ECR_PRIVATE_IMAGE_SCANNING_ENABLED
@@ -435,7 +402,7 @@ Resources:
       ConfigRuleName: ecs-containers-nonprivileged
       Scope:
         ComplianceResourceTypes:
-        - AWS::ECS::TaskDefinition
+          - AWS::ECS::TaskDefinition
       Source:
         Owner: AWS
         SourceIdentifier: ECS_CONTAINERS_NONPRIVILEGED
@@ -447,7 +414,7 @@ Resources:
       ConfigRuleName: ecs-containers-readonly-access
       Scope:
         ComplianceResourceTypes:
-        - AWS::ECS::TaskDefinition
+          - AWS::ECS::TaskDefinition
       Source:
         Owner: AWS
         SourceIdentifier: ECS_CONTAINERS_READONLY_ACCESS
@@ -466,11 +433,6 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: efs-in-backup-plan
-# <EXEMPTION>
-      # Scope:
-        # TagKey: NZISM-Require-efs-in-backup-plan
-        # TagValue: true
-# </EXEMPTION>
       Source:
         Owner: AWS
         SourceIdentifier: EFS_IN_BACKUP_PLAN
@@ -482,7 +444,7 @@ Resources:
       ConfigRuleName: elastic-beanstalk-managed-updates-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::ElasticBeanstalk::Environment
+          - AWS::ElasticBeanstalk::Environment
       Source:
         Owner: AWS
         SourceIdentifier: ELASTIC_BEANSTALK_MANAGED_UPDATES_ENABLED
@@ -521,7 +483,7 @@ Resources:
       ConfigRuleName: elasticsearch-node-to-node-encryption-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::Elasticsearch::Domain
+          - AWS::Elasticsearch::Domain
       Source:
         Owner: AWS
         SourceIdentifier: ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK
@@ -533,7 +495,7 @@ Resources:
       ConfigRuleName: elb-cross-zone-load-balancing-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::ElasticLoadBalancing::LoadBalancer
+          - AWS::ElasticLoadBalancing::LoadBalancer
       Source:
         Owner: AWS
         SourceIdentifier: ELB_CROSS_ZONE_LOAD_BALANCING_ENABLED
@@ -547,7 +509,7 @@ Resources:
         sslProtocolsAndCiphers: 'Protocol-TLSv1.2,ECDHE-ECDSA-AES256-GCM-SHA384'
       Scope:
         ComplianceResourceTypes:
-        - AWS::ElasticLoadBalancing::LoadBalancer
+          - AWS::ElasticLoadBalancing::LoadBalancer
       Source:
         Owner: AWS
         SourceIdentifier: ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK
@@ -559,8 +521,8 @@ Resources:
       ConfigRuleName: elb-logging-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::ElasticLoadBalancing::LoadBalancer
-        - AWS::ElasticLoadBalancingV2::LoadBalancer
+          - AWS::ElasticLoadBalancing::LoadBalancer
+          - AWS::ElasticLoadBalancingV2::LoadBalancer
       Source:
         Owner: AWS
         SourceIdentifier: ELB_LOGGING_ENABLED
@@ -572,7 +534,7 @@ Resources:
       ConfigRuleName: elb-tls-https-listeners-only
       Scope:
         ComplianceResourceTypes:
-        - AWS::ElasticLoadBalancing::LoadBalancer
+          - AWS::ElasticLoadBalancing::LoadBalancer
       Source:
         Owner: AWS
         SourceIdentifier: ELB_TLS_HTTPS_LISTENERS_ONLY
@@ -593,7 +555,7 @@ Resources:
       ConfigRuleName: encrypted-volumes
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::Volume
+          - AWS::EC2::Volume
       Source:
         Owner: AWS
         SourceIdentifier: ENCRYPTED_VOLUMES
@@ -640,7 +602,7 @@ Resources:
       ConfigRuleName: iam-policy-no-statements-with-admin-access
       Scope:
         ComplianceResourceTypes:
-        - AWS::IAM::Policy
+          - AWS::IAM::Policy
       Source:
         Owner: AWS
         SourceIdentifier: IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS
@@ -690,7 +652,7 @@ Resources:
       ConfigRuleName: lambda-function-public-access-prohibited
       Scope:
         ComplianceResourceTypes:
-        - AWS::Lambda::Function
+          - AWS::Lambda::Function
       Source:
         Owner: AWS
         SourceIdentifier: LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED
@@ -711,7 +673,7 @@ Resources:
       ConfigRuleName: opensearch-encrypted-at-rest
       Scope:
         ComplianceResourceTypes:
-        - AWS::OpenSearch::Domain
+          - AWS::OpenSearch::Domain
       Source:
         Owner: AWS
         SourceIdentifier: OPENSEARCH_ENCRYPTED_AT_REST
@@ -723,7 +685,7 @@ Resources:
       ConfigRuleName: opensearch-in-vpc-only
       Scope:
         ComplianceResourceTypes:
-        - AWS::OpenSearch::Domain
+          - AWS::OpenSearch::Domain
       Source:
         Owner: AWS
         SourceIdentifier: OPENSEARCH_IN_VPC_ONLY
@@ -735,7 +697,7 @@ Resources:
       ConfigRuleName: opensearch-node-to-node-encryption-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::OpenSearch::Domain
+          - AWS::OpenSearch::Domain
       Source:
         Owner: AWS
         SourceIdentifier: OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK
@@ -747,7 +709,7 @@ Resources:
       ConfigRuleName: rds-automatic-minor-version-upgrade-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: RDS_AUTOMATIC_MINOR_VERSION_UPGRADE_ENABLED
@@ -759,7 +721,7 @@ Resources:
       ConfigRuleName: rds-cluster-deletion-protection-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBCluster
+          - AWS::RDS::DBCluster
       Source:
         Owner: AWS
         SourceIdentifier: RDS_CLUSTER_DELETION_PROTECTION_ENABLED
@@ -769,14 +731,9 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: rds-cluster-multi-az-enabled
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBCluster
-      # Scope:
-        # TagKey: NZISM-Require-rds-cluster-multi-az-enabled
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::RDS::DBCluster
       Source:
         Owner: AWS
         SourceIdentifier: RDS_CLUSTER_MULTI_AZ_ENABLED
@@ -786,11 +743,6 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: rds-in-backup-plan
-# <EXEMPTION>
-      # Scope:
-        # TagKey: NZISM-Require-rds-in-backup-plan
-        # TagValue: true
-# </EXEMPTION>
       Source:
         Owner: AWS
         SourceIdentifier: RDS_IN_BACKUP_PLAN
@@ -802,7 +754,7 @@ Resources:
       ConfigRuleName: rds-instance-deletion-protection-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: RDS_INSTANCE_DELETION_PROTECTION_ENABLED
@@ -814,7 +766,7 @@ Resources:
       ConfigRuleName: rds-instance-public-access-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: RDS_INSTANCE_PUBLIC_ACCESS_CHECK
@@ -826,7 +778,7 @@ Resources:
       ConfigRuleName: rds-logging-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: RDS_LOGGING_ENABLED
@@ -836,14 +788,9 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: rds-multi-az-support
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
-      # Scope:
-        # TagKey: NZISM-Require-rds-multi-az-support
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: RDS_MULTI_AZ_SUPPORT
@@ -855,8 +802,8 @@ Resources:
       ConfigRuleName: rds-snapshot-encrypted
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBSnapshot
-        - AWS::RDS::DBClusterSnapshot
+          - AWS::RDS::DBSnapshot
+          - AWS::RDS::DBClusterSnapshot
       Source:
         Owner: AWS
         SourceIdentifier: RDS_SNAPSHOT_ENCRYPTED
@@ -868,8 +815,8 @@ Resources:
       ConfigRuleName: rds-snapshots-public-prohibited
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBSnapshot
-        - AWS::RDS::DBClusterSnapshot
+          - AWS::RDS::DBSnapshot
+          - AWS::RDS::DBClusterSnapshot
       Source:
         Owner: AWS
         SourceIdentifier: RDS_SNAPSHOTS_PUBLIC_PROHIBITED
@@ -881,7 +828,7 @@ Resources:
       ConfigRuleName: rds-storage-encrypted
       Scope:
         ComplianceResourceTypes:
-        - AWS::RDS::DBInstance
+          - AWS::RDS::DBInstance
       Source:
         Owner: AWS
         SourceIdentifier: RDS_STORAGE_ENCRYPTED
@@ -893,7 +840,7 @@ Resources:
       ConfigRuleName: redshift-backup-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::Redshift::Cluster
+          - AWS::Redshift::Cluster
       Source:
         Owner: AWS
         SourceIdentifier: REDSHIFT_BACKUP_ENABLED
@@ -908,7 +855,7 @@ Resources:
         loggingEnabled: 'TRUE'
       Scope:
         ComplianceResourceTypes:
-        - AWS::Redshift::Cluster
+          - AWS::Redshift::Cluster
       Source:
         Owner: AWS
         SourceIdentifier: REDSHIFT_CLUSTER_CONFIGURATION_CHECK
@@ -922,7 +869,7 @@ Resources:
         allowVersionUpgrade: 'TRUE'
       Scope:
         ComplianceResourceTypes:
-        - AWS::Redshift::Cluster
+          - AWS::Redshift::Cluster
       Source:
         Owner: AWS
         SourceIdentifier: REDSHIFT_CLUSTER_MAINTENANCESETTINGS_CHECK
@@ -934,7 +881,7 @@ Resources:
       ConfigRuleName: redshift-cluster-public-access-check
       Scope:
         ComplianceResourceTypes:
-        - AWS::Redshift::Cluster
+          - AWS::Redshift::Cluster
       Source:
         Owner: AWS
         SourceIdentifier: REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK
@@ -946,7 +893,7 @@ Resources:
       ConfigRuleName: redshift-require-tls-ssl
       Scope:
         ComplianceResourceTypes:
-        - AWS::Redshift::Cluster
+          - AWS::Redshift::Cluster
       Source:
         Owner: AWS
         SourceIdentifier: REDSHIFT_REQUIRE_TLS_SSL
@@ -958,7 +905,7 @@ Resources:
       ConfigRuleName: restricted-ssh
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::SecurityGroup
+          - AWS::EC2::SecurityGroup
       Source:
         Owner: AWS
         SourceIdentifier: INCOMING_SSH_DISABLED
@@ -997,7 +944,7 @@ Resources:
       ConfigRuleName: s3-bucket-public-read-prohibited
       Scope:
         ComplianceResourceTypes:
-        - AWS::S3::Bucket
+          - AWS::S3::Bucket
       Source:
         Owner: AWS
         SourceIdentifier: S3_BUCKET_PUBLIC_READ_PROHIBITED
@@ -1009,7 +956,7 @@ Resources:
       ConfigRuleName: s3-bucket-public-write-prohibited
       Scope:
         ComplianceResourceTypes:
-        - AWS::S3::Bucket
+          - AWS::S3::Bucket
       Source:
         Owner: AWS
         SourceIdentifier: S3_BUCKET_PUBLIC_WRITE_PROHIBITED
@@ -1021,7 +968,7 @@ Resources:
       ConfigRuleName: s3-bucket-server-side-encryption-enabled
       Scope:
         ComplianceResourceTypes:
-        - AWS::S3::Bucket
+          - AWS::S3::Bucket
       Source:
         Owner: AWS
         SourceIdentifier: S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED
@@ -1033,7 +980,7 @@ Resources:
       ConfigRuleName: s3-bucket-ssl-requests-only
       Scope:
         ComplianceResourceTypes:
-        - AWS::S3::Bucket
+          - AWS::S3::Bucket
       Source:
         Owner: AWS
         SourceIdentifier: S3_BUCKET_SSL_REQUESTS_ONLY
@@ -1043,14 +990,11 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: s3-bucket-versioning-enabled
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::S3::Bucket
-      # Scope:
-        # TagKey: NZISM-Require-s3-bucket-versioning-enabled
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::S3::Bucket
+        TagKey: NZISM-Require-s3-bucket-versioning-enabled
+        TagValue: true
       Source:
         Owner: AWS
         SourceIdentifier: S3_BUCKET_VERSIONING_ENABLED
@@ -1060,18 +1004,40 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: s3-default-encryption-kms
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::S3::Bucket
-      # Scope:
-        # TagKey: NZISM-Require-s3-default-encryption-kms
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::S3::Bucket
       Source:
         Owner: AWS
         SourceIdentifier: S3_DEFAULT_ENCRYPTION_KMS
       Description: "SHOULD 17.1.46.C.04[CID:2082]| Cryptography/Cryptographic Fundamentals/Reducing storage and physical transfer requirements"
+  SagemakerEndpointConfigurationKmsKeyConfigured:
+    Controls: ['4839']
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-endpoint-configuration-kms-key-configured
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED
+      Description: "SHOULD 22.1.24.C.04[CID:4839]| Enterprise systems security/Cloud Computing/Unauthorised Access"
+  SagemakerNotebookInstanceKmsKeyConfigured:
+    Controls: ['4839']
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-notebook-instance-kms-key-configured
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED
+      Description: "SHOULD 22.1.24.C.04[CID:4839]| Enterprise systems security/Cloud Computing/Unauthorised Access"
+  SagemakerNotebookNoDirectInternetAccess:
+    Controls: ['3562', '7466']
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-notebook-no-direct-internet-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS
+      Description: "MUST 19.1.12.C.01[CID:3562], MUST 23.4.10.C.01[CID:7466]| Gateway security/Gateways/Configuration of gateways & Public Cloud Security/Data Protection in Public Cloud/Data accessibility"
   SecretsmanagerUsingCmk:
     Controls: ['4839']
     Type: AWS::Config::ConfigRule
@@ -1079,7 +1045,7 @@ Resources:
       ConfigRuleName: secretsmanager-using-cmk
       Scope:
         ComplianceResourceTypes:
-        - AWS::SecretsManager::Secret
+          - AWS::SecretsManager::Secret
       Source:
         Owner: AWS
         SourceIdentifier: SECRETSMANAGER_USING_CMK
@@ -1098,14 +1064,9 @@ Resources:
     Type: AWS::Config::ConfigRule
     Properties:
       ConfigRuleName: sns-encrypted-kms
-# <EXEMPTION>
       Scope:
         ComplianceResourceTypes:
-        - AWS::SNS::Topic
-      # Scope:
-        # TagKey: NZISM-Require-sns-encrypted-kms
-        # TagValue: true
-# </EXEMPTION>
+          - AWS::SNS::Topic
       Source:
         Owner: AWS
         SourceIdentifier: SNS_ENCRYPTED_KMS
@@ -1126,7 +1087,7 @@ Resources:
       ConfigRuleName: vpc-default-security-group-closed
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::SecurityGroup
+          - AWS::EC2::SecurityGroup
       Source:
         Owner: AWS
         SourceIdentifier: VPC_DEFAULT_SECURITY_GROUP_CLOSED
@@ -1149,7 +1110,7 @@ Resources:
         authorizedTcpPorts: '443'
       Scope:
         ComplianceResourceTypes:
-        - AWS::EC2::SecurityGroup
+          - AWS::EC2::SecurityGroup
       Source:
         Owner: AWS
         SourceIdentifier: VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS

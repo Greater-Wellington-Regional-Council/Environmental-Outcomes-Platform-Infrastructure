@@ -74,14 +74,8 @@ remote_state {
     dynamodb_table            = "terraform-locks"
     accesslogging_bucket_name = lower("${local.name_prefix}-${local.account_name}-${local.aws_region}-tf-logs")
     s3_bucket_tags = {
-
+      "NZISM-Require-s3-bucket-versioning-enabled" = "true"
     }
-    dynamodb_table_tags = {
-      "NZISM-Require-dynamodb-in-backup-plan" = "false"
-    }
-    # accesslogging_bucket_tags = {
-    #   "NZISM-Require-s3-bucket-versioning-enabled" = "false"
-    # }
   }
   generate = {
     path      = "backend.tf"
