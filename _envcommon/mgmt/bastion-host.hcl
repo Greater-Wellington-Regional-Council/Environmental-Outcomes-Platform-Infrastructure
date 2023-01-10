@@ -17,8 +17,10 @@ terraform {
 # Dependencies are modules that need to be deployed before this one.
 # ---------------------------------------------------------------------------------------------------------------------
 
+# While the bastion is a "Management" component, it needs to be deployed into the "App" VPC to have access to app services
+# that is without VPC peering.
 dependency "vpc" {
-  config_path = "${get_terragrunt_dir()}/../networking/vpc"
+  config_path = "${get_terragrunt_dir()}/../../${local.account_name}/networking/vpc"
 
   mock_outputs = {
     vpc_id            = "vpc-abcd1234"
