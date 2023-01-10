@@ -173,9 +173,8 @@ inputs = {
     secrets_manager_env_vars = {
       GITHUB_OAUTH_TOKEN = local.github_pat_secrets_manager_arn
     }
-    environment_vars = {
-    }
-    iam_policy = local.deploy_permissions
+    environment_vars = {}
+    iam_policy       = local.deploy_permissions
   }
 
   # A list of role names that should be given permissions to invoke the infrastructure CI/CD pipeline.
