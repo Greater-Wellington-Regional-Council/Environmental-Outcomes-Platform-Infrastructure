@@ -993,8 +993,6 @@ Resources:
       Scope:
         ComplianceResourceTypes:
           - AWS::S3::Bucket
-        TagKey: NZISM-Require-s3-bucket-versioning-enabled
-        TagValue: true
       Source:
         Owner: AWS
         SourceIdentifier: S3_BUCKET_VERSIONING_ENABLED
