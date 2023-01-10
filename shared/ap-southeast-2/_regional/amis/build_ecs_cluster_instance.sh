@@ -14,8 +14,8 @@
 set -e
 
 readonly PACKER_TEMPLATE_REPO="https://github.com/gruntwork-io/terraform-aws-service-catalog.git//modules/services/ecs-cluster/ecs-node-al2.pkr.hcl"
-readonly PACKER_TEMPLATE_REPO_REF="v0.96.9"
-readonly SERVICE_CATALOG_REF="v0.96.9"
+readonly PACKER_TEMPLATE_REPO_REF="v0.99.0"
+readonly SERVICE_CATALOG_REF="v0.99.0"
 readonly DEPLOY_RUNNER_REGION="ap-southeast-2"
 readonly REGION="ap-southeast-2"
 readonly COPY_REGIONS=()
