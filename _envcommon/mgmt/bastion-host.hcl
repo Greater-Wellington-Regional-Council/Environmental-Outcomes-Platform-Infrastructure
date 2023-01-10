@@ -10,7 +10,7 @@
 # locally, you can use --terragrunt-source /path/to/local/checkout/of/module to override the source parameter to a
 # local check out of the module for faster iteration.
 terraform {
-  source = "${local.source_base_url}?ref=v0.96.9"
+  source = "${local.source_base_url}?ref=v0.99.0"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ terraform {
 # ---------------------------------------------------------------------------------------------------------------------
 
 dependency "vpc" {
-  config_path = "${get_terragrunt_dir()}/../../networking/vpc"
+  config_path = "${get_terragrunt_dir()}/../networking/vpc"
 
   mock_outputs = {
     vpc_id            = "vpc-abcd1234"
@@ -29,7 +29,7 @@ dependency "vpc" {
 }
 
 dependency "sns" {
-  config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
+  config_path = "${get_terragrunt_dir()}/../../_regional/sns-topic"
 
   mock_outputs = {
     topic_arn = "arn:aws:sns:us-east-1:123456789012:mytopic-NZJ5JSMVGFIE"

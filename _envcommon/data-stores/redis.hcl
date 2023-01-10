@@ -29,7 +29,7 @@ dependency "vpc" {
 }
 
 dependency "network_bastion" {
-  config_path = "${get_terragrunt_dir()}/../../networking/bastion-host"
+  config_path = "${get_terragrunt_dir()}/../../../mgmt/bastion-host"
 
   mock_outputs = {
     security_group_id = "sg-abcd1234"
