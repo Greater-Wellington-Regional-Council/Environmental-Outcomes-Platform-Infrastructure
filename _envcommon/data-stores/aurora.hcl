@@ -94,6 +94,7 @@ inputs = {
   # security groups for better defense in depth.
   allow_connections_from_cidr_blocks     = dependency.vpc.outputs.private_app_subnet_cidr_blocks
   allow_connections_from_security_groups = [dependency.network_bastion.outputs.bastion_host_security_group_id]
+  iam_database_authentication_enabled    = true
 
   # Only apply changes during the scheduled maintenance window, as certain DB changes cause degraded performance or
   # downtime. For more info, see: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Clusters.Modify.html
