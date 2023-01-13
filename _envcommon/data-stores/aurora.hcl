@@ -78,7 +78,7 @@ locals {
 # This defines the parameters that are common across all environments.
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
-  name              = "aurora-${local.name_prefix}-${lower(local.account_name)}"
+  name              = "aurora-${lower(local.account_name)}"
   instance_type     = "db.t3.medium"
   vpc_id            = dependency.vpc.outputs.vpc_id
   aurora_subnet_ids = dependency.vpc.outputs.private_persistence_subnet_ids
