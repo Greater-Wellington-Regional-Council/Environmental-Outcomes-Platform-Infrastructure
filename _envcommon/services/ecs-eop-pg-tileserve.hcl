@@ -21,16 +21,6 @@ dependency "ecs_fargate_cluster" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-dependency "aurora" {
-  config_path = "${get_terragrunt_dir()}/../../data-stores/aurora"
-
-  mock_outputs = {
-    primary_endpoint = "rds"
-    port             = 5432
-  }
-  mock_outputs_allowed_terraform_commands = ["validate", ]
-}
-
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -77,11 +67,11 @@ locals {
   # Extract the region for easy access
   aws_region = local.region_vars.locals.aws_region
 
-  service_name = "eop-manager"
+  service_name = "eop-pg-tileserve"
 
   # Define the container image. This will be used in the child config to combine with the specific image tag for the
   # environment.
-  container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-manager"
+  container_image = "pramsey/pg_tileserv"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -159,7 +149,9 @@ inputs = {
     "default" = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
-      path_patterns = ["/*"]
+      # Use host based routing, reference Route53 hostname, and do the same for manager api
+      # host_header = ["tiles.*"]
+      path_patterns  = ["/*.pbf"]
     }
   }
 
@@ -195,32 +187,12 @@ inputs = {
   _container_definitions_map = {
     (local.service_name) = {
       essential = true
-      environment = [
-        {
-          name  = "SERVER_PORT"
-          value = "80"
-        },
-        {
-          name  = "SPRING_PROFILES_ACTIVE"
-          value = "aws,prod"
-        },
-        {
-          name  = "CONFIG_APP_ENVIRONMENT_NAME"
-          value = local.account_role
-        },
-        {
-          name  = "CONFIG_DATABASE_HOST"
-          value = dependency.aurora.outputs.primary_endpoint
-        },
-        {
-          name  = "CONFIG_DATABASE_POOL_SIZE",
-          value = tostring(10)
-        }
-      ]
+      environment = []
       # The container ports that should be exposed from this container.
       portMappings = [
         {
-          "containerPort" = 80
+          "containerPort" = 7800
+          "hostPort"      = 80
           "protocol"      = "tcp"
         }
       ]

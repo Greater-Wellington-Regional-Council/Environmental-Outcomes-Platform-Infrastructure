@@ -7,13 +7,14 @@ include "root" {
 }
 
 include "envcommon" {
-  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-manager.hcl"
+  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-pg-tileserve.hcl"
   expose = true
 }
 
 locals {
+  # TODO: Is this needed?
   tls_secrets_manager_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:SampleAppBackEndCA-yT4JVB"
-  db_secrets_manager_arn  = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD"
+  db_url_sercret_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD"
 
   # List of environment variables and container images for each container that are specific to this environment. The map
   # key here should correspond to the map keys of the _container_definitions_map input defined in envcommon.
@@ -23,10 +24,6 @@ locals {
         name  = "CONFIG_SECRETS_SECRETS_MANAGER_TLS_ID"
         value = local.tls_secrets_manager_arn
       },
-      {
-        name  = "CONFIG_SECRETS_SECRETS_MANAGER_DB_ID"
-        value = local.db_secrets_manager_arn
-      },
     ]
   }
   container_images = {
@@ -34,7 +31,7 @@ locals {
   }
 
   # Specify the app image tag here so that it can be overridden in a CI/CD pipeline.
-  tag = "426dbdaed8f5f025cc2989bb743eef06e6d8dddf"
+  tag = "20221019"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -52,13 +49,20 @@ inputs = {
       {
         name        = name
         image       = local.container_images[name]
+        secrets = [
+          {
+            name: "DATABASE_URL",
+            valueFrom: local.db_url_sercret_arn
+          }
+        ]
         environment = concat(definition.environment, local.service_environment_variables[name])
       },
     )
   ]
 
+  # TODO: Does this add permissions for the service to read the secret?
   secrets_access = [
     local.tls_secrets_manager_arn,
-    local.db_secrets_manager_arn,
+    local.db_url_sercret_arn,
   ]
 }
