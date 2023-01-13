@@ -21,6 +21,7 @@ include "envcommon" {
 # Module parameters to pass in. Note that these parameters are environment specific.
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
+  name = "aurora-eopdev"
 
   # The DB config secret contains the following data:
   # - DB engine (e.g. postgres, mysql, etc)
