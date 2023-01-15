@@ -1,10 +1,3 @@
-# This is the configuration for Terragrunt, a thin wrapper for Terraform: https://terragrunt.gruntwork.io/
-
-# Override the terraform source with the actual version we want to deploy.
-terraform {
-  source = "${include.envcommon.locals.source_base_url}?ref=v0.96.9"
-}
-
 # Include the root `terragrunt.hcl` configuration, which has settings common across all environments & components.
 include "root" {
   path = find_in_parent_folders()
@@ -29,4 +22,5 @@ inputs = {
   # - Port
   # - Username and password
   # Alternatively, these can be specified as individual inputs.
-db_config_secrets_manager_id = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD" }
+  db_config_secrets_manager_id = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD"
+}
