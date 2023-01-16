@@ -1,5 +1,5 @@
 terraform {
-  source = "${local.source_base_url}?ref=v0.96.9"
+  source = "${local.source_base_url}?ref=v0.100.0"
 }
 
 dependency "vpc" {
