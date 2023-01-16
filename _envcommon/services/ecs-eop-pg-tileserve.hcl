@@ -185,12 +185,16 @@ inputs = {
   _container_definitions_map = {
     (local.service_name) = {
       essential = true
-      environment = []
+      environment = [
+        {
+          name  = "TS_HTTPPORT"
+          value = "80"
+        },
+      ]        
       # The container ports that should be exposed from this container.
       portMappings = [
         {
-          "containerPort" = 7800
-          "hostPort"      = 80
+          "containerPort" = 80
           "protocol"      = "tcp"
         }
       ]
