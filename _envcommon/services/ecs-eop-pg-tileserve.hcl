@@ -140,7 +140,7 @@ inputs = {
   }
   elb_target_group_deregistration_delay = 60
   elb_target_group_vpc_id               = dependency.vpc.outputs.vpc_id
-  health_check_path                     = "/actuator/health"
+  health_check_path                     = "/index.json"
   default_listener_arns                 = dependency.alb.outputs.listener_arns
   default_listener_ports                = ["443"]
 
