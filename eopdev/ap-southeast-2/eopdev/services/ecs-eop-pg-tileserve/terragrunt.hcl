@@ -8,7 +8,8 @@ include "envcommon" {
 }
 
 locals {
-  db_url_sercret_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD"
+  db_url_sercret_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:EOPTileServerConfig-aTHOy7"
+  
 
   container_images = {
     (include.envcommon.locals.service_name) = "${include.envcommon.locals.container_image}:${local.tag}"
@@ -36,7 +37,7 @@ inputs = {
         secrets = [
           {
             name: "DATABASE_URL",
-            valueFrom: local.db_url_sercret_arn
+            valueFrom: "${local.db_url_sercret_arn}:DATABASE_URL::"
           }
         ]
       },
