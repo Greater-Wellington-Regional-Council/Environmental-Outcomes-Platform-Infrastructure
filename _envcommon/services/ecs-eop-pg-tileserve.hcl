@@ -149,9 +149,7 @@ inputs = {
     "default" = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
-      # Use host based routing, reference Route53 hostname, and do the same for manager api
-      # host_header = ["tiles.*"]
-      path_patterns  = ["/*.pbf"]
+      host_headers = ["tiles.*"]
     }
   }
 
