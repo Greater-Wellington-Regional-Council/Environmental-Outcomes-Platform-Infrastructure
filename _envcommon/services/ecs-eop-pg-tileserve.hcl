@@ -108,8 +108,8 @@ inputs = {
       }
       AllowALBIngress = {
         type                     = "ingress"
-        from_port                = 80
-        to_port                  = 80
+        from_port                = 7800
+        to_port                  = 7800
         protocol                 = "TCP"
         cidr_blocks              = null
         source_security_group_id = dependency.alb.outputs.alb_security_group_id
@@ -133,7 +133,7 @@ inputs = {
     alb = {
       name                  = local.service_name
       container_name        = local.service_name
-      container_port        = 80
+      container_port        = 7800
       protocol              = "HTTP"
       health_check_protocol = "HTTP"
     }
@@ -186,16 +186,11 @@ inputs = {
   _container_definitions_map = {
     (local.service_name) = {
       essential = true
-      environment = [
-        {
-          name  = "TS_HTTPPORT"
-          value = "80"
-        },
-      ]        
+      environment = []        
       # The container ports that should be exposed from this container.
       portMappings = [
         {
-          "containerPort" = 80
+          "containerPort" = 7800
           "protocol"      = "tcp"
         }
       ]
