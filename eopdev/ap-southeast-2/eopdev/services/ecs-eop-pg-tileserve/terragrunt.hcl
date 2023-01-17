@@ -9,7 +9,6 @@ include "envcommon" {
 
 locals {
   db_url_sercret_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:EOPTileServerConfig-aTHOy7"
-  
 
   container_images = {
     (include.envcommon.locals.service_name) = "${include.envcommon.locals.container_image}:${local.tag}"
@@ -44,7 +43,7 @@ inputs = {
     )
   ]
 
-  secrets_access = [
+  secrets_manager_arns = [
     local.db_url_sercret_arn,
   ]
 }
