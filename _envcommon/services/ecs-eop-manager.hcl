@@ -163,6 +163,7 @@ inputs = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
       path_patterns = ["/*"]
+      priority      = 2
     }
   }
 

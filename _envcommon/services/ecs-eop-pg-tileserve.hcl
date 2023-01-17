@@ -149,7 +149,8 @@ inputs = {
     "default" = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
-      host_headers = ["tiles.*"]
+      host_headers  = ["tiles.*"]
+      priority      = 1
     }
   }
 
