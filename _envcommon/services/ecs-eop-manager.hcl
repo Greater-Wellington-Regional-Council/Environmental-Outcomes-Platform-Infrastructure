@@ -67,9 +67,8 @@ locals {
   # Automatically load account-level variables
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
 
-  # Extract the account_name and account_role for easy access
+  # Extract the account_name for easy access
   account_name = local.account_vars.locals.account_name
-  account_role = local.account_vars.locals.account_role
 
   # Automatically load region-level variables
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
@@ -82,6 +81,10 @@ locals {
   # Define the container image. This will be used in the child config to combine with the specific image tag for the
   # environment.
   container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-manager"
+
+  module_config              = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
+  container_image_tag        = local.module_config.locals.container_image_tag
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -118,8 +121,8 @@ inputs = {
       }
       AllowALBIngress = {
         type                     = "ingress"
-        from_port                = 80
-        to_port                  = 80
+        from_port                = 443
+        to_port                  = 443
         protocol                 = "TCP"
         cidr_blocks              = null
         source_security_group_id = dependency.alb.outputs.alb_security_group_id
@@ -143,9 +146,9 @@ inputs = {
     alb = {
       name                  = local.service_name
       container_name        = local.service_name
-      container_port        = 80
-      protocol              = "HTTP"
-      health_check_protocol = "HTTP"
+      container_port        = 443
+      protocol              = "HTTPS"
+      health_check_protocol = "HTTPS"
     }
   }
   elb_target_group_deregistration_delay = 60
@@ -192,21 +195,19 @@ inputs = {
   # a map, it makes it easier to merge various attributes of the container definition in the final input.
   # Refer to the AWS docs for supported options in the container definition:
   # https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html
-  _container_definitions_map = {
-    (local.service_name) = {
+  container_definitions = [
+    {
+      name      = "${local.service_name}"
+      image     = "${local.container_image}:${local.container_image_tag}"
       essential = true
       environment = [
         {
           name  = "SERVER_PORT"
-          value = "80"
+          value = "443"
         },
         {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "aws,prod"
-        },
-        {
-          name  = "CONFIG_APP_ENVIRONMENT_NAME"
-          value = local.account_role
+          value = "prod,ssl"
         },
         {
           name  = "CONFIG_DATABASE_HOST"
@@ -217,13 +218,50 @@ inputs = {
           value = tostring(10)
         }
       ]
+
+      secrets = [
+        {
+          name : "CONFIG_DATABASE_USERNAME",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_USERNAME::"
+        },
+        {
+          name : "CONFIG_DATABASE_PASSWORD",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_PASSWORD::"
+        },
+        {
+          name : "CONFIG_DATABASE_MIGRATIONS_USERNAME",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_MIGRATIONS_USERNAME::"
+        },
+        {
+          name : "CONFIG_DATABASE_MIGRATIONS_PASSWORD",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_MIGRATIONS_PASSWORD::"
+        },
+        {
+          name : "CONFIG_DATABASE_NAME",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_NAME::"
+        },
+        {
+          name : "CONFIG_KEYSTORE_CONTENT",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_CONTENT::"
+        },
+        {
+          name : "CONFIG_KEYSTORE_PASSWORD",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_PASSWORD::"
+        },
+        {
+          name : "CONFIG_KEYSTORE_KEY",
+          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_KEY::"
+        },
+      ]
+
       # The container ports that should be exposed from this container.
       portMappings = [
         {
-          "containerPort" = 80
+          "containerPort" = 443
           "protocol"      = "tcp"
         }
       ]
+
       # Configure log aggregation from the ECS service to stream to CloudWatch logs.
       logConfiguration = {
         logDriver = "awslogs",
@@ -235,5 +273,9 @@ inputs = {
         }
       }
     }
-  }
+  ]
+
+  secrets_manager_arns = [
+    local.config_secrets_manager_arn,
+  ]
 }
