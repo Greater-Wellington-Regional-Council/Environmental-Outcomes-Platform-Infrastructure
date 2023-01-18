@@ -3,41 +3,9 @@ include "root" {
 }
 
 include "envcommon" {
-  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-manager.hcl"
-  expose = true
+  path = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-manager.hcl"
 }
 
-locals {
-  config_secrets_manager_arn = "arn:aws:secretsmanager:ap-southeast-2:564180615104:secret:EOPManagerDBConfig"
-
-  container_images = {
-    (include.envcommon.locals.service_name) = "${include.envcommon.locals.container_image}:${local.tag}"
-  }
-
-  # Specify the app image tag here so that it can be overridden in a CI/CD pipeline.
-  tag = "70ef87df6b147a3cb3ff08df1c95e2a45210dcff"
-}
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Module parameters to pass in. Note that these parameters are environment specific.
-# ---------------------------------------------------------------------------------------------------------------------
 inputs = {
-  # The Container definitions of the ECS service. The following environment specific parameters are injected into the
-  # common definition defined in the envcommon config:
-  # - Image tag
-  container_definitions = [
-    for name, definition in include.envcommon.inputs._container_definitions_map :
-    merge(
-      definition,
-      {
-        name        = name
-        image       = local.container_images[name]
-        environment = concat(definition.environment)
-      },
-    )
-  ]
 
-  secrets_access = [
-    local.config_secrets_manager_arn,
-  ]
 }
