@@ -192,8 +192,6 @@ inputs = {
   # instead of using locals because locals can not reference dependencies.
   # -------------------------------------------------------------------------------------------------------------
 
-  # Define the common container definitions as a map instead of the list that is expected by the module. By using
-  # a map, it makes it easier to merge various attributes of the container definition in the final input.
   # Refer to the AWS docs for supported options in the container definition:
   # https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html
   container_definitions = [

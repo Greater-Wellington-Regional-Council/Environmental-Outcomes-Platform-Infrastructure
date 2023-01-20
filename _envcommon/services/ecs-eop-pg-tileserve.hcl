@@ -57,9 +57,8 @@ locals {
   # Automatically load account-level variables
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
 
-  # Extract the account_name and account_role for easy access
+  # Extract the account_name for easy access
   account_name = local.account_vars.locals.account_name
-  account_role = local.account_vars.locals.account_role
 
   # Automatically load region-level variables
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
@@ -72,6 +71,10 @@ locals {
   # Define the container image. This will be used in the child config to combine with the specific image tag for the
   # environment.
   container_image = "pramsey/pg_tileserv"
+
+  module_config               = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn  = local.module_config.locals.config_secrets_manager_arn
+  container_image_tag         = local.module_config.locals.container_image_tag
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -179,14 +182,20 @@ inputs = {
   # instead of using locals because locals can not reference dependencies.
   # -------------------------------------------------------------------------------------------------------------
 
-  # Define the common container definitions as a map instead of the list that is expected by the module. By using
-  # a map, it makes it easier to merge various attributes of the container definition in the final input.
   # Refer to the AWS docs for supported options in the container definition:
   # https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html
-  _container_definitions_map = {
-    (local.service_name) = {
+  container_definitions = [
+    {
+      name      = "${local.service_name}"
+      image     = "${local.container_image}:${local.container_image_tag}"
       essential = true
-      environment = []        
+      environment = []
+      secrets = [
+        {
+          name : "DATABASE_URL",
+          valueFrom : "${local.config_secrets_manager_arn}:DATABASE_URL::"
+        }
+      ]
       # The container ports that should be exposed from this container.
       portMappings = [
         {
@@ -194,6 +203,7 @@ inputs = {
           "protocol"      = "tcp"
         }
       ]
+
       # Configure log aggregation from the ECS service to stream to CloudWatch logs.
       logConfiguration = {
         logDriver = "awslogs",
@@ -205,5 +215,8 @@ inputs = {
         }
       }
     }
-  }
+  ]
+  secrets_manager_arns = [
+    local.config_secrets_manager_arn,
+  ]  
 }
