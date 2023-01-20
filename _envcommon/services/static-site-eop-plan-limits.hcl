@@ -42,7 +42,7 @@ inputs = {
   base_domain_name                        = local.account_vars.locals.domain_name.name
   website_domain_name                     = "plan-limits.${local.account_vars.locals.domain_name.name}"
   acm_certificate_domain_name             = "${local.account_vars.locals.domain_name.name}"
-  security_header_content_security_policy = "default-src 'self'; base-uri 'self'; block-all-mixed-content; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src 'self' blob: https://api.mapbox.com/; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; connect-src 'self' https://api.mapbox.com/ https://basemaps.linz.govt.nz/ https://data.${local.account_vars.locals.domain_name.name}/; upgrade-insecure-requests"
+  security_header_content_security_policy = "default-src 'self'; base-uri 'self'; block-all-mixed-content; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src 'self' blob: https://api.mapbox.com/; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; connect-src 'self' https://api.mapbox.com/ https://basemaps.linz.govt.nz/ https://data.${local.account_vars.locals.domain_name.name}/ https://tiles.${local.account_vars.locals.domain_name.name}/; upgrade-insecure-requests"
 
   error_responses = {
     404 = {
