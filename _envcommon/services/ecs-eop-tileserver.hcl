@@ -66,7 +66,7 @@ locals {
   # Extract the region for easy access
   aws_region = local.region_vars.locals.aws_region
 
-  service_name = "eop-pg-tileserve"
+  service_name = "eop-tileserver"
 
   # Define the container image. This will be used in the child config to combine with the specific image tag for the
   # environment.

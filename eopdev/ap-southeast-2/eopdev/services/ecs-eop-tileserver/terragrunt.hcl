@@ -3,7 +3,7 @@ include "root" {
 }
 
 include "envcommon" {
-  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-pg-tileserve.hcl"
+  path   = "${dirname(find_in_parent_folders())}/_envcommon/services/ecs-eop-tileserver.hcl"
   expose = true
 }
 
