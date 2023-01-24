@@ -21,16 +21,6 @@ dependency "ecs_fargate_cluster" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-dependency "aurora" {
-  config_path = "${get_terragrunt_dir()}/../../data-stores/aurora"
-
-  mock_outputs = {
-    primary_endpoint = "rds"
-    port             = 5432
-  }
-  mock_outputs_allowed_terraform_commands = ["validate", ]
-}
-
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -76,15 +66,15 @@ locals {
   # Extract the region for easy access
   aws_region = local.region_vars.locals.aws_region
 
-  service_name = "eop-manager"
+  service_name = "eop-tileserver"
 
   # Define the container image. This will be used in the child config to combine with the specific image tag for the
   # environment.
-  container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-manager"
+  container_image = "pramsey/pg_tileserv"
 
-  module_config              = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
-  container_image_tag        = local.module_config.locals.container_image_tag
+  module_config               = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn  = local.module_config.locals.config_secrets_manager_arn
+  container_image_tag         = local.module_config.locals.container_image_tag
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -121,8 +111,8 @@ inputs = {
       }
       AllowALBIngress = {
         type                     = "ingress"
-        from_port                = 443
-        to_port                  = 443
+        from_port                = 7800
+        to_port                  = 7800
         protocol                 = "TCP"
         cidr_blocks              = null
         source_security_group_id = dependency.alb.outputs.alb_security_group_id
@@ -146,14 +136,14 @@ inputs = {
     alb = {
       name                  = local.service_name
       container_name        = local.service_name
-      container_port        = 443
-      protocol              = "HTTPS"
-      health_check_protocol = "HTTPS"
+      container_port        = 7800
+      protocol              = "HTTP"
+      health_check_protocol = "HTTP"
     }
   }
   elb_target_group_deregistration_delay = 60
   elb_target_group_vpc_id               = dependency.vpc.outputs.vpc_id
-  health_check_path                     = "/actuator/health"
+  health_check_path                     = "/index.json"
   default_listener_arns                 = dependency.alb.outputs.listener_arns
   default_listener_ports                = ["443"]
 
@@ -162,8 +152,8 @@ inputs = {
     "default" = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
-      path_patterns = ["/*"]
-      priority      = 2
+      host_headers  = ["tiles.*"]
+      priority      = 1
     }
   }
 
@@ -199,64 +189,17 @@ inputs = {
       name      = "${local.service_name}"
       image     = "${local.container_image}:${local.container_image_tag}"
       essential = true
-      environment = [
-        {
-          name  = "SERVER_PORT"
-          value = "443"
-        },
-        {
-          name  = "SPRING_PROFILES_ACTIVE"
-          value = "prod,ssl"
-        },
-        {
-          name  = "CONFIG_DATABASE_HOST"
-          value = dependency.aurora.outputs.primary_endpoint
-        },
-        {
-          name  = "CONFIG_DATABASE_POOL_SIZE",
-          value = tostring(10)
-        }
-      ]
-
+      environment = []
       secrets = [
         {
-          name : "CONFIG_DATABASE_USERNAME",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_USERNAME::"
-        },
-        {
-          name : "CONFIG_DATABASE_PASSWORD",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_PASSWORD::"
-        },
-        {
-          name : "CONFIG_DATABASE_MIGRATIONS_USERNAME",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_MIGRATIONS_USERNAME::"
-        },
-        {
-          name : "CONFIG_DATABASE_MIGRATIONS_PASSWORD",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_MIGRATIONS_PASSWORD::"
-        },
-        {
-          name : "CONFIG_DATABASE_NAME",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_DATABASE_NAME::"
-        },
-        {
-          name : "CONFIG_KEYSTORE_CONTENT",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_CONTENT::"
-        },
-        {
-          name : "CONFIG_KEYSTORE_PASSWORD",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_PASSWORD::"
-        },
-        {
-          name : "CONFIG_KEYSTORE_KEY",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_KEY::"
-        },
+          name : "DATABASE_URL",
+          valueFrom : "${local.config_secrets_manager_arn}:DATABASE_URL::"
+        }
       ]
-
       # The container ports that should be exposed from this container.
       portMappings = [
         {
-          "containerPort" = 443
+          "containerPort" = 7800
           "protocol"      = "tcp"
         }
       ]
@@ -273,8 +216,7 @@ inputs = {
       }
     }
   ]
-
   secrets_manager_arns = [
     local.config_secrets_manager_arn,
-  ]
+  ]  
 }
