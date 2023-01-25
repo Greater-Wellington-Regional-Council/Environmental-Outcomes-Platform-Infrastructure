@@ -158,15 +158,7 @@ inputs = {
   }
 
   # Configure the ALB listener rules to redirect HTTP traffic to HTTPS
-  redirect_rules = {
-    "http-to-https" = {
-      listener_ports = [80]
-      status_code    = "HTTP_301"
-      port           = 443
-      protocol       = "HTTPS"
-      path_patterns  = ["/*"]
-    }
-  }
+  # This is handled in the ecs-eop-manager config, which uses the same ALB
 
   # -------------------------------------------------------------------------------------------------------------
   # CloudWatch Alarms
