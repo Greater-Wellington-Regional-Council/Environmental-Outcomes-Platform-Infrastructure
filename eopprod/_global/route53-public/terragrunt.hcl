@@ -16,28 +16,3 @@ include "envcommon" {
   # We want to reference the variables from the included config in this configuration, so we expose it.
   expose = true
 }
-
-inputs = {
-  public_zones = {
-    "gw-eop-prod.tech" = {
-      comment       = ""
-      tags          = {}
-      force_destroy = false
-      base_domain_name_tags = {
-      }
-      created_outside_terraform = true
-      subject_alternative_names = ["*.gw-eop-prod.tech"]
-      hosted_zone_domain_name   = "gw-eop-prod.tech"
-    },
-    "eop.gw.govt.nz" = {
-      comment       = ""
-      tags          = {}
-      force_destroy = false
-      base_domain_name_tags = {
-      }
-      created_outside_terraform = true
-      subject_alternative_names = ["*.eop.gw.govt.nz"]
-      hosted_zone_domain_name   = "eop.gw.govt.nz"
-    }
-  }
-}
