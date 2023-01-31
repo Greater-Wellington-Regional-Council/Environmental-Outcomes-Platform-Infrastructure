@@ -21,13 +21,6 @@ dependency "ecs_fargate_cluster" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-dependency "eop_shared_secret" {
-  config_path = "${get_terragrunt_dir()}/../eop-shared-secret"
-  mock_outputs = {
-    secret = "secret"
-  }
-}
-
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -49,9 +42,12 @@ dependency "alb" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-# dependency "tileserver_secret" {
-#   config_path = "${get_terragrunt_dir()}/../ecs-eop-tileserver-secret"
-# }
+dependency "shared_secret" {
+  config_path = "${get_terragrunt_dir()}/../ecs-eop-tileserver-secret"
+  mock_outputs = {
+    secret = "secret"
+  }
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Locals are named constants that are reusable within the configuration.
@@ -83,9 +79,9 @@ locals {
   # environment.
   container_image = "pramsey/pg_tileserv"
 
-  module_config               = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn  = local.module_config.locals.config_secrets_manager_arn
-  container_image_tag         = local.module_config.locals.container_image_tag
+  module_config              = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
+  container_image_tag        = local.module_config.locals.container_image_tag
 }
 # ---------------------------------------------------------------------------------------------------------------------
 # MODULE PARAMETERS
@@ -163,11 +159,11 @@ inputs = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
       host_headers  = ["tiles.*"]
-      http_headers   = [{
+      http_headers = [{
         http_header_name = "x-alb-secret"
-        values = [dependency.eop_shared_secret.outputs.secret]
+        values           = [dependency.shared_secret.outputs.secret]
       }]
-      priority      = 1
+      priority = 1
     }
   }
 
@@ -197,8 +193,8 @@ inputs = {
       essential = true
       environment = [
         {
-          name: "TS_CACHETTL",
-          value: "3600"
+          name : "TS_CACHETTL",
+          value : "3600"
         }
       ]
       secrets = [
@@ -229,5 +225,5 @@ inputs = {
   ]
   secrets_manager_arns = [
     local.config_secrets_manager_arn,
-  ]  
+  ]
 }
