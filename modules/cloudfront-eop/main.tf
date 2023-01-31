@@ -77,11 +77,50 @@ resource "aws_cloudfront_distribution" "tileserver_cdn" {
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  # logging_config {
-  #   include_cookies = false
-  #   bucket          = "mylogs.s3.amazonaws.com"
-  #   prefix          = "myprefix"
-  # }  
+  logging_config {
+    include_cookies = false
+    bucket          = "${module.access_logs.name}.s3.amazonaws.com"
+  }  
+}
+
+# Taken from https://github.com/gruntwork-io/terraform-aws-static-assets/blob/main/modules/s3-cloudfront/main.tf#L542
+locals {
+  policy_principal_type       = "AWS"
+  policy_principal_identifier = ["arn:aws:iam::162777425019:root"]
+}
+
+module "access_logs" {
+  source = "git::git@github.com:gruntwork-io/terraform-aws-security.git//modules/private-s3-bucket?ref=v0.65.3"
+
+  name              = "${var.domain_name}-cloudfront-logs"
+  acl               = "log-delivery-write"
+  sse_algorithm     = "AES256" # For access logging buckets, only AES256 encryption is supported
+
+  bucket_policy_statements = {
+    # Create a policy that allows Cloudfront to write to the logs bucket
+    # CloudFront automatically does this when you enable logging in the UI, but since we aren't using the UI, we have to
+    # add these permissions ourselves. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
+    AllowCloudfrontWriteS3AccessLog = {
+      effect = "Allow"
+      # It seems like CloudFront needs a lot of permissions to write the logs and set ACLs on them in this bucket
+      actions = ["s3:*"]
+      principals = {
+        (local.policy_principal_type) = local.policy_principal_identifier
+      }
+    }
+  }
+  
+  lifecycle_rules = {
+    log = {
+      enabled = true
+      expiration = {
+        expire_in_days = {
+          # This matches the default value used for the plan-limits UI distribution
+          days = 30
+        }
+      }
+    }
+  }
 }
 
 resource "aws_route53_record" "dns_record" {
