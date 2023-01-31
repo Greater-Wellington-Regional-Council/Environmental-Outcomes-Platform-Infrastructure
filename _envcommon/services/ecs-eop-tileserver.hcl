@@ -195,7 +195,12 @@ inputs = {
       name      = "${local.service_name}"
       image     = "${local.container_image}:${local.container_image_tag}"
       essential = true
-      environment = []
+      environment = [
+        {
+          name: "TS_CACHETTL",
+          value: "3600"
+        }
+      ]
       secrets = [
         {
           name : "DATABASE_URL",

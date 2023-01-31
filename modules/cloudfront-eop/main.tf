@@ -50,6 +50,12 @@ resource "aws_cloudfront_distribution" "tileserver_cdn" {
     target_origin_id = local.origin_id
     viewer_protocol_policy = "redirect-to-https"
 
+    # In order to use origin cache headers, we need to set some magic numbers here:
+    # https://github.com/hashicorp/terraform-provider-aws/issues/21272
+    min_ttl = 0
+    default_ttl = 86400
+    max_ttl = 31536000   
+
     forwarded_values {
       query_string = true
       cookies {
