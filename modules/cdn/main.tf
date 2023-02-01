@@ -62,7 +62,6 @@ module "access_logs" {
   source = "git::git@github.com:gruntwork-io/terraform-aws-security.git//modules/private-s3-bucket?ref=v0.65.3"
 
   name          = "${var.domain_name}-cloudfront-logs"
-  acl           = "log-delivery-write"
   sse_algorithm = "AES256"
 
   bucket_policy_statements = {
