@@ -42,6 +42,13 @@ dependency "alb" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
+dependency "shared_secret" {
+  config_path = "${get_terragrunt_dir()}/../ecs-eop-tileserver-secret"
+  mock_outputs = {
+    secret = "secret"
+  }
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Locals are named constants that are reusable within the configuration.
 # ---------------------------------------------------------------------------------------------------------------------
@@ -72,11 +79,10 @@ locals {
   # environment.
   container_image = "pramsey/pg_tileserv"
 
-  module_config               = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn  = local.module_config.locals.config_secrets_manager_arn
-  container_image_tag         = local.module_config.locals.container_image_tag
+  module_config              = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
+  container_image_tag        = local.module_config.locals.container_image_tag
 }
-
 # ---------------------------------------------------------------------------------------------------------------------
 # MODULE PARAMETERS
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above.
@@ -153,7 +159,11 @@ inputs = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
       host_headers  = ["tiles.*"]
-      priority      = 1
+      http_headers = [{
+        http_header_name = "x-alb-secret"
+        values           = [dependency.shared_secret.outputs.secret]
+      }]
+      priority = 1
     }
   }
 
@@ -181,7 +191,12 @@ inputs = {
       name      = "${local.service_name}"
       image     = "${local.container_image}:${local.container_image_tag}"
       essential = true
-      environment = []
+      environment = [
+        {
+          name : "TS_CACHETTL",
+          value : "3600"
+        }
+      ]
       secrets = [
         {
           name : "DATABASE_URL",
@@ -210,5 +225,5 @@ inputs = {
   ]
   secrets_manager_arns = [
     local.config_secrets_manager_arn,
-  ]  
+  ]
 }
