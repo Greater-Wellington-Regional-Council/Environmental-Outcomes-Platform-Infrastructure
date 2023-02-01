@@ -30,9 +30,9 @@ locals {
 }
 
 inputs = {
-  domain_name = "tiles.${local.account_vars.locals.domain_name.name}"
-  acm_certificate_arn = dependency.acm_tls_certificate.outputs.certificate_arns[0]
-  hosted_zone_id = dependency.route53.outputs.public_hosted_zone_map[local.account_vars.locals.domain_name.name]
-  alb_dns_name = dependency.alb.outputs.original_alb_dns_name
+  domain_name            = "tiles.${local.account_vars.locals.domain_name.name}"
+  acm_certificate_arn    = dependency.acm_tls_certificate.outputs.certificate_arns[0]
+  hosted_zone_id         = dependency.route53.outputs.public_hosted_zone_map[local.account_vars.locals.domain_name.name]
+  alb_dns_name           = dependency.alb.outputs.original_alb_dns_name
   alb_http_header_secret = dependency.shared_secret.outputs.secret
 }
