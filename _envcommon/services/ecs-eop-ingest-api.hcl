@@ -31,7 +31,7 @@ dependency "sns" {
 }
 
 dependency "alb" {
-  config_path = "${get_terragrunt_dir()}/../../networking/alb-eop-manager"
+  config_path = "${get_terragrunt_dir()}/../../networking/alb-eop-ingest-api"
 
   mock_outputs = {
     listener_arns = {
@@ -152,9 +152,21 @@ inputs = {
     "default" = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
-      path_patterns = ["/allocations"]
+      path_patterns = ["/*"]
+      priority      = 1
     }
   }
+
+  # Configure the ALB listener rules to redirect HTTP traffic to HTTPS
+  redirect_rules = {
+    "http-to-https" = {
+      listener_ports = [80]
+      status_code    = "HTTP_301"
+      port           = 443
+      protocol       = "HTTPS"
+      path_patterns  = ["/*"]
+    }
+  }  
 
   # -------------------------------------------------------------------------------------------------------------
   # CloudWatch Alarms
