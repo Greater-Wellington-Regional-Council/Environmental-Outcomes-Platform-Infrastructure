@@ -74,6 +74,7 @@ locals {
 
   module_config              = read_terragrunt_config("module_config.hcl")
   config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
+  users_secrets_manager_arn = local.module_config.locals.users_secrets_manager_arn
   container_image_tag        = local.module_config.locals.container_image_tag
 }
 
@@ -213,6 +214,10 @@ inputs = {
           name : "CONFIG_KEYSTORE_KEY",
           valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_KEY::"
         },
+        {
+          name : "INGESTAPI_USERSJSON",
+          valueFrom : local.users_secrets_manager_arn
+        },        
       ]
 
       # The container ports that should be exposed from this container.
@@ -238,5 +243,6 @@ inputs = {
 
   secrets_manager_arns = [
     local.config_secrets_manager_arn,
+    local.users_secrets_manager_arn,
   ]
 }
