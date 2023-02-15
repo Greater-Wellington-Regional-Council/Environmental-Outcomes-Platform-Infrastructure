@@ -2,5 +2,6 @@
 locals {
   config_secrets_manager_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:EOPIngestAPIConfig-Sd0J4T"
   users_secrets_manager_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:EOPIngestAPIUsers-OGblpw"
-  container_image_tag        = "85448b44f03239b095203ee5e62fb081ab04aacd"
+  kafka_creds_secrets_manager_arn = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:AmazonMSK_EOPIngestAPIKafkaCredentials-kndW0a"
+  container_image_tag        = "d7d09bc751652bbbd0f2d165e382caf2e8fb3837"
 }

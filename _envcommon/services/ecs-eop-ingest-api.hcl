@@ -21,6 +21,15 @@ dependency "ecs_fargate_cluster" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
+dependency "kafka" {
+  config_path = "${get_terragrunt_dir()}/../../data-stores/kafka"
+
+  mock_outputs = {
+    bootstrap_brokers_scram = "brokers"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -75,6 +84,7 @@ locals {
   module_config              = read_terragrunt_config("module_config.hcl")
   config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
   users_secrets_manager_arn = local.module_config.locals.users_secrets_manager_arn
+  kafka_creds_secrets_manager_arn = local.module_config.locals.kafka_creds_secrets_manager_arn
   container_image_tag        = local.module_config.locals.container_image_tag
 }
 
@@ -198,9 +208,12 @@ inputs = {
         {
           name  = "SPRING_PROFILES_ACTIVE"
           value = "prod,ssl"
-        }
+        },
+        {
+          name  = "KAFKA_BOOTSTRAP_BROKERS"
+          value = dependency.kafka.outputs.bootstrap_brokers_scram
+        },
       ]
-
       secrets = [
         {
           name : "CONFIG_KEYSTORE_CONTENT",
@@ -217,6 +230,14 @@ inputs = {
         {
           name : "INGESTAPI_USERSJSON",
           valueFrom : local.users_secrets_manager_arn
+        },
+        {
+          name : "KAFKA_SASL_USERNAME",
+          valueFrom : "${local.kafka_creds_secrets_manager_arn}:username::"
+        },
+        {
+          name : "KAFKA_SASL_PASSWORD",
+          valueFrom : "${local.kafka_creds_secrets_manager_arn}:password::"
         },        
       ]
 
@@ -244,5 +265,6 @@ inputs = {
   secrets_manager_arns = [
     local.config_secrets_manager_arn,
     local.users_secrets_manager_arn,
+    local.kafka_creds_secrets_manager_arn,
   ]
 }
