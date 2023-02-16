@@ -38,4 +38,8 @@ inputs = {
   allowed_inbound_cidr_blocks = dependency.vpc.outputs.private_app_subnet_cidr_blocks
   allowed_inbound_security_group_ids = [dependency.network_bastion.outputs.bastion_host_security_group_id]
   enable_client_sasl_scram = true
+  server_properties = {
+    "auto.create.topics.enable"  = "true"
+    "default.replication.factor" = "2"
+  }
 }
