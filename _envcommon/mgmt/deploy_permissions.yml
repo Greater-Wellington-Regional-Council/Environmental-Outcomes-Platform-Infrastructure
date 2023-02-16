@@ -181,3 +181,17 @@ S3DeployAccess:
     - "s3:*"
   resources:
     - "*"
+
+MSKDeployAccess:
+  effect: "Allow"
+  actions:
+    - "kafka:*"
+  resources:
+    - "*"
+
+ApplicationAutoScalingDeployAccess:
+  effect: "Allow"
+  actions:
+    - "application-autoscaling:*"
+  resources:
+    - "*"

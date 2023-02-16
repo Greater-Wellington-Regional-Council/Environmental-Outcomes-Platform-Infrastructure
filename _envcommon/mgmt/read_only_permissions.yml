@@ -233,3 +233,19 @@ S3StateBucketAccess:
   resources:
     - "arn:aws:s3:::${state_bucket}"
     - "arn:aws:s3:::${state_bucket}/*"
+
+MSKReadOnlyAccess:
+  effect: "Allow"
+  actions:
+    - "kafka:Describe*"
+    - "kafka:List*"
+    - "kafka:Get*"
+  resources:
+    - "*"
+
+ApplicationAutoScalingReadOnlyAccess:
+  effect: "Allow"
+  actions:
+    - "application-autoscaling:Describe*"
+  resources:
+    - "*"
