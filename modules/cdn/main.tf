@@ -66,7 +66,7 @@ module "access_logs" {
 
   bucket_policy_statements = {
     AllowCloudfrontWriteS3AccessLog = {
-      effect = "Allow"
+      effect  = "Allow"
       actions = ["s3:*"]
       principals = {
         "AWS" = ["arn:aws:iam::162777425019:root"]

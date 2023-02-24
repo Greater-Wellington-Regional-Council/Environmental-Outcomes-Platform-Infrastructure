@@ -81,11 +81,11 @@ locals {
   # environment.
   container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-ingest-api"
 
-  module_config              = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
-  users_secrets_manager_arn = local.module_config.locals.users_secrets_manager_arn
+  module_config                   = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn      = local.module_config.locals.config_secrets_manager_arn
+  users_secrets_manager_arn       = local.module_config.locals.users_secrets_manager_arn
   kafka_creds_secrets_manager_arn = local.module_config.locals.kafka_creds_secrets_manager_arn
-  container_image_tag        = local.module_config.locals.container_image_tag
+  container_image_tag             = local.module_config.locals.container_image_tag
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ inputs = {
       protocol       = "HTTPS"
       path_patterns  = ["/*"]
     }
-  }  
+  }
 
   # -------------------------------------------------------------------------------------------------------------
   # CloudWatch Alarms
@@ -238,7 +238,7 @@ inputs = {
         {
           name : "KAFKA_SASL_PASSWORD",
           valueFrom : "${local.kafka_creds_secrets_manager_arn}:password::"
-        },        
+        },
       ]
 
       # The container ports that should be exposed from this container.
