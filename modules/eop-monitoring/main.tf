@@ -8,11 +8,11 @@ locals {
 
 resource "aws_cloudwatch_log_metric_filter" "manager_log_errors" {
   name           = "Manager Log Error Messages"
-  pattern        = "?\" ERROR \" ?\" WARN \""
+  pattern        = "?\" WARN \" ?\" ERROR \""
   log_group_name = local.manager_log_group_name
 
   metric_transformation {
-    name          = "ErrorMessageEventCount"
+    name          = "ManagerErrorMessageEventCount"
     namespace     = "EOP"
     value         = "1"
     default_value = "0"
@@ -25,14 +25,41 @@ resource "aws_cloudwatch_metric_alarm" "manager_log_errors_alarm" {
   evaluation_periods  = "1"
   threshold           = "1"
   namespace           = "EOP"
-  metric_name         = "ErrorMessageEventCount"
+  metric_name         = "ManagerErrorMessageEventCount"
   period              = "300"
   statistic           = "Sum"
   alarm_description   = "This metric monitors error log records in the EOP Manager log file."
   treat_missing_data  = "notBreaching"
 
   alarm_actions = var.alarms_sns_topic_arn
+}
 
+resource "aws_cloudwatch_log_metric_filter" "tileserver_log_errors" {
+  name           = "Tileserver Log Error Messages"
+  pattern        = "?\"=warning\" ?\"=error\" ?\"=panic\" ?\"=fatal\""
+  log_group_name = local.tileserver_log_group_name
+
+  metric_transformation {
+    name          = "TileserverErrorMessageEventCount"
+    namespace     = "EOP"
+    value         = "1"
+    default_value = "0"
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "tileserver_log_errors_alarm" {
+  alarm_name          = "eop-tileserver-log-errors"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  threshold           = "1"
+  namespace           = "EOP"
+  metric_name         = "TileserverErrorMessageEventCount"
+  period              = "300"
+  statistic           = "Sum"
+  alarm_description   = "This metric monitors error log records in the EOP Tileserver log file."
+  treat_missing_data  = "notBreaching"
+
+  alarm_actions = var.alarms_sns_topic_arn
 }
 
 data "aws_arn" "eop_alb_arn" {
