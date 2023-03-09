@@ -20,6 +20,16 @@ dependency "alb-eop-manager" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
+dependency "ecs_fargate_cluster" {
+  config_path = "${get_terragrunt_dir()}/../ecs-fargate-cluster"
+
+  mock_outputs = {
+    arn  = "some-ecs-cluster-arn"
+    name = "ecs-cluster"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "ecs-eop-manager" {
   config_path = "${get_terragrunt_dir()}/../ecs-eop-manager"
 
@@ -30,13 +40,21 @@ dependency "ecs-eop-manager" {
 }
 
 locals {
+  common_vars  = read_terragrunt_config(find_in_parent_folders("common.hcl"))
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
+  region_vars  = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+
   account_name = local.account_vars.locals.account_name
-  service_name = "eop-manager"
+  account_ids  = local.common_vars.locals.account_ids
+  account_id   = local.account_ids[local.account_name]
+  aws_region   = local.region_vars.locals.aws_region
 }
 
 inputs = {
-  eop_manager_log_group_name = "/${local.account_name}/ecs/${local.service_name}"
-  alarms_sns_topic_arn       = [dependency.sns.outputs.topic_arn]
-  eop_alb_arn                = dependency.alb-eop-manager.outputs.alb_arn
+  account_name         = local.account_name
+  account_id           = local.account_id
+  aws_region           = local.aws_region
+  ecs_cluster_name     = dependency.ecs_fargate_cluster.outputs.name
+  alarms_sns_topic_arn = [dependency.sns.outputs.topic_arn]
+  eop_alb_arn          = dependency.alb-eop-manager.outputs.alb_arn
 }
