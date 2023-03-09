@@ -8,7 +8,7 @@ locals {
 
 resource "aws_cloudwatch_log_metric_filter" "manager_log_errors" {
   name           = "Manager Log Error Messages"
-  pattern        = "\" ERROR \""
+  pattern        = "?\" ERROR \" ?\" WARN \""
   log_group_name = local.manager_log_group_name
 
   metric_transformation {
@@ -26,38 +26,9 @@ resource "aws_cloudwatch_metric_alarm" "manager_log_errors_alarm" {
   threshold           = "1"
   namespace           = "EOP"
   metric_name         = "ErrorMessageEventCount"
-  period              = "900"
+  period              = "300"
   statistic           = "Sum"
   alarm_description   = "This metric monitors error log records in the EOP Manager log file."
-  treat_missing_data  = "notBreaching"
-
-  alarm_actions = var.alarms_sns_topic_arn
-
-}
-
-resource "aws_cloudwatch_log_metric_filter" "manager_log_warnings" {
-  name           = "Manager Log Warning Messages"
-  pattern        = "\" WARN \""
-  log_group_name = local.manager_log_group_name
-
-  metric_transformation {
-    name          = "WarningMessageEventCount"
-    namespace     = "EOP"
-    value         = "1"
-    default_value = "0"
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "manager_log_warnings_alarm" {
-  alarm_name          = "eop-manager-log-warnings"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "1"
-  threshold           = "1"
-  namespace           = "EOP"
-  metric_name         = "WarningMessageEventCount"
-  period              = "900"
-  statistic           = "Sum"
-  alarm_description   = "This metric monitors warning log records in the EOP Manager log file."
   treat_missing_data  = "notBreaching"
 
   alarm_actions = var.alarms_sns_topic_arn
@@ -103,7 +74,6 @@ resource "aws_cloudwatch_dashboard" "main" {
           title = "Alarm Status"
           alarms = [
             aws_cloudwatch_metric_alarm.manager_log_errors_alarm.arn,
-            aws_cloudwatch_metric_alarm.manager_log_warnings_alarm.arn,
             aws_cloudwatch_metric_alarm.eop_elb_500_errors.arn,
             # The Gruntworks modules don't expose these ARNs as outputs. Easier to build them here than get them added as outputs.
             "arn:aws:cloudwatch:${var.aws_region}:${var.account_id}:alarm:services-${var.account_name}-eop-tileserver-high-memory-utilization",
