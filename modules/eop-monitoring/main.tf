@@ -205,6 +205,47 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         height = 6,
+        width  = 6,
+        y      = 10,
+        x      = 18,
+        type   = "metric",
+
+        properties = {
+          metrics = [
+            [{ expression = "METRICS() * 1000", label = "to Millis", id : "e1", region : var.aws_region }],
+            ["AWS/ApplicationELB", "TargetResponseTime", "LoadBalancer", replace(data.aws_arn.eop_alb_arn.resource, "loadbalancer/", ""), { stat = "Average", id = "m1", visible = false }],
+            ["...", { stat = "Maximum", id = "m2", visible = false }],
+            ["...", { stat = "p99", id = "m3", visible = false }]
+
+          ],
+          view     = "timeSeries",
+          stacked  = false,
+          region   = var.aws_region,
+          period   = 300,
+          title    = "API Response Times",
+          liveData = true,
+          yAxis = {
+            right = {
+              showUnits = false
+            }
+            left = {
+              showUnits = false
+              label     = "Millis"
+            }
+          }
+          annotations = {
+            horizontal = [
+              {
+                label = "Goal",
+                value = 3000,
+                fill  = "above"
+              }
+            ]
+          }
+        }
+      },
+      {
+        height = 6,
         width  = 24,
         y      = 16,
         x      = 0,
@@ -228,7 +269,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           region  = var.aws_region,
           stacked = false,
           view    = "table",
-          title   = "Tile Server Logs"
+          title   = "Latest Tile Server Logs"
         }
       },
 
