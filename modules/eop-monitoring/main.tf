@@ -36,7 +36,7 @@ resource "aws_cloudwatch_metric_alarm" "manager_log_errors_alarm" {
 
 resource "aws_cloudwatch_log_metric_filter" "tileserver_log_errors" {
   name           = "Tileserver Log Error Messages"
-  pattern        = "?\"=warning\" ?\"=error\" ?\"=panic\" ?\"=fatal\""
+  pattern        = "[time, level=\"level=error\" || level=\"level=warning\" || level=\"level=panic\" || level=\"level=fatal\", message!=\"*write: broken pipe*\"]"
   log_group_name = local.tileserver_log_group_name
 
   metric_transformation {
