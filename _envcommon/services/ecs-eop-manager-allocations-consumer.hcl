@@ -31,6 +31,15 @@ dependency "aurora" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
+dependency "kafka" {
+  config_path = "${get_terragrunt_dir()}/../../data-stores/kafka"
+
+  mock_outputs = {
+    bootstrap_brokers_scram = "brokers"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -82,9 +91,10 @@ locals {
   # environment.
   container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-manager"
 
-  module_config              = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
-  container_image_tag        = local.module_config.locals.container_image_tag
+  module_config                   = read_terragrunt_config("module_config.hcl")
+  config_secrets_manager_arn      = local.module_config.locals.config_secrets_manager_arn
+  kafka_creds_secrets_manager_arn = local.module_config.locals.kafka_creds_secrets_manager_arn
+  container_image_tag             = local.module_config.locals.container_image_tag
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -215,7 +225,11 @@ inputs = {
         {
           name  = "CONFIG_DATABASE_POOL_SIZE",
           value = tostring(10)
-        }
+        },
+        {
+          name  = "KAFKA_BOOTSTRAP_BROKERS"
+          value = dependency.kafka.outputs.bootstrap_brokers_scram
+        },
       ]
 
       secrets = [
@@ -251,6 +265,14 @@ inputs = {
           name : "CONFIG_KEYSTORE_KEY",
           valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_KEY::"
         },
+        {
+          name : "KAFKA_SASL_USERNAME",
+          valueFrom : "${local.kafka_creds_secrets_manager_arn}:username::"
+        },
+        {
+          name : "KAFKA_SASL_PASSWORD",
+          valueFrom : "${local.kafka_creds_secrets_manager_arn}:password::"
+        },
       ]
 
       # The container ports that should be exposed from this container.
@@ -276,5 +298,6 @@ inputs = {
 
   secrets_manager_arns = [
     local.config_secrets_manager_arn,
+    local.kafka_creds_secrets_manager_arn,
   ]
 }
