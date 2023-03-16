@@ -36,7 +36,9 @@ resource "aws_cloudwatch_metric_alarm" "manager_log_errors_alarm" {
 
 resource "aws_cloudwatch_log_metric_filter" "tileserver_log_errors" {
   name           = "Tileserver Log Error Messages"
-  pattern        = "?\"=warning\" ?\"=error\" ?\"=panic\" ?\"=fatal\""
+  # We are explicitly excluding an error message "write tcp 10.0.97.216:7800->10.0.17.215:48920: write: broken pipe" which occurs when a request is cancelled on the client end.
+  # so its not an error with the tileserver, and is very easy to cause so leads to lots of error messages being posted.
+  pattern        = "[time, level=\"level=error\" || level=\"level=warning\" || level=\"level=panic\" || level=\"level=fatal\", message!=\"*write: broken pipe*\"]"
   log_group_name = local.tileserver_log_group_name
 
   metric_transformation {
