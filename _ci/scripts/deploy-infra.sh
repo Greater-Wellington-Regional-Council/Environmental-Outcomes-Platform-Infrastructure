@@ -103,7 +103,7 @@ function handle_updated_folders {
   # Note that we ignore the _envcommon folder as that is handled in a different pipeline.
   local updated_folders
   updated_folders="$(
-    git-updated-folders --source-ref "$source_ref" --target-ref "$ref" --terragrunt --ext yaml --ext yml --exclude-deleted \
+    git-updated-folders --source-ref "$source_ref" --target-ref "$ref" --ext yaml --ext yml --ext hcl --exclude-deleted \
       | (grep -Ev '^_envcommon' || true) | (grep -Ev '^modules' || true)
   )"
 
