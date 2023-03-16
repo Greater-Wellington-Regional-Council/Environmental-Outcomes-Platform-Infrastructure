@@ -206,7 +206,7 @@ inputs = {
         },
         {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "prod,ssl"
+          value = "prod,ssl,allocations-consumer"
         },
         {
           name  = "CONFIG_DATABASE_HOST"
