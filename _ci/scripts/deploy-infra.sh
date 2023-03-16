@@ -103,7 +103,7 @@ function handle_updated_folders {
   # Note that we ignore the _envcommon folder as that is handled in a different pipeline.
   local updated_folders
   updated_folders="$(
-    git-updated-folders --source-ref "$source_ref" --target-ref "$ref" --terragrunt --ext yaml --ext yml --exclude-deleted \
+    git-updated-folders --source-ref "$source_ref" --target-ref "$ref" --terragrunt --ext yaml --ext yml --ext module_config.hcl --exclude-deleted \
       | (grep -Ev '^_envcommon' || true) | (grep -Ev '^modules' || true)
   )"
 
@@ -145,7 +145,7 @@ function handle_updated_envcommon {
   # infrastructure-deployer. Note that we pass in --exclude-ext so that we only capture changes to the common hcl files,
   # and not the individual module files.
   local updated_common_files
-  updated_common_files="$(git-updated-files --source-ref "$source_ref" --target-ref "$ref" --ext .hcl --exclude-ext terragrunt.hcl)"
+  updated_common_files="$(git-updated-files --source-ref "$source_ref" --target-ref "$ref" --ext .hcl --exclude-ext terragrunt.hcl --exclude-ext module_config.hcl)"
 
   # We also look for updated data files in the _envcommon directory, and pull in the related .hcl files.
   # We do this by running through git-updated-files looking for data file extensions (yaml + json), and then filtering
