@@ -8,7 +8,7 @@ locals {
 
 resource "aws_cloudwatch_log_metric_filter" "manager_log_errors" {
   name           = "Manager Log Error Messages"
-  pattern        = "?\" WARN \" ?\" ERROR \""
+  pattern        = "{ ($.level = \"WARN\" || $.level = \"ERROR\") }"
   log_group_name = local.manager_log_group_name
 
   metric_transformation {
