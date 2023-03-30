@@ -2,6 +2,16 @@ terraform {
   source = "${local.source_base_url}?ref=v0.100.0"
 }
 
+dependency "eop_secrets" {
+  config_path = "${get_terragrunt_dir()}/../../secrets"
+  mock_outputs = {
+    ingest_api_kafka_credentials_arn = "secret_arn"
+    ingest_api_config_arn            = "secret_arn"
+    ingest_api_users_arn             = "secret_arn"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "vpc" {
   config_path = "${get_terragrunt_dir()}/../../networking/vpc"
 
@@ -81,11 +91,8 @@ locals {
   # environment.
   container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-ingest-api"
 
-  module_config                   = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn      = local.module_config.locals.config_secrets_manager_arn
-  users_secrets_manager_arn       = local.module_config.locals.users_secrets_manager_arn
-  kafka_creds_secrets_manager_arn = local.module_config.locals.kafka_creds_secrets_manager_arn
-  container_image_tag             = local.module_config.locals.container_image_tag
+  module_config       = read_terragrunt_config("module_config.hcl")
+  container_image_tag = local.module_config.locals.container_image_tag
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -217,27 +224,27 @@ inputs = {
       secrets = [
         {
           name : "CONFIG_KEYSTORE_CONTENT",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_CONTENT::"
+          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_config_arn}:CONFIG_KEYSTORE_CONTENT::"
         },
         {
           name : "CONFIG_KEYSTORE_PASSWORD",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_PASSWORD::"
+          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_config_arn}:CONFIG_KEYSTORE_PASSWORD::"
         },
         {
           name : "CONFIG_KEYSTORE_KEY",
-          valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_KEY::"
+          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_config_arn}:CONFIG_KEYSTORE_KEY::"
         },
         {
           name : "SPRING_APPLICATION_JSON",
-          valueFrom : local.users_secrets_manager_arn
+          valueFrom : dependency.eop_secrets.outputs.ingest_api_users_arn
         },
         {
           name : "KAFKA_SASL_USERNAME",
-          valueFrom : "${local.kafka_creds_secrets_manager_arn}:username::"
+          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_kafka_credentials_arn}:username::"
         },
         {
           name : "KAFKA_SASL_PASSWORD",
-          valueFrom : "${local.kafka_creds_secrets_manager_arn}:password::"
+          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_kafka_credentials_arn}:password::"
         },
       ]
 
@@ -263,8 +270,8 @@ inputs = {
   ]
 
   secrets_manager_arns = [
-    local.config_secrets_manager_arn,
-    local.users_secrets_manager_arn,
-    local.kafka_creds_secrets_manager_arn,
+    dependency.eop_secrets.outputs.ingest_api_kafka_credentials_arn,
+    dependency.eop_secrets.outputs.ingest_api_config_arn,
+    dependency.eop_secrets.outputs.ingest_api_users_arn,
   ]
 }
