@@ -228,7 +228,7 @@ inputs = {
           valueFrom : "${local.config_secrets_manager_arn}:CONFIG_KEYSTORE_KEY::"
         },
         {
-          name : "INGESTAPI_USERSJSON",
+          name : "SPRING_APPLICATION_JSON",
           valueFrom : local.users_secrets_manager_arn
         },
         {
