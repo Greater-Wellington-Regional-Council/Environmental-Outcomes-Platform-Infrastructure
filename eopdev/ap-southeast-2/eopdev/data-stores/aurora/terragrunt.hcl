@@ -14,13 +14,4 @@ include "envcommon" {
 # Module parameters to pass in. Note that these parameters are environment specific.
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
-  name = "aurora-eopdev"
-
-  # The DB config secret contains the following data:
-  # - DB engine (e.g. postgres, mysql, etc)
-  # - Default database name
-  # - Port
-  # - Username and password
-  # Alternatively, these can be specified as individual inputs.
-  db_config_secrets_manager_id = "arn:aws:secretsmanager:ap-southeast-2:657968434173:secret:RDSDBConfig-wHo5DD"
 }
