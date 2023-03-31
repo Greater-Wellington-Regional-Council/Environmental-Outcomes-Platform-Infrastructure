@@ -240,11 +240,11 @@ inputs = {
         },
         {
           name : "KAFKA_SASL_USERNAME",
-          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_kafka_credentials_arn}:username::"
+          valueFrom : "${dependency.eop_secrets.outputs.kafka_client_credentials_arn}:username::"
         },
         {
           name : "KAFKA_SASL_PASSWORD",
-          valueFrom : "${dependency.eop_secrets.outputs.ingest_api_kafka_credentials_arn}:password::"
+          valueFrom : "${dependency.eop_secrets.outputs.kafka_client_credentials_arn}:password::"
         },
       ]
 
@@ -270,7 +270,7 @@ inputs = {
   ]
 
   secrets_manager_arns = [
-    dependency.eop_secrets.outputs.ingest_api_kafka_credentials_arn,
+    dependency.eop_secrets.outputs.kafka_client_credentials_arn,
     dependency.eop_secrets.outputs.ingest_api_config_arn,
     dependency.eop_secrets.outputs.ingest_api_users_arn,
   ]

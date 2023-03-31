@@ -2,6 +2,16 @@ terraform {
   source = "${local.source_base_url}?ref=v0.100.0"
 }
 
+dependency "eop_secrets" {
+  config_path = "${get_terragrunt_dir()}/../../secrets"
+  mock_outputs = {
+    ingest_api_kafka_credentials_arn = "secret_arn"
+    ingest_api_config_arn            = "secret_arn"
+    ingest_api_users_arn             = "secret_arn"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "vpc" {
   config_path = "${get_terragrunt_dir()}/../../networking/vpc"
 
@@ -79,9 +89,8 @@ locals {
   # environment.
   container_image = "pramsey/pg_tileserv"
 
-  module_config              = read_terragrunt_config("module_config.hcl")
-  config_secrets_manager_arn = local.module_config.locals.config_secrets_manager_arn
-  container_image_tag        = local.module_config.locals.container_image_tag
+  module_config       = read_terragrunt_config("module_config.hcl")
+  container_image_tag = local.module_config.locals.container_image_tag
 }
 # ---------------------------------------------------------------------------------------------------------------------
 # MODULE PARAMETERS
@@ -200,7 +209,7 @@ inputs = {
       secrets = [
         {
           name : "DATABASE_URL",
-          valueFrom : "${local.config_secrets_manager_arn}:DATABASE_URL::"
+          valueFrom : "${dependency.eop_secrets.outputs.tileserver_config_arn}:DATABASE_URL::"
         }
       ]
       # The container ports that should be exposed from this container.
@@ -224,6 +233,6 @@ inputs = {
     }
   ]
   secrets_manager_arns = [
-    local.config_secrets_manager_arn,
+    dependency.eop_secrets.outputs.tileserver_config_arn,
   ]
 }

@@ -2,6 +2,10 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 # Aurora Postgres
+resource "aws_secretsmanager_secret" "aurora_rds_config" {
+  name        = "RDSDBConfig"
+  description = "Configuration for the RDS database instance."
+}
 
 # Kafka
 ## SASL config secrets for Kafka require a KMS key that is not the default
@@ -70,18 +74,28 @@ resource "aws_kms_key_policy" "kafka_sasl_credentials_key_policy" {
   })
 }
 
-# EOP Manager
-
-# Ingest API
-resource "aws_secretsmanager_secret" "ingest_api_kafka_credentials" {
-  name        = "AmazonMSK_EOPIngestAPIKafkaCredentials"
-  description = "SASL/SCRAM Credentials used by the IngestAPI to connect to Kafka"
+resource "aws_secretsmanager_secret" "kafka_client_credentials" {
+  name        = "AmazonMSK_KafkaClientCredentials"
+  description = "SASL/SCRAM Credentials used by the client applications to connect to Kafka"
   kms_key_id  = aws_kms_key.kafka_sasl_credentials_key.id
 }
 
+# EOP Manager
+resource "aws_secretsmanager_secret" "manager_config" {
+  name        = "EOPManagerConfig"
+  description = "Sensitive configuration details for the Manager Application"
+}
+
+# Tile Server
+resource "aws_secretsmanager_secret" "tileserver_config" {
+  name        = "EOPTileServerConfig"
+  description = "Sensitive configuration details for the TileServer service"
+}
+
+# Ingest API
 resource "aws_secretsmanager_secret" "ingest_api_config" {
   name        = "EOPIngestAPIConfig"
-  description = "Configuration for the EOP Ingest API Service"
+  description = "Sensitive configuration details for the Ingest API application"
 }
 
 resource "aws_secretsmanager_secret" "ingest_api_users" {
