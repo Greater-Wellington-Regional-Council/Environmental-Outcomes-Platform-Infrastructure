@@ -2,6 +2,14 @@ terraform {
   source = "${local.source_base_url}?ref=v0.10.1"
 }
 
+dependency "eop_secrets" {
+  config_path = "${get_terragrunt_dir()}/../../secrets"
+  mock_outputs = {
+    kafka_client_credentials_arn = "secret_arn"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "vpc" {
   config_path = "${get_terragrunt_dir()}/../../networking/vpc"
 
@@ -43,4 +51,7 @@ inputs = {
     "auto.create.topics.enable"  = "true"
     "default.replication.factor" = "2"
   }
+  client_sasl_scram_secret_arns = [
+    dependency.eop_secrets.outputs.kafka_client_credentials_arn
+  ]
 }
