@@ -16,12 +16,13 @@ output "tileserver_config_arn" {
   value       = aws_secretsmanager_secret.tileserver_config.arn
 }
 
-# Ingest API
+# Kafka
 output "kafka_client_credentials_arn" {
-  description = "The ARN for the Ingest API Kafka Credentials secret"
+  description = "The ARN for the Kafka Credentials secret"
   value       = aws_secretsmanager_secret.kafka_client_credentials.arn
 }
 
+# Ingest API
 output "ingest_api_config_arn" {
   description = "The ARN for the Ingest API Config secret"
   value       = aws_secretsmanager_secret.ingest_api_config.arn
