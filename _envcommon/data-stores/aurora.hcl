@@ -13,9 +13,15 @@ terraform {
   source = "${local.source_base_url}?ref=v0.96.9"
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# Dependencies are modules that need to be deployed before this one.
-# ---------------------------------------------------------------------------------------------------------------------
+dependency "eop_secrets" {
+  config_path = "${get_terragrunt_dir()}/../../secrets"
+  mock_outputs = {
+    ingest_api_kafka_credentials_arn = "secret_arn"
+    ingest_api_config_arn            = "secret_arn"
+    ingest_api_users_arn             = "secret_arn"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
 
 dependency "vpc" {
   config_path = "${get_terragrunt_dir()}/../../networking/vpc"
@@ -95,6 +101,9 @@ inputs = {
   allow_connections_from_cidr_blocks     = dependency.vpc.outputs.private_app_subnet_cidr_blocks
   allow_connections_from_security_groups = [dependency.network_bastion.outputs.bastion_host_security_group_id]
   iam_database_authentication_enabled    = true
+
+  db_config_secrets_manager_id = dependency.eop_secrets.outputs.aurora_rds_config_arn
+
 
   # Only apply changes during the scheduled maintenance window, as certain DB changes cause degraded performance or
   # downtime. For more info, see: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Clusters.Modify.html
