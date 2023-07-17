@@ -102,3 +102,9 @@ resource "aws_secretsmanager_secret" "ingest_api_users" {
   name        = "EOPIngestAPIUsers"
   description = "API users that can access the Ingest API"
 }
+
+# Hilltop Crawler
+resource "aws_secretsmanager_secret" "hilltop_crawler_config" {
+  name        = "EOPHilltopCrawlerConfig"
+  description = "Sensitive configuration details for the Hilltop Crawler application"
+}

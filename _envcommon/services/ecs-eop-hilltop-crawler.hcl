@@ -59,18 +59,6 @@ dependency "sns" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
-dependency "alb" {
-  config_path = "${get_terragrunt_dir()}/../../networking/alb-eop-manager"
-
-  mock_outputs = {
-    listener_arns = {
-      80  = "arn:aws:elasticloadbalancing:us-east-1:123456789012:listener/app/mock-alb/50dc6c495c0c9188/f2f7dc8efc522ab2"
-      443 = "arn:aws:elasticloadbalancing:us-east-1:123456789012:listener/app/mock-alb/50dc6c495c0c9188/f2f7dc8efc522ab2"
-    }
-  }
-  mock_outputs_allowed_terraform_commands = ["validate", ]
-}
-
 # ---------------------------------------------------------------------------------------------------------------------
 # Locals are named constants that are reusable within the configuration.
 # ---------------------------------------------------------------------------------------------------------------------
@@ -95,11 +83,11 @@ locals {
   # Extract the region for easy access
   aws_region = local.region_vars.locals.aws_region
 
-  service_name = "eop-manager"
+  service_name = "eop-hilltop-crawler"
 
   # Define the container image. This will be used in the child config to combine with the specific image tag for the
   # environment.
-  container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-manager"
+  container_image = "898449181946.dkr.ecr.ap-southeast-2.amazonaws.com/eop-hilltop-crawler"
 
   module_config       = read_terragrunt_config("module_config.hcl")
   container_image_tag = local.module_config.locals.container_image_tag
@@ -120,8 +108,8 @@ inputs = {
   ecs_cluster_arn  = dependency.ecs_fargate_cluster.outputs.arn
 
   launch_type = "FARGATE"
-  task_cpu    = 2048
-  task_memory = 4096
+  task_cpu    = 1024
+  task_memory = 2048
 
   network_mode = "awsvpc"
   network_configuration = {
@@ -137,14 +125,6 @@ inputs = {
         cidr_blocks              = ["0.0.0.0/0"]
         source_security_group_id = null
       }
-      AllowALBIngress = {
-        type                     = "ingress"
-        from_port                = 443
-        to_port                  = 443
-        protocol                 = "TCP"
-        cidr_blocks              = null
-        source_security_group_id = dependency.alb.outputs.alb_security_group_id
-      }
     }
     additional_security_group_ids = []
     assign_public_ip              = false
@@ -159,42 +139,13 @@ inputs = {
   # We configure Target Groups for the ECS service so that the ALBs can route to the ECS tasks that are deployed on each
   # node by the service.
   # --------------------------------------------------------------------------------------------------------------------
-
   elb_target_groups = {
-    alb = {
-      name                  = local.service_name
-      container_name        = local.service_name
-      container_port        = 443
-      protocol              = "HTTPS"
-      health_check_protocol = "HTTPS"
-    }
   }
   elb_target_group_deregistration_delay = 60
   elb_target_group_vpc_id               = dependency.vpc.outputs.vpc_id
   health_check_path                     = "/actuator/health"
-  default_listener_arns                 = dependency.alb.outputs.listener_arns
-  default_listener_ports                = ["443"]
-
-  # Configure the ALB listener rules to forward HTTPS traffic to the ECS service.
-  forward_rules = {
-    "default" = {
-      listener_arns = [dependency.alb.outputs.listener_arns["443"]]
-      port          = 443
-      path_patterns = ["/*"]
-      priority      = 2
-    }
-  }
-
-  # Configure the ALB listener rules to redirect HTTP traffic to HTTPS
-  redirect_rules = {
-    "http-to-https" = {
-      listener_ports = [80]
-      status_code    = "HTTP_301"
-      port           = 443
-      protocol       = "HTTPS"
-      path_patterns  = ["/*"]
-    }
-  }
+  default_listener_arns                 = {}
+  default_listener_ports                = []
 
   # -------------------------------------------------------------------------------------------------------------
   # CloudWatch Alarms
@@ -219,12 +170,8 @@ inputs = {
       essential = true
       environment = [
         {
-          name  = "SERVER_PORT"
-          value = "443"
-        },
-        {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "prod,ssl,allocations-consumer,hilltop-consumer"
+          value = "prod"
         },
         {
           name  = "CONFIG_DATABASE_HOST"
@@ -239,39 +186,26 @@ inputs = {
           value = dependency.kafka.outputs.bootstrap_brokers_scram
         },
       ]
-
       secrets = [
         {
           name : "CONFIG_DATABASE_USERNAME",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_DATABASE_USERNAME::"
+          valueFrom : "${dependency.eop_secrets.outputs.hilltop_crawler_config_arn}:CONFIG_DATABASE_USERNAME::"
         },
         {
           name : "CONFIG_DATABASE_PASSWORD",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_DATABASE_PASSWORD::"
+          valueFrom : "${dependency.eop_secrets.outputs.hilltop_crawler_config_arn}:CONFIG_DATABASE_PASSWORD::"
         },
         {
           name : "CONFIG_DATABASE_MIGRATIONS_USERNAME",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_DATABASE_MIGRATIONS_USERNAME::"
+          valueFrom : "${dependency.eop_secrets.outputs.hilltop_crawler_config_arn}:CONFIG_DATABASE_MIGRATIONS_USERNAME::"
         },
         {
           name : "CONFIG_DATABASE_MIGRATIONS_PASSWORD",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_DATABASE_MIGRATIONS_PASSWORD::"
+          valueFrom : "${dependency.eop_secrets.outputs.hilltop_crawler_config_arn}:CONFIG_DATABASE_MIGRATIONS_PASSWORD::"
         },
         {
           name : "CONFIG_DATABASE_NAME",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_DATABASE_NAME::"
-        },
-        {
-          name : "CONFIG_KEYSTORE_CONTENT",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_KEYSTORE_CONTENT::"
-        },
-        {
-          name : "CONFIG_KEYSTORE_PASSWORD",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_KEYSTORE_PASSWORD::"
-        },
-        {
-          name : "CONFIG_KEYSTORE_KEY",
-          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_KEYSTORE_KEY::"
+          valueFrom : "${dependency.eop_secrets.outputs.hilltop_crawler_config_arn}:CONFIG_DATABASE_NAME::"
         },
         {
           name : "KAFKA_SASL_USERNAME",
@@ -281,14 +215,6 @@ inputs = {
           name : "KAFKA_SASL_PASSWORD",
           valueFrom : "${dependency.eop_secrets.outputs.kafka_client_credentials_arn}:password::"
         },
-      ]
-
-      # The container ports that should be exposed from this container.
-      portMappings = [
-        {
-          "containerPort" = 443
-          "protocol"      = "tcp"
-        }
       ]
 
       # Configure log aggregation from the ECS service to stream to CloudWatch logs.
@@ -305,7 +231,7 @@ inputs = {
   ]
 
   secrets_manager_arns = [
-    dependency.eop_secrets.outputs.manager_config_arn,
     dependency.eop_secrets.outputs.kafka_client_credentials_arn,
+    dependency.eop_secrets.outputs.hilltop_crawler_config_arn,
   ]
 }
