@@ -32,3 +32,9 @@ output "ingest_api_users_arn" {
   description = "The ARN for the Ingest API users secret"
   value       = aws_secretsmanager_secret.ingest_api_users.arn
 }
+
+# Hilltop Crawler
+output "hilltop_crawler_config_arn" {
+  description = "The ARN for the Hilltop Crawler Config secret"
+  value       = aws_secretsmanager_secret.hilltop_crawler_config.arn
+}

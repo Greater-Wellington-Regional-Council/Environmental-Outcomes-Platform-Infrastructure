@@ -120,8 +120,8 @@ inputs = {
   ecs_cluster_arn  = dependency.ecs_fargate_cluster.outputs.arn
 
   launch_type = "FARGATE"
-  task_cpu    = 1024
-  task_memory = 2048
+  task_cpu    = 2048
+  task_memory = 4096
 
   network_mode = "awsvpc"
   network_configuration = {
@@ -224,7 +224,7 @@ inputs = {
         },
         {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "prod,ssl,allocations-consumer"
+          value = "prod,ssl,allocations-consumer,hilltop-consumer"
         },
         {
           name  = "CONFIG_DATABASE_HOST"

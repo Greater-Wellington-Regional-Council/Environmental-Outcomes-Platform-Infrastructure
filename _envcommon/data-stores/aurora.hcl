@@ -94,6 +94,7 @@ inputs = {
 
   enable_cloudwatch_alarms          = true
   alarms_sns_topic_arns             = [dependency.sns.outputs.topic_arn]
+  performance_insights_enabled      = true
   too_many_db_connections_threshold = 100
 
   # Here we allow any connection from the private app subnet tier of the VPC. You can further restrict network access by
@@ -109,4 +110,21 @@ inputs = {
   # downtime. For more info, see: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Clusters.Modify.html
   # We default to false, but in non-prod environments we set it to true to immediately roll out the changes.
   apply_immediately = false
+
+  db_cluster_custom_parameter_group = {
+    name   = "custom-aurora-postgresql13"
+    family = "aurora-postgresql13"
+    parameters = [
+      {
+        name         = "log_temp_files"
+        value        = "64"
+        apply_method = "immediate"
+      },
+      {
+        name         = "shared_preload_libraries"
+        value        = "pg_stat_statements"
+        apply_method = "immediate"
+      }
+    ]
+  }
 }
