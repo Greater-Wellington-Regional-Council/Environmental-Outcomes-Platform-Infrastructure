@@ -41,6 +41,15 @@ dependency "aurora" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
+dependency "kafka" {
+  config_path = "${get_terragrunt_dir()}/../../data-stores/kafka"
+
+  mock_outputs = {
+    bootstrap_brokers_scram = "brokers"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -111,8 +120,8 @@ inputs = {
   ecs_cluster_arn  = dependency.ecs_fargate_cluster.outputs.arn
 
   launch_type = "FARGATE"
-  task_cpu    = 1024
-  task_memory = 2048
+  task_cpu    = 2048
+  task_memory = 4096
 
   network_mode = "awsvpc"
   network_configuration = {
@@ -215,7 +224,7 @@ inputs = {
         },
         {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "prod,ssl"
+          value = "prod,ssl,allocations-consumer"
         },
         {
           name  = "CONFIG_DATABASE_HOST"
@@ -224,7 +233,11 @@ inputs = {
         {
           name  = "CONFIG_DATABASE_POOL_SIZE",
           value = tostring(10)
-        }
+        },
+        {
+          name  = "KAFKA_BOOTSTRAP_BROKERS"
+          value = dependency.kafka.outputs.bootstrap_brokers_scram
+        },
       ]
 
       secrets = [
@@ -260,6 +273,14 @@ inputs = {
           name : "CONFIG_KEYSTORE_KEY",
           valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_KEYSTORE_KEY::"
         },
+        {
+          name : "KAFKA_SASL_USERNAME",
+          valueFrom : "${dependency.eop_secrets.outputs.kafka_client_credentials_arn}:username::"
+        },
+        {
+          name : "KAFKA_SASL_PASSWORD",
+          valueFrom : "${dependency.eop_secrets.outputs.kafka_client_credentials_arn}:password::"
+        },
       ]
 
       # The container ports that should be exposed from this container.
@@ -285,5 +306,6 @@ inputs = {
 
   secrets_manager_arns = [
     dependency.eop_secrets.outputs.manager_config_arn,
+    dependency.eop_secrets.outputs.kafka_client_credentials_arn,
   ]
 }
