@@ -31,6 +31,15 @@ dependency "ecs_fargate_cluster" {
   mock_outputs_allowed_terraform_commands = ["validate", ]
 }
 
+dependency "network_bastion" {
+  config_path = "${get_terragrunt_dir()}/../../../mgmt/bastion-host"
+
+  mock_outputs = {
+    security_group_id = "sg-abcd1234"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", ]
+}
+
 dependency "sns" {
   config_path = "${get_terragrunt_dir()}/../../../_regional/sns-topic"
 
@@ -132,6 +141,14 @@ inputs = {
         cidr_blocks              = null
         source_security_group_id = dependency.alb.outputs.alb_security_group_id
       }
+      AllowBastionIngress = {
+        type                     = "ingress"
+        from_port                = 7800
+        to_port                  = 7800
+        protocol                 = "TCP"
+        cidr_blocks              = null
+        source_security_group_id = dependency.network_bastion.outputs.bastion_host_security_group_id
+      }
     }
     additional_security_group_ids = []
     assign_public_ip              = false
@@ -168,6 +185,7 @@ inputs = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
       host_headers  = ["tiles.*"]
+      path_patterns = ["*.pbf", "index.json"]
       http_headers = [{
         http_header_name = "x-alb-secret"
         values           = [dependency.shared_secret.outputs.secret]
