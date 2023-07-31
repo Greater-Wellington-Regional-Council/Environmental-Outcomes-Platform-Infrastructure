@@ -168,6 +168,7 @@ inputs = {
       listener_arns = [dependency.alb.outputs.listener_arns["443"]]
       port          = 443
       host_headers  = ["tiles.*"]
+      path_patterns = ["*.pbf", "index.json"]
       http_headers = [{
         http_header_name = "x-alb-secret"
         values           = [dependency.shared_secret.outputs.secret]
