@@ -11,7 +11,7 @@
 # locally, you can use --terragrunt-source /path/to/local/checkout/of/module to override the source parameter to a
 # local check out of the module for faster iteration.
 terraform {
-  source = "${local.source_base_url}?ref=v0.99.0"
+  source = "${local.source_base_url}?ref=v0.105.1"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -142,6 +142,7 @@ inputs = {
     }
     infrastructure_live_repositories        = local.infrastructure_live_repositories
     infrastructure_live_repositories_regex  = []
+    additional_allowed_options              = []
     repo_access_ssh_key_secrets_manager_arn = null
     repo_access_https_tokens = {
       github_token_secrets_manager_arn = local.github_pat_secrets_manager_arn
@@ -162,6 +163,7 @@ inputs = {
     infrastructure_live_repositories_regex = []
     allowed_update_variable_names          = ["tag", "ami", "docker_tag", "ami_version_tag", ]
     allowed_apply_git_refs                 = ["main", "origin/main", "main", "origin/main", ]
+    additional_allowed_options             = []
     machine_user_git_info = {
       name  = "gwrc-eop-automation"
       email = "steve.mosley+github@gw.govt.nz"

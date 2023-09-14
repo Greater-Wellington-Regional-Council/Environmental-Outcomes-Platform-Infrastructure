@@ -246,6 +246,7 @@ MSKReadOnlyAccess:
 ApplicationAutoScalingReadOnlyAccess:
   effect: "Allow"
   actions:
+    - "application-autoscaling:List*"
     - "application-autoscaling:Describe*"
   resources:
     - "*"
