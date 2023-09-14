@@ -1,5 +1,5 @@
 terraform {
-  source = "${local.source_base_url}?ref=v0.10.1"
+  source = "${local.source_base_url}?ref=v0.12.2"
 }
 
 dependency "eop_secrets" {
@@ -40,7 +40,7 @@ locals {
 inputs = {
   cluster_name                           = "kafka-${lower(local.account_name)}"
   cluster_size                           = 3
-  kafka_version                          = "3.3.1"
+  kafka_version                          = "3.4.0"
   instance_type                          = "kafka.t3.small"
   vpc_id                                 = dependency.vpc.outputs.vpc_id
   subnet_ids                             = dependency.vpc.outputs.private_persistence_subnet_ids
