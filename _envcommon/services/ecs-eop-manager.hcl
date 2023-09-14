@@ -154,6 +154,14 @@ inputs = {
 
   custom_iam_policy_prefix = local.service_name
 
+  iam_policy = {
+    CloudWatchMetrics = {
+      actions   = ["cloudwatch:PutMetricData"]
+      resources = ["*"]
+      effect    = "Allow"
+    },
+  }
+
   # --------------------------------------------------------------------------------------------------------------------
   # ALB configuration
   # We configure Target Groups for the ECS service so that the ALBs can route to the ECS tasks that are deployed on each
