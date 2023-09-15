@@ -182,8 +182,8 @@ inputs = {
   # A list of role names that should be given permissions to invoke the infrastructure CI/CD pipeline.
   iam_roles = ["allow-auto-deploy-from-other-accounts", ]
 
-  container_cpu        = 2048
-  container_memory     = 4096
+  container_cpu        = 4096
+  container_memory     = 8192
   container_max_cpu    = 8192
   container_max_memory = 32768
 
