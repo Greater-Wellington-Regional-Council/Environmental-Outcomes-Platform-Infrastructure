@@ -11,5 +11,4 @@ include "envcommon" {
 }
 
 inputs = {
-  kafka_version = "3.3.1"
 }
