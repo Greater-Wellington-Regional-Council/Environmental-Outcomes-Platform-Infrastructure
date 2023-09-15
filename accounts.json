@@ -1,31 +1,31 @@
 {
   "eopdev": {
-    "deploy_order": 0,
+    "deploy_order": 4,
     "id": "657968434173",
     "root_user_email": ""
   },
   "eopprod": {
-    "deploy_order": 0,
+    "deploy_order": 6,
     "id": "422253851608",
     "root_user_email": ""
   },
   "eopstage": {
-    "deploy_order": 0,
+    "deploy_order": 5,
     "id": "564180615104",
     "root_user_email": ""
   },
   "logs": {
-    "deploy_order": 0,
+    "deploy_order": 1,
     "id": "972859489186",
     "root_user_email": ""
   },
   "security": {
-    "deploy_order": 0,
+    "deploy_order": 2,
     "id": "063810897000",
     "root_user_email": ""
   },
   "shared": {
-    "deploy_order": 0,
+    "deploy_order": 3,
     "id": "898449181946",
     "root_user_email": ""
   }
