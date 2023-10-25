@@ -107,6 +107,14 @@ locals {
         actions = ["kms:Decrypt", "kms:GenerateDataKey*"]
       }]
     }
+    budget-alarm-sns-encryption = {
+      region                     = local.aws_region
+      cmk_administrator_iam_arns = ["arn:aws:iam::${local.account_id}:root"]
+      cmk_service_principals = [{
+        name    = "budgets.amazonaws.com"
+        actions = ["kms:Decrypt", "kms:GenerateDataKey*"]
+      }]
+    }
   }
 }
 
