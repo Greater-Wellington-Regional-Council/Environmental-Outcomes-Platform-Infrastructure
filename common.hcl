@@ -93,4 +93,6 @@ locals {
 
   # Centrally define the internal services domain name configured by the route53-private module
   internal_services_domain_name = "gwrc.aws"
+
+  budget_monitoring_notification_email_addresses = ["1c7ffc35.greaterwellington.onmicrosoft.com@au.teams.ms", "sam.gundersen@gw.govt.nz", "chris.dick@gw.govt.nz"]
 }

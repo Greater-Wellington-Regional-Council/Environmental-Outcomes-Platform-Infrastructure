@@ -8,4 +8,5 @@ locals {
       created_outside_terraform = true
     }
   }
+  budget_monitoring_notification_email_addresses = ["eop+eopstage_budget_notifications@gw.govt.nz"]
 }
