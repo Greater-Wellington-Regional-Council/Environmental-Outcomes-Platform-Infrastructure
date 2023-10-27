@@ -250,3 +250,10 @@ ApplicationAutoScalingReadOnlyAccess:
     - "application-autoscaling:Describe*"
   resources:
     - "*"
+
+BudgetsReadOnlyAccess:
+  effect: "Allow"
+  actions:
+    - "budgets:ViewBudget"
+  resources:
+    - "*"

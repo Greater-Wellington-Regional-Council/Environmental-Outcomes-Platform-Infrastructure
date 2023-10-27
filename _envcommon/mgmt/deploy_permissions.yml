@@ -195,3 +195,10 @@ ApplicationAutoScalingDeployAccess:
     - "application-autoscaling:*"
   resources:
     - "*"
+
+BudgetsDeployAccess:
+  effect: "Allow"
+  actions:
+    - "budgets:*"
+  resources:
+    - "*"
