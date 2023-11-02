@@ -33,6 +33,10 @@ resource "aws_budgets_budget" "monthly_cloudwatch_budget" {
 
   time_period_start = "2022-10-01_00:00"
 
+  cost_filters = {
+    Service  = "AmazonCloudWatch"
+  }
+
   notification {
     comparison_operator        = "GREATER_THAN"
     threshold                  = 100
