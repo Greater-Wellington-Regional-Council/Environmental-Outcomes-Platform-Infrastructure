@@ -7,6 +7,6 @@ include "envcommon" {
 }
 
 inputs = {
-  total_monthly_budget_amount      = 75
-  monthly_cloudwatch_budget_amount = 5
+  total_monthly_budget_amount      = 120
+  monthly_cloudwatch_budget_amount = 30
 }

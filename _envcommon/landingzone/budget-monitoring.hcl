@@ -8,8 +8,8 @@ locals {
 }
 
 inputs = {
-  total_monthly_budget_amount      = 1250.00
-  monthly_cloudwatch_budget_amount = 150
+  total_monthly_budget_amount      = 2000
+  monthly_cloudwatch_budget_amount = 500
 
   notification_email_addresses = setunion(local.account_vars.locals.budget_monitoring_notification_email_addresses, local.common_vars.locals.budget_monitoring_notification_email_addresses)
 }
