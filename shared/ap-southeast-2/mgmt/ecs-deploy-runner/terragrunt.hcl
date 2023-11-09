@@ -55,7 +55,7 @@ inputs = {
 
     allowed_repos = [
       local.common_vars.locals.infra_live_repo_https,
-      "https://github.com/gruntwork-io/terraform-aws-ci.git",
+      "https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-ci.git",
     ]
     allowed_repos_regex = []
     git_config = {
@@ -77,9 +77,9 @@ inputs = {
     allowed_repos = [
       local.common_vars.locals.infra_live_repo_ssh,
       # Also allow building from Gruntwork Service Catalog repo
-      "https://github.com/gruntwork-io/terraform-aws-service-catalog.git",
+      "https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git",
       # Also allow building from Gruntwork Sample App repo
-      "https://github.com/gruntwork-io/aws-sample-app.git",
+      "https://github.com/Greater-Wellington-Regional-Council/aws-sample-app.git",
     ]
     allowed_repos_regex                     = []
     repo_access_ssh_key_secrets_manager_arn = null

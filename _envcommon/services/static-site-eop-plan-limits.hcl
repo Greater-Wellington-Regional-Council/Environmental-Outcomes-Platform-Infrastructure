@@ -32,7 +32,7 @@ EOF
 }
 
 locals {
-  source_base_url = "git::git@github.com:gruntwork-io/terraform-aws-service-catalog.git//modules/services/public-static-website"
+  source_base_url = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git//modules/services/public-static-website"
   account_vars    = read_terragrunt_config(find_in_parent_folders("account.hcl"))
 }
 

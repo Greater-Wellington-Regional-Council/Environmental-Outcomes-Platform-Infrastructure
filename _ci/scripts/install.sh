@@ -19,13 +19,13 @@ function run {
 
   curl -Ls https://raw.githubusercontent.com/gruntwork-io/gruntwork-installer/main/bootstrap-gruntwork-installer.sh \
     | bash /dev/stdin --version "$gruntwork_installer_version"
-  gruntwork-install --repo "https://github.com/gruntwork-io/terraform-aws-ci" \
+  gruntwork-install --repo "https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-ci" \
     --binary-name "infrastructure-deployer" \
     --tag "$module_ci_version"
-  gruntwork-install --repo "https://github.com/gruntwork-io/terraform-aws-ci" \
+  gruntwork-install --repo "https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-ci" \
     --module-name "terraform-helpers" \
     --tag "$module_ci_version"
-  gruntwork-install --repo "https://github.com/gruntwork-io/terraform-aws-security" \
+  gruntwork-install --repo "https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security" \
     --module-name "aws-auth" \
     --tag "$module_security_version"
 }
