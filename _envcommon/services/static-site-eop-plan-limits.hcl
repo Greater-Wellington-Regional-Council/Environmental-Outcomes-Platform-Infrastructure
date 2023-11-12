@@ -1,5 +1,5 @@
 terraform {
-  source = "${local.source_base_url}?ref=v0.96.4"
+  source = "${local.source_base_url}?ref=v0.107.5"
 }
 
 dependency "acm_tls_certificate" {

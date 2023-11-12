@@ -1,5 +1,5 @@
 terraform {
-  source = "${local.source_base_url}?ref=v0.12.2"
+  source = "${local.source_base_url}?ref=v0.12.4"
 }
 
 dependency "eop_secrets" {
