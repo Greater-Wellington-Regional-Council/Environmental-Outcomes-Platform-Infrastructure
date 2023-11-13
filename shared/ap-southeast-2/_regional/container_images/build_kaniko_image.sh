@@ -12,7 +12,7 @@
 set -e
 
 readonly DOCKERFILE_REPO="https://github.com/gruntwork-io/terraform-aws-ci.git"
-readonly DOCKERFILE_REPO_REF="v0.50.6"
+readonly DOCKERFILE_REPO_REF="v0.52.19"
 readonly DOCKERFILE_CONTEXT_PATH="modules/ecs-deploy-runner/docker/kaniko"
 readonly DEPLOY_RUNNER_REGION="ap-southeast-2"
 readonly ECR_REPO_REGION="ap-southeast-2"
@@ -40,7 +40,7 @@ function run {
     --repo "$DOCKERFILE_REPO" \
     --ref "$DOCKERFILE_REPO_REF" \
     --context-path "$DOCKERFILE_CONTEXT_PATH" \
-    --build-arg 'GITHUB_OAUTH_TOKEN' \
+    --env-secret 'github-token=GITHUB_OAUTH_TOKEN' \
     --docker-image-tag "$ecr_repo_url:$DOCKERFILE_REPO_REF"
 }
 

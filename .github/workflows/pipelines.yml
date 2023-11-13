@@ -28,9 +28,9 @@ on:
       - ".github/**"
 
 env:
-  GRUNTWORK_INSTALLER_VERSION: v0.0.38
-  MODULE_CI_VERSION: v0.50.4
-  MODULE_SECURITY_VERSION: v0.65.8
+  GRUNTWORK_INSTALLER_VERSION: v0.0.39
+  MODULE_CI_VERSION: v0.52.19
+  MODULE_SECURITY_VERSION: v0.69.3
   # Disables the use of the Amazon EC2 instance metadata service (IMDS).
   # Forces the AWS CLI to use the env vars defined above for credentials.
   AWS_EC2_METADATA_DISABLED: true
@@ -89,15 +89,6 @@ jobs:
         env:
           GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: run plan
-        id: plan
-        run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ github.sha }}" plan
-        shell: bash
-        env:
-          GITHUB_OAUTH_TOKEN: ${{ secrets.GH_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          
       - name: run deploy
         id: deploy
         run: ./_ci/scripts/deploy-infra.sh "${{ steps.ref.outputs.source_ref }}" "${{ steps.ref.outputs.short_ref }}" apply
