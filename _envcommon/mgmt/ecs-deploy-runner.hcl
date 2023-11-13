@@ -183,10 +183,8 @@ inputs = {
   # A list of role names that should be given permissions to invoke the infrastructure CI/CD pipeline.
   iam_roles = ["allow-auto-deploy-from-other-accounts", ]
 
-  container_cpu        = 4096
-  container_memory     = 8192
-  container_max_cpu    = 8192
-  container_max_memory = 32768
+  container_cpu        = 8192
+  container_memory     = 32768
 
   # Configure opt in regions for each multi region service based on locally configured setting.
   kms_grant_opt_in_regions = local.opt_in_regions
