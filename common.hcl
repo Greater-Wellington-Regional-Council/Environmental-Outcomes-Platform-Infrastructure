@@ -18,11 +18,11 @@ locals {
 
   # All accounts use the ECR repo in the shared account for the ecs-deploy-runner docker image.
   deploy_runner_ecr_uri             = "${local.account_ids.shared}.dkr.ecr.${local.default_region}.amazonaws.com/ecs-deploy-runner"
-  deploy_runner_container_image_tag = "v0.50.11"
+  deploy_runner_container_image_tag = "v0.50.12"
 
   # All accounts use the ECR repo in the shared account for the Kaniko docker image.
   kaniko_ecr_uri             = "${local.account_ids.shared}.dkr.ecr.${local.default_region}.amazonaws.com/kaniko"
-  kaniko_container_image_tag = "v0.50.4"
+  kaniko_container_image_tag = "v0.50.12"
 
   # The infrastructure-live repository on which the deploy runner operates.
   infra_live_repo_https = "https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure.git"
