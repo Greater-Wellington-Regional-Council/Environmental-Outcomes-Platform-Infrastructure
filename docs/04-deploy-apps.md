@@ -267,7 +267,7 @@ For the purpose of this example, we will assume we want to deploy the simple web
 ### Deploying your configuration
 
 The above are the minimum set of configurations that you need to deploy the app. You can take a look at [`variables.tf`
-of `ecs-service`](https://github.com/gruntwork-io/terraform-aws-service-catalog/tree/main/modules/services/ecs-service)
+of `ecs-service`](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/tree/main/modules/services/ecs-service)
 for all the options.
 
 Once you've verified that everything looks fine, change to the new ALB directory you created, and run:

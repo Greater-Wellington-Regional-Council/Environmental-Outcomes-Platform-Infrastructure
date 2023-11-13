@@ -57,7 +57,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 }
 
-# Based on https://github.com/gruntwork-io/terraform-aws-static-assets/blob/main/modules/s3-cloudfront/main.tf#L542
+# Based on https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-static-assets/blob/main/modules/s3-cloudfront/main.tf#L542
 module "access_logs" {
   source = "git::git@github.com:gruntwork-io/terraform-aws-security.git//modules/private-s3-bucket?ref=v0.65.3"
 

@@ -92,7 +92,7 @@ inputs = {
   allow_ssh_from_cidr_list = local.common_vars.locals.ssh_ip_allow_list
 
   # Access the VPN server over SSH using ssh-grunt.
-  # See: https://github.com/gruntwork-io/terraform-aws-security/blob/master/modules/ssh-grunt
+  # See: https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/blob/master/modules/ssh-grunt
   enable_ssh_grunt                    = true
   ssh_grunt_iam_group                 = local.common_vars.locals.ssh_grunt_users_group
   ssh_grunt_iam_group_sudo            = local.common_vars.locals.ssh_grunt_sudo_users_group

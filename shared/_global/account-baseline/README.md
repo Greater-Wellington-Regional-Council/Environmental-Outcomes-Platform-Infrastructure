@@ -20,8 +20,8 @@ Since this is the shared-services account, it is responsible for sharing resourc
 
 For each account, the root account ARN (for example, `arn:aws:iam::111111111111:root`) is granted access to each key, allowing administrators in that account to delegate additional access as needed [using grants](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html).
 
-For full details on what this configuration includes and how to use it, refer to the [`account-baseline-app` service catalog module](https://github.com/gruntwork-io/terraform-aws-service-catalog/blob/main/modules/landingzone/account-baseline-app/README.adoc). If you don't have access to this repo, email
+For full details on what this configuration includes and how to use it, refer to the [`account-baseline-app` service catalog module](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/blob/main/modules/landingzone/account-baseline-app/README.adoc). If you don't have access to this repo, email
 [support@gruntwork.io](mailto:support@gruntwork.io).
 
-See [the module docs](https://github.com/gruntwork-io/terraform-aws-service-catalog/tree/v0.95.0/modules/landingzone/account-baseline-app) for more
+See [the module docs](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/tree/v0.95.0/modules/landingzone/account-baseline-app) for more
 information about the underlying Terraform module.

@@ -261,7 +261,7 @@ Once the branch is merged, updates to the `main` branch will trigger a build job
 
 ## Update the CI/CD pipeline itself
 
-The CI/CD pipeline uses the Gruntwork [terraform-aws-ci](https://github.com/gruntwork-io/terraform-aws-ci) repo code, so
+The CI/CD pipeline uses the Gruntwork [terraform-aws-ci](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-ci) repo code, so
 whenever there's a new release, it's a good idea to update your pipeline.
 
 Here are the manual steps for this process:
