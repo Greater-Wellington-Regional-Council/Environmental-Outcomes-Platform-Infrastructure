@@ -59,10 +59,12 @@ resource "aws_cloudfront_distribution" "cdn" {
 
 # Based on https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-static-assets/blob/main/modules/s3-cloudfront/main.tf#L542
 module "access_logs" {
-  source = "git::git@github.com:gruntwork-io/terraform-aws-security.git//modules/private-s3-bucket?ref=v0.65.3"
+  source = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-security.git//modules/private-s3-bucket?ref=v0.69.3-gwrc"
 
-  name          = "${var.domain_name}-cloudfront-logs"
-  sse_algorithm = "AES256"
+  name             = "${var.domain_name}-cloudfront-logs"
+  acl              = null
+  bucket_ownership = "ObjectWriter"
+  sse_algorithm    = "AES256"
 
   bucket_policy_statements = {
     AllowCloudfrontWriteS3AccessLog = {
