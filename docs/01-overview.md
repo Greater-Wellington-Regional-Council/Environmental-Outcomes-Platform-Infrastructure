@@ -5,7 +5,7 @@ This documentation contains an overview of the architecture deployed and managed
 First, the short version:
 
 - This is an end-to-end tech stack for [Amazon Web Services (AWS)](https://aws.amazon.com/) that incluldes all the
-  basic infrastructure a company needs, including the network topology, orchestration tools (e.g., Kubernetes or ECS), databases, caches, load balancers, CI/CD pipeline, monitoring, alerting, log aggregation, etc.- It's built on top of the [Gruntwork Service Catalog](https://github.com/gruntwork-io/terraform-aws-service-catalog).
+  basic infrastructure a company needs, including the network topology, orchestration tools (e.g., Kubernetes or ECS), databases, caches, load balancers, CI/CD pipeline, monitoring, alerting, log aggregation, etc.- It's built on top of the [Gruntwork Service Catalog](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog).
 - It's all defined and managed as code using tools such as [Terraform](https://www.terraform.io/), [Packer](https://www.packer.io/), and [Docker](https://www.docker.com/).
 
 Here's a diagram that shows a rough overview of what the Reference Architecture looks like:
@@ -44,7 +44,7 @@ All of the infrastructure in this repo is managed as **code** using [Terragrunt]
 
 * You can package your infrastructure as reusable, documented, battle-tested modules that make it easier to scale and
   evolve your infrastructure. In fact, most of the infrastructure code in this architecture is deployed from the service modules in the
-  [Gruntwork Service Catalog](https://github.com/gruntwork-io/terraform-aws-service-catalog/).
+  [Gruntwork Service Catalog](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/).
 
 For more info on Infrastructure as Code and Terraform, check out [A Comprehensive Guide to
 Terraform](https://blog.gruntwork.io/a-comprehensive-guide-to-terraform-b3d32832baca) and our guide on [How to use the Gruntwork Infrastructure as Code Library](https://gruntwork.io/guides/foundations/how-to-use-gruntwork-infrastructure-as-code-library/).
@@ -114,7 +114,7 @@ Where:
   Instances, Auto Scaling Groups, ECS Clusters, Databases, Load Balancers, and so on. These resources are further
   organized by the overarching category that they relate to, such as `networking` and `services`. Note that the
   Terraform code for most of these resources lives in the [terraform-aws-service-catalog
-  repo](https://github.com/gruntwork-io/terraform-aws-service-catalog).
+  repo](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog).
 
 
 
@@ -161,7 +161,7 @@ can be useful for monitoring and auditing network traffic across the VPC. Each V
 Logs, under the log group `VPC_NAME-vpc-flow-logs`, where the `VPC_NAME` is an input variable to the `vpc` module.
 
 To learn more about VPCs and subnets, check out the Gruntwork [vpc
-service](https://github.com/gruntwork-io/terraform-aws-service-catalog/tree/main/modules/networking/vpc).
+service](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/tree/main/modules/networking/vpc).
 
 
 
@@ -194,7 +194,7 @@ VPN client, you are "in the network", and will be able to access the private res
 to your EC2 Instances).
 
 For more info, see the [openvpn
-service](https://github.com/gruntwork-io/terraform-aws-service-catalog/tree/main/modules/mgmt/openvpn-server) and the VPN
+service](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/tree/main/modules/mgmt/openvpn-server) and the VPN
 section of the [Authentication docs](02-authenticate.md).
 
 
@@ -223,7 +223,7 @@ We are using [Amazon Route 53](https://aws.amazon.com/route53/) to configure DNS
 have configured SSL/TLS certificates for your domain names using [Amazon's Certificate Manager
 (ACM)](https://aws.amazon.com/certificate-manager/), which issues certificates that are free and renew automatically.
 
-For more info, see the [route53 service](https://github.com/gruntwork-io/terraform-aws-service-catalog/tree/main/modules/networking/route53).
+For more info, see the [route53 service](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/tree/main/modules/networking/route53).
 
 
 
@@ -239,13 +239,13 @@ We have configured security best practices in every aspect of this infrastructur
 * **Application secrets**: see secrets management section of the [Deploy your Apps docs](04-deploy-apps.md).
 * **User accounts**: see the [Authentication docs](02-authenticate.md).
 
-* **Auditing**: see the [CloudTrail](https://github.com/gruntwork-io/terraform-aws-security/tree/main/modules/cloudtrail) and
-  [AWS Config](https://github.com/gruntwork-io/terraform-aws-security/tree/main/modules/aws-config) modules.
+* **Auditing**: see the [CloudTrail](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/tree/main/modules/cloudtrail) and
+  [AWS Config](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/tree/main/modules/aws-config) modules.
 
-* **Intrusion detection**: see the [fail2ban](https://github.com/gruntwork-io/terraform-aws-security/tree/main/modules/fail2ban)
-  and [GuardDuty](https://github.com/gruntwork-io/terraform-aws-security/tree/main/modules/guardduty-multi-region) modules.
+* **Intrusion detection**: see the [fail2ban](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/tree/main/modules/fail2ban)
+  and [GuardDuty](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/tree/main/modules/guardduty-multi-region) modules.
 
-* **Security updates**: see the [auto-update module](https://github.com/gruntwork-io/terraform-aws-security/tree/main/modules/auto-update).
+* **Security updates**: see the [auto-update module](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/tree/main/modules/auto-update).
 
 Check out [Gruntwork Security Best
 Practices](https://docs.google.com/document/d/e/2PACX-1vTikva7hXPd2h1SSglJWhlW8W6qhMlZUxl0qQ9rUJ0OX22CQNeM-91w4lStRk9u2zQIn6lPejUbe-dl/pub)

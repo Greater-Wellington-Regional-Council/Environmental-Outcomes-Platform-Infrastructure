@@ -9,8 +9,8 @@ Redis Replication Group. The resources that are created include:
 1. A **Security Group** to limit access to the Replication Group.
 
 Under the hood, this is all implemented using Terraform modules from the [Gruntwork Service
-Catalog](https://github.com/gruntwork-io/terraform-aws-service-catalog) repo. If you don't have access to this repo, email
+Catalog](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog) repo. If you don't have access to this repo, email
 [support@gruntwork.io](mailto:support@gruntwork.io).
 
-See [the module docs](https://github.com/gruntwork-io/terraform-aws-service-catalog/tree/v0.95.0/modules/data-stores/redis) for more
+See [the module docs](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/tree/v0.95.0/modules/data-stores/redis) for more
 information about the underlying Terraform module.

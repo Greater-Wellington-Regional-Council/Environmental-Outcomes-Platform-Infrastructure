@@ -7,7 +7,7 @@ helping with development.
 
 This code is built from the [Gruntwork Reference Architecture](https://gruntwork.io/reference-architecture/) using
 services from the [Gruntwork
-AWS Service Catalog](https://github.com/gruntwork-io/terraform-aws-service-catalog). There is supporting documentation
+AWS Service Catalog](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog). There is supporting documentation
 in the `./docs` folder of this repo, which was initially provided by Gruntworks during the reference architecture setup,
 which is useful but quite generic, it will be updated over time to be more specific to EOP.
 
