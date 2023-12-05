@@ -1,4 +1,4 @@
 # Define some config vars that can be imported by the shared terragrunt config. To keep the config dry.
 locals {
-  container_image_tag = "c9e439b4f0e81bbd831d53d89df02103e9cca37e"
+  container_image_tag = "9dc8208ee2fa563e848db9a0031353016ee9f78c"
 }
