@@ -24,3 +24,9 @@ martin.peak@gw.govt.nz:
     - _all-accounts
     - full-access
     - ssh-grunt-sudo-users
+
+swapna.josmisam@gw.govt.nz:
+  groups:
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
