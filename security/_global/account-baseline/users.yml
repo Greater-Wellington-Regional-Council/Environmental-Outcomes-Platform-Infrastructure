@@ -13,13 +13,13 @@ steve.mosley@gw.govt.nz:
     - full-access
     - ssh-grunt-sudo-users
 
-vimal.jobanputra@gw.govt.nz:
+martin.peak@gw.govt.nz:
   groups:
     - _all-accounts
     - full-access
     - ssh-grunt-sudo-users
 
-martin.peak@gw.govt.nz:
+swapna.josmisam@gw.govt.nz:
   groups:
     - _all-accounts
     - full-access
