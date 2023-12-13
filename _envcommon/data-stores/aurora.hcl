@@ -85,12 +85,13 @@ locals {
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
   name              = "aurora-${lower(local.account_name)}"
-  instance_type     = "db.t3.medium"
+  instance_type     = "db.t4g.medium"
   vpc_id            = dependency.vpc.outputs.vpc_id
   aurora_subnet_ids = dependency.vpc.outputs.private_persistence_subnet_ids
 
   instance_count = "1"
   engine_mode    = "provisioned"
+  engine_version = "15.4"
 
   enable_cloudwatch_alarms          = true
   alarms_sns_topic_arns             = [dependency.sns.outputs.topic_arn]
@@ -112,8 +113,8 @@ inputs = {
   apply_immediately = false
 
   db_cluster_custom_parameter_group = {
-    name   = "custom-aurora-postgresql13"
-    family = "aurora-postgresql13"
+    name   = "custom-aurora-postgresql15"
+    family = "aurora-postgresql15"
     parameters = [
       {
         name         = "log_temp_files"
