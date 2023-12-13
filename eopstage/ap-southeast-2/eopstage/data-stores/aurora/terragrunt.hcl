@@ -15,7 +15,4 @@ include "envcommon" {
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
   apply_immediately = true
-
-  // This will be removed after the update to 15
-  allow_major_version_upgrade = true
 }

@@ -14,7 +14,5 @@ include "envcommon" {
 # Module parameters to pass in. Note that these parameters are environment specific.
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
-  // These will be removed after the update to 15
-  apply_immediately           = true
-  allow_major_version_upgrade = true
+
 }
