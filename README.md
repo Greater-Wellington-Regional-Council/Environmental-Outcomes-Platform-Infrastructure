@@ -118,7 +118,7 @@ role_arn = arn:aws:iam::898449181946:role/allow-full-access-from-other-accounts
 
 * Configure aws-vault
 
-See [here](https://github.com/99designs/aws-vault) and 
+See [here for aws-vault installation and setup details](https://github.com/99designs/aws-vault).
 ```
 aws-vault add security
 ```
