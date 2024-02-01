@@ -80,8 +80,8 @@ locally and avoiding clicking around the AWS UI.
   
 * Install the [AWS command line application](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [aws-vault](https://github.com/99designs/aws-vault#installing).
   
-* Add your IAM User credentials to `.aws/config` as follows.  This is a generated example, so update the `<IAM User>` and
-  `role/???` accordingly.  Select an appropriate role name from the list of roles above.
+* Add your IAM User credentials to `.aws/config` as follows.  This is a generated example, so replace `<IAM User>` and
+  **allow-full-access-from-other-accounts** with the correct user name and role for you.  Select an appropriate role name from the list of roles above.
 
 ```
 [default]
@@ -116,13 +116,13 @@ mfa_serial = arn:aws:iam::063810897000:mfa/<IAM User>
 role_arn = arn:aws:iam::898449181946:role/allow-full-access-from-other-accounts
 ```
 
-* Configure aws-vault
+* Configure aws-vault.  See [here for aws-vault installation and setup details](https://github.com/99designs/aws-vault).
 
-See [here for aws-vault installation and setup details](https://github.com/99designs/aws-vault).
+* Run the following command to add the security profile credentials to aws-vault 
 ```
 aws-vault add security
 ```
-If you are working on a mac, you may need to explicitly open the Keychain Access application at this point and add the aws-vault keychain file to the list of keychains.  
+* If you are working on a mac, you may need to explicitly open your Mac's Keychain Access application at this point and add the aws-vault keychain.  This involves opening the Keychain app, selecting File/Add Keychain and selecting aws-vault.keychain-db from the file dialog to add it.
 
 * Once configured, you can use AWS vault with Terragrunt, Terraform, the AWS CLI, and anything else that uses the AWS
   SDK to authenticate. To check if your authentication is working, you can run `aws sts caller-identity`
