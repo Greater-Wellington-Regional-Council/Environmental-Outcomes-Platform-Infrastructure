@@ -19,14 +19,13 @@ Here's a diagram that shows a rough overview of what the Reference Architecture 
 
 ## Getting Started
 
-If you are not currently a member of the EOP delivery team in GitHub and would like to make changes, you can either fork the repository and submit a PR from your fork, or request that you be added to the EOP group on GitHub and create a new branch and PR containing your changes.  Again, this is only needed if you need/want to change the EOP infrastructure.  
+The code in this repo describes the active installation of EOP currently shared by all contributing councils.  In the event you might want to create and host your own instance somewhere, you can of course fork the repository. Otherwise, to modify the existing infrastructure for some reason, for example to support a new API or front end you have developed, you will need to complete the following one-time steps:-
+* Contact the EOP technical team to have yourself added to the EOP developers group in Github 
+* Add your email to the AWS account by modifying [this file](https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure/blob/main/security/_global/account-baseline/users.yml) through a pull request
+* Set up the [AWS command line application](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [aws-on your development machine so that you can authenticate with the AWS account to check/test your changes (see instructions below after downloading and installing)
+* Ensure that you can connect to the EOP Bastion Hosts over SSH from your development machine also for checking/testing
 
-In any case, it is likely you will need to to check and test your changes in AWS before submitting your PR.  That requires the following setup:-
-* Add your details to [this file](https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure/blob/main/security/_global/account-baseline/users.yml) via a pull request
-* Set up the AWS CLI on your development machine so that you can authenticate with the AWS account
-* Ensure you can connect to the Bastion Hosts from your development machine if required (for example, if you are developing a front end module you need to test against your AWS changes)
-
-Detailed instructions follow.  
+Detailed instructions follow for the above steps. Having completed them, you are in a position to contribute to the existing infrastructure as described [here](#Contributing) 
 
 ### AWS Account
 
