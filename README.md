@@ -5,7 +5,7 @@ infrastructure in this repo is managed as **code** and deployed via merging code
 this repo. As such there should be few times that changes need to be made via click-ops in the AWS console, other than
 helping with development.  
 
-In fact, even the code in this repository only needs to change if the Infrastructure in AWS on which the various EOP components rely needs to be altered.  If you are adding a front end application or API to Ha Kākano, for example, that affects AWS resources or needs new resources, then you will likely make and test the changes locally first and then modify this repo to update the Infrastructure as Code.
+In fact, even the code in this repository only needs to change if the Infrastructure in AWS on which the various EOP components rely needs to be altered.  If you are adding a front end application or API to Ha Kākano, for example, that affects AWS resources or needs new resources, then you will likely make and test the changes locally first and then modify this repo to update the Infrastructure as Code through a pull request.
 
 This code is built from the [Gruntwork Reference Architecture](https://gruntwork.io/reference-architecture/) using
 services from the [Gruntwork
@@ -19,13 +19,12 @@ Here's a diagram that shows a rough overview of what the Reference Architecture 
 
 ## Getting Started
 
-In order to change this code, you need to have access to AWS and the ability to create Pull Requests against the repo.  If you are not member of Greater Wellingtion Regional Council's team, you will likely need to fork the repo and create and submit a PR containing your proposed changes from that fork.  Contact the Greater Wellington Delivery Team if you would like help with that.  GW developers will need to:-
-* Have themselves added to Github
-* Add themselves to AWS
-* Set up the AWS CLI on their development machine
-* Ensure they can connect to the Bastion Hosts from their machine
+If you are not currently a member of the EOP delivery team in GitHub and would like to make changes, you can either fork the repository and submit a PR from your fork, or request that you be added to the EOP group on GitHub and create a new branch and PR containing your changes.  Again, this is only needed if you need/want to change the EOP infrastructure.  In any case, it is likely you will need to to check and test yur changes in AWS before submitting your PR.  To gain access to non-production accounts in AWS for this purpose, you will need to do the following:-
+* Add your details to [this file](https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure/blob/main/security/_global/account-baseline/users.yml) via a pull request
+* Set up the AWS CLI on your development machine so that you can authenticate with the AWS account
+* Ensure you can connect to the Bastion Hosts from your development machine if required (for example, if you are developing a front end module you need to test against your AWS changes)
 
-Detailed instructions follow for the above.
+Detailed instructions follow.  
 
 ### AWS Account
 
