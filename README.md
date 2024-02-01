@@ -3,7 +3,9 @@
 This repository contains code to deploy the EOP infrastructure across all live environments in AWS. All the
 infrastructure in this repo is managed as **code** and deployed via merging code changes into the **main** branch of
 this repo. As such there should be few times that changes need to be made via click-ops in the AWS console, other than
-helping with development.
+helping with development.  
+
+In fact, even the code in this repository only needs to change if the Infrastructure in AWS on which the various EOP components rely needs to be altered.  If you are adding a front end application or API to Ha Kākano, for example, that affects AWS resources or needs new resources, then you will likely make and test the changes locally first and then modify this repo to update the Infrastructure as Code.
 
 This code is built from the [Gruntwork Reference Architecture](https://gruntwork.io/reference-architecture/) using
 services from the [Gruntwork
@@ -17,7 +19,13 @@ Here's a diagram that shows a rough overview of what the Reference Architecture 
 
 ## Getting Started
 
-This section is for people new to the EOP team looking to work in or support the AWS infrastructure.
+In order to change this code, you need to have access to AWS and the ability to create Pull Requests against the repo.  If you are not member of Greater Wellingtion Regional Council's team, you will likely need to fork the repo and create and submit a PR containing your proposed changes from that fork.  Contact the Greater Wellington Delivery Team if you would like help with that.  GW developers will need to:-
+* Have themselves added to Github
+* Add themselves to AWS
+* Set up the AWS CLI on their development machine
+* Ensure they can connect to the Bastion Hosts from their machine
+
+Detailed instructions follow for the above.
 
 ### AWS Account
 
