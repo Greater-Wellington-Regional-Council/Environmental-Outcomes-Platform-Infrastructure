@@ -20,9 +20,9 @@ Here's a diagram that shows a rough overview of what the Reference Architecture 
 ## Getting Started
 
 The code in this repo describes the active installation of EOP currently shared by all contributing councils.  In the event you might want to create and host your own instance somewhere, you can of course fork the repository. Otherwise, to modify the existing infrastructure for some reason, for example to support a new API or front end you have developed, you will need to complete the following one-time steps:-
-* Contact the EOP technical team to have yourself added to the EOP developers group in Github 
+* Contact the EOP technical team to have yourself added to the EOP developers group in Github
 * Add your email to the AWS account by modifying [this file](https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure/blob/main/security/_global/account-baseline/users.yml) through a pull request
-* Set up the [AWS command line application](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [aws-on your development machine so that you can authenticate with the AWS account to check/test your changes (see instructions below after downloading and installing)
+* Set up the [AWS command line application](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) on a development machine so that you can authenticate with the AWS account to check/test your changes (see instructions below after downloading and installing)
 * Ensure that you can connect to the EOP Bastion Hosts over SSH from your development machine also for checking/testing
 
 Detailed instructions follow for the above steps. Having completed them, you are in a position to contribute to the existing infrastructure as described [here](#Contributing) 
