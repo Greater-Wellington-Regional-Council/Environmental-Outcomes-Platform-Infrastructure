@@ -122,10 +122,10 @@ role_arn = arn:aws:iam::898449181946:role/allow-full-access-from-other-accounts
 ```
 aws-vault add security
 ```
-* If you are working on a mac, you may need to explicitly open your Mac's Keychain Access application at this point and add the aws-vault keychain.  This involves opening the Keychain app, selecting File/Add Keychain and selecting aws-vault.keychain-db from the file dialog to add it.
+* If you are working on a mac, you may need to explicitly open your Mac's Keychain Access application at this point and add the aws-vault keychain.  One way you'll recongnise that you need to do this if aws-vault prompts for a password, but will not accept the correct password which you assigned in the last step.  Another indicator is that there is no aws-vault under Custom Keychains in the Keychain Access app.  Open the Keychain Access app, select File/Add Keychain and select the aws-vault.keychain-db file in the resulting dialog to add it.  If added successfully, it should now appear in the app under **Custom Keychains**.
 
-* Once configured, you can use AWS vault with Terragrunt, Terraform, the AWS CLI, and anything else that uses the AWS
-  SDK to authenticate. To check if your authentication is working, you can run `aws sts caller-identity`
+* Once configured, you can use AWS Vault with Terragrunt, Terraform, the AWS CLI, and anything else that uses the AWS
+  SDK to authenticate. To check if your authentication is working, you   can run `aws sts caller-identity`
 
 ```
 aws-vault exec eopdev -- aws sts get-caller-identity
