@@ -19,7 +19,9 @@ Here's a diagram that shows a rough overview of what the Reference Architecture 
 
 ## Getting Started
 
-If you are not currently a member of the EOP delivery team in GitHub and would like to make changes, you can either fork the repository and submit a PR from your fork, or request that you be added to the EOP group on GitHub and create a new branch and PR containing your changes.  Again, this is only needed if you need/want to change the EOP infrastructure.  In any case, it is likely you will need to to check and test yur changes in AWS before submitting your PR.  To gain access to non-production accounts in AWS for this purpose, you will need to do the following:-
+If you are not currently a member of the EOP delivery team in GitHub and would like to make changes, you can either fork the repository and submit a PR from your fork, or request that you be added to the EOP group on GitHub and create a new branch and PR containing your changes.  Again, this is only needed if you need/want to change the EOP infrastructure.  
+
+In any case, it is likely you will need to to check and test your changes in AWS before submitting your PR.  That requires the following setup:-
 * Add your details to [this file](https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure/blob/main/security/_global/account-baseline/users.yml) via a pull request
 * Set up the AWS CLI on your development machine so that you can authenticate with the AWS account
 * Ensure you can connect to the Bastion Hosts from your development machine if required (for example, if you are developing a front end module you need to test against your AWS changes)
