@@ -7,13 +7,13 @@
 # the Shared Services AWS account.
 #
 # This is the build script for the ECS Cluster Instance AMI. You can view the packer template at the following URL:
-# https://github.com/gruntwork-io/terraform-aws-service-catalog/blob/v0.95.0/modules/services/ecs-cluster/ecs-node-al2.pkr.hcl
+# https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog/blob/v0.95.0/modules/services/ecs-cluster/ecs-node-al2.pkr.hcl
 #
 # Pass in the --run-local flag to build the image on the local machine, without going through the ECS Deploy Runner.
 
 set -e
 
-readonly PACKER_TEMPLATE_REPO="https://github.com/gruntwork-io/terraform-aws-service-catalog.git//modules/services/ecs-cluster/ecs-node-al2.pkr.hcl"
+readonly PACKER_TEMPLATE_REPO="https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git//modules/services/ecs-cluster/ecs-node-al2.pkr.hcl"
 readonly PACKER_TEMPLATE_REPO_REF="v0.99.0"
 readonly SERVICE_CATALOG_REF="v0.99.0"
 readonly DEPLOY_RUNNER_REGION="ap-southeast-2"

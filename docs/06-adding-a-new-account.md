@@ -165,7 +165,7 @@ If you are sharing encrypted AMIs, then you will also need to ensure the new acc
 encrypts the AMI root device. This is managed in the `shared` account baseline module.
 
 Finally, for the [ECS Deploy
-Runner](https://github.com/gruntwork-io/terraform-aws-ci/tree/main/modules/ecs-deploy-runner) to work, the new account
+Runner](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-ci/tree/main/modules/ecs-deploy-runner) to work, the new account
 needs to be able to access the secrets for accessing the remote repositories and the Docker images that back the build
 runners. Both of these are stored in the `shared` account.
 

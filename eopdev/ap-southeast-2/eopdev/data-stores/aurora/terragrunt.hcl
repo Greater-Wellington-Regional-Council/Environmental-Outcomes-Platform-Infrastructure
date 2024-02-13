@@ -14,4 +14,5 @@ include "envcommon" {
 # Module parameters to pass in. Note that these parameters are environment specific.
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
+  apply_immediately = true
 }

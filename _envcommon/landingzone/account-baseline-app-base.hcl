@@ -10,7 +10,7 @@
 # locally, you can use --terragrunt-source /path/to/local/checkout/of/module to override the source parameter to a
 # local check out of the module for faster iteration.
 terraform {
-  source = "${local.source_base_url}?ref=v0.105.1"
+  source = "${local.source_base_url}?ref=v0.107.5-gwrc"
 
   # This module deploys some resources (e.g., AWS Config) across all AWS regions, each of which needs its own provider,
   # which in Terraform means a separate process. To avoid all these processes thrashing the CPU, which leads to network
@@ -49,7 +49,6 @@ provider "aws" {
   # Skip credential validation and account ID retrieval for disabled or restricted regions
   skip_credentials_validation = ${contains(coalesce(local.opt_in_regions, []), region) ? "false" : "true"}
   skip_requesting_account_id  = ${contains(coalesce(local.opt_in_regions, []), region) ? "false" : "true"}
-  skip_get_ec2_platforms      = ${contains(coalesce(local.opt_in_regions, []), region) ? "false" : "true"}
 }
 %{endfor}
 EOF
@@ -59,7 +58,7 @@ EOF
 # Locals are named constants that are reusable within the configuration.
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  source_base_url = "git::git@github.com:gruntwork-io/terraform-aws-service-catalog.git//modules/landingzone/account-baseline-app"
+  source_base_url = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git//modules/landingzone/account-baseline-app"
 
   # Automatically load common variables shared across all accounts
   common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))

@@ -33,8 +33,12 @@ resource "aws_budgets_budget" "monthly_cloudwatch_budget" {
 
   time_period_start = "2022-10-01_00:00"
 
-  cost_filters = {
-    Service  = "AmazonCloudWatch"
+  cost_filter {
+    name = "Service"
+    values = [
+      "AmazonCloudWatch"
+    ]
+
   }
 
   notification {

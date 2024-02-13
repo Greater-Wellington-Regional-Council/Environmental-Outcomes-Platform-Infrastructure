@@ -1,5 +1,5 @@
 terraform {
-  source = "${local.source_base_url}?ref=v0.12.2"
+  source = "${local.source_base_url}?ref=v0.12.4"
 }
 
 dependency "eop_secrets" {
@@ -32,7 +32,7 @@ dependency "network_bastion" {
 
 
 locals {
-  source_base_url = "git::git@github.com:gruntwork-io/terraform-aws-messaging.git//modules/msk"
+  source_base_url = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-messaging.git//modules/msk"
   account_vars    = read_terragrunt_config(find_in_parent_folders("account.hcl"))
   account_name    = local.account_vars.locals.account_name
 }

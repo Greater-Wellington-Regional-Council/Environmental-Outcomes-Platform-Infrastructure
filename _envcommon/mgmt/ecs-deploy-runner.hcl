@@ -12,7 +12,7 @@
 # locally, you can use --terragrunt-source /path/to/local/checkout/of/module to override the source parameter to a
 # local check out of the module for faster iteration.
 terraform {
-  source = "${local.source_base_url}?ref=v0.105.1"
+  source = "${local.source_base_url}?ref=v0.107.5-gwrc"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -52,7 +52,6 @@ provider "aws" {
   # Skip credential validation and account ID retrieval for disabled or restricted regions
   skip_credentials_validation = ${contains(coalesce(local.opt_in_regions, []), region) ? "false" : "true"}
   skip_requesting_account_id  = ${contains(coalesce(local.opt_in_regions, []), region) ? "false" : "true"}
-  skip_get_ec2_platforms      = ${contains(coalesce(local.opt_in_regions, []), region) ? "false" : "true"}
 }
 %{endfor}
 EOF
@@ -62,7 +61,7 @@ EOF
 # Locals are named constants that are reusable within the configuration.
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  source_base_url = "git::git@github.com:gruntwork-io/terraform-aws-service-catalog.git//modules/mgmt/ecs-deploy-runner"
+  source_base_url = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git//modules/mgmt/ecs-deploy-runner"
 
   # Automatically load common variables shared across all accounts
   common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
@@ -183,8 +182,8 @@ inputs = {
   # A list of role names that should be given permissions to invoke the infrastructure CI/CD pipeline.
   iam_roles = ["allow-auto-deploy-from-other-accounts", ]
 
-  container_cpu        = 8192
-  container_memory     = 32768
+  container_cpu    = 8192
+  container_memory = 32768
 
   # Configure opt in regions for each multi region service based on locally configured setting.
   kms_grant_opt_in_regions = local.opt_in_regions

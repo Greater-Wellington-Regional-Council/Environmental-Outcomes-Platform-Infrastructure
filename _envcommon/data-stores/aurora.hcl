@@ -10,7 +10,7 @@
 # locally, you can use --terragrunt-source /path/to/local/checkout/of/module to override the source parameter to a
 # local check out of the module for faster iteration.
 terraform {
-  source = "${local.source_base_url}?ref=v0.96.9"
+  source = "${local.source_base_url}?ref=v0.107.5-gwrc"
 }
 
 dependency "eop_secrets" {
@@ -56,7 +56,7 @@ dependency "sns" {
 # Locals are named constants that are reusable within the configuration.
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  source_base_url = "git::git@github.com:gruntwork-io/terraform-aws-service-catalog.git//modules/data-stores/aurora"
+  source_base_url = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git//modules/data-stores/aurora"
 
   # Automatically load common variables shared across all accounts
   common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
@@ -85,12 +85,13 @@ locals {
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
   name              = "aurora-${lower(local.account_name)}"
-  instance_type     = "db.t3.medium"
+  instance_type     = "db.t4g.medium"
   vpc_id            = dependency.vpc.outputs.vpc_id
   aurora_subnet_ids = dependency.vpc.outputs.private_persistence_subnet_ids
 
   instance_count = "1"
   engine_mode    = "provisioned"
+  engine_version = "15.4"
 
   enable_cloudwatch_alarms          = true
   alarms_sns_topic_arns             = [dependency.sns.outputs.topic_arn]
@@ -112,8 +113,8 @@ inputs = {
   apply_immediately = false
 
   db_cluster_custom_parameter_group = {
-    name   = "custom-aurora-postgresql13"
-    family = "aurora-postgresql13"
+    name   = "custom-aurora-postgresql15"
+    family = "aurora-postgresql15"
     parameters = [
       {
         name         = "log_temp_files"

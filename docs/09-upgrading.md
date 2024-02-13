@@ -18,4 +18,4 @@ using the specified Terraform version.
 bucket containing all your Reference Architecture's state files.
 
 You can read more about how this works in the main
-[ECS Deploy Runner docs](https://github.com/gruntwork-io/terraform-aws-ci/blob/ee2d941946824bdabbac6830dc6cf66f9ee69bec/modules/ecs-deploy-runner/core-concepts.md#how-do-i-use-the-deploy-runner-with-multiple-terraform-versions).
+[ECS Deploy Runner docs](https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-ci/blob/ee2d941946824bdabbac6830dc6cf66f9ee69bec/modules/ecs-deploy-runner/core-concepts.md#how-do-i-use-the-deploy-runner-with-multiple-terraform-versions).

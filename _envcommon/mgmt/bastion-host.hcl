@@ -10,7 +10,7 @@
 # locally, you can use --terragrunt-source /path/to/local/checkout/of/module to override the source parameter to a
 # local check out of the module for faster iteration.
 terraform {
-  source = "${local.source_base_url}?ref=v0.105.1"
+  source = "${local.source_base_url}?ref=v0.107.5-gwrc"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ dependency "sns" {
 # Locals are named constants that are reusable within the configuration.
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  source_base_url = "git::git@github.com:gruntwork-io/terraform-aws-service-catalog.git//modules/mgmt/bastion-host"
+  source_base_url = "git::git@github.com:Greater-Wellington-Regional-Council/gwio_terraform-aws-service-catalog.git//modules/mgmt/bastion-host"
 
   # Automatically load common variables shared across all accounts
   common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
@@ -92,7 +92,7 @@ inputs = {
   allow_ssh_from_cidr_list = local.common_vars.locals.ssh_ip_allow_list
 
   # Access the VPN server over SSH using ssh-grunt.
-  # See: https://github.com/gruntwork-io/terraform-aws-security/blob/master/modules/ssh-grunt
+  # See: https://github.com/Greater-Wellington-Regional-Council/gwio_terraform-aws-security/blob/master/modules/ssh-grunt
   enable_ssh_grunt                    = true
   ssh_grunt_iam_group                 = local.common_vars.locals.ssh_grunt_users_group
   ssh_grunt_iam_group_sudo            = local.common_vars.locals.ssh_grunt_sudo_users_group
