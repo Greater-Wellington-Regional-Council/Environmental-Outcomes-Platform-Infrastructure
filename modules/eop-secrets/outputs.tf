@@ -38,3 +38,9 @@ output "hilltop_crawler_config_arn" {
   description = "The ARN for the Hilltop Crawler Config secret"
   value       = aws_secretsmanager_secret.hilltop_crawler_config.arn
 }
+
+# Data Transformation
+output "data_transformation_config_arn" {
+  description = "The ARN for the Data Transformation Config secret"
+  value       = aws_secretsmanager_secret.data_transformation_config.arn
+}

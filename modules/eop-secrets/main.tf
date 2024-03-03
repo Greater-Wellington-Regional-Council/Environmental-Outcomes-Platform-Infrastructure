@@ -108,3 +108,8 @@ resource "aws_secretsmanager_secret" "hilltop_crawler_config" {
   name        = "EOPHilltopCrawlerConfig"
   description = "Sensitive configuration details for the Hilltop Crawler application"
 }
+
+resource "aws_secretsmanager_secret" "data_transformation_config" {
+  name        = "EOPDataTransformationConfig"
+  description = "Sensitive configuration details for the Data Transformation application"
+}
