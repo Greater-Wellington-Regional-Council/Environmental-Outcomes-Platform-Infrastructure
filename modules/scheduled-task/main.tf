@@ -13,13 +13,13 @@ module "ecs_task_scheduler" {
     subnets = var.subnets
   }
 
-
   ecs_target_launch_type      = "FARGATE"
   ecs_target_platform_version = "LATEST"
-
 }
 
 resource "aws_security_group" "service" {
+  name   = var.service_name
+  vpc_id = var.vpc_id
   egress {
     from_port   = 0
     to_port     = 0

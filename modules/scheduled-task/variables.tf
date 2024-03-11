@@ -14,6 +14,11 @@ variable "task_schedule_expression" {
   default     = null
 }
 
+variable "vpc_id" {
+  description = "The VPC to use for the Fargate task network. The security group will be created in this VPC."
+  type        = string
+}
+
 variable "subnets" {
   description = "The subnets to use for the Fargate task network."
   type        = list(string)
