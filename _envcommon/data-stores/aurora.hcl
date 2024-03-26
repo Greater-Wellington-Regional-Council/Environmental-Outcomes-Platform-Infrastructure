@@ -85,7 +85,7 @@ locals {
 # ---------------------------------------------------------------------------------------------------------------------
 inputs = {
   name              = "aurora-${lower(local.account_name)}"
-  instance_type     = "db.t4g.medium"
+  instance_type     = "db.t4g.large"
   vpc_id            = dependency.vpc.outputs.vpc_id
   aurora_subnet_ids = dependency.vpc.outputs.private_persistence_subnet_ids
 
