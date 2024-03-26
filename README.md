@@ -3,7 +3,9 @@
 This repository contains code to deploy the EOP infrastructure across all live environments in AWS. All the
 infrastructure in this repo is managed as **code** and deployed via merging code changes into the **main** branch of
 this repo. As such there should be few times that changes need to be made via click-ops in the AWS console, other than
-helping with development.
+helping with development.  
+
+In fact, even the code in this repository only needs to change if the Infrastructure in AWS on which the various EOP components rely needs to be altered.  If you are adding a front end application or API to Ha Kākano, for example, that affects AWS resources or needs new resources, then you will likely make and test the changes locally first and then modify this repo to update the Infrastructure as Code through a pull request.
 
 This code is built from the [Gruntwork Reference Architecture](https://gruntwork.io/reference-architecture/) using
 services from the [Gruntwork
@@ -15,9 +17,15 @@ Here's a diagram that shows a rough overview of what the Reference Architecture 
 
 ![Reference Architecture](docs/images/landing-zone-ref-arch.png?raw=true)
 
-## Getting Started
+## Using this Repository
 
-This section is for people new to the EOP team looking to work in or support the AWS infrastructure.
+The code in this repo describes the active installation of EOP currently shared by all contributing parties.  In the event you might want to create and host your own instance somewhere, you can of course fork the repository and modify that freely. However to modify the existing shared infrastructure, for example to support a new API or front end you have developed, you need to complete the following one-time steps:-
+* Contact the EOP technical team and have yourself added to the EOP developers group in Github
+* Add your email to the AWS account by modifying [this file](https://github.com/Greater-Wellington-Regional-Council/Environmental-Outcomes-Platform-Infrastructure/blob/main/security/_global/account-baseline/users.yml) through a pull request
+* Set up the [AWS command line application](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) on a development machine so that you can authenticate with the AWS account to check/test any changes you make (see instructions below after downloading and installing)
+* Ensure that you can connect to the EOP Bastion Hosts over SSH from your development machine, also for checking/testing
+
+Detailed instructions follow for the above steps. Having completed them, you are in a position to contribute to the existing infrastructure as described [here](#Contributing).
 
 ### AWS Account
 
@@ -39,7 +47,7 @@ able to access anything!
 You will now be logged into the security account, to access the other accounts in EOP is done by "switching role" to the
 other accounts with specific access.
 
-**Roles which are allowed**
+**Roles which are allowed** (to be used in `.aws/config` as per Local Machine Setup below)
 
 * **allow-read-only-access-from-other-accounts** - Provides read only access to most things
 * **allow-dev-access-from-other-accounts** - Provides access intended for developers, the ability to make changes in the
@@ -65,19 +73,15 @@ other accounts with specific access.
 
 ### Local Machine Setup
 
-Now you have access to the AWS account, you may want AWS command line access. This would be for making Terraform changes
-locally or just avoiding clicking around the UI in favour of command line tools.
+Now you have access to the AWS account, we recommend that you enable AWS command line access for making Terraform changes
+locally and avoiding clicking around the AWS UI.
 
-* Create Access Keys for your account
-* [Install aws-vault](https://github.com/99designs/aws-vault#installing).
-* Add your IAM User credentials:
-
-```
-aws-vault add security
-```
-
-* Add new profiles for each of the accounts to `~/.aws/config`. This is a generated config, update the <IAM User> and
-  role accordingly
+* Create Access Keys for your account in AWS IAM
+  
+* Install the [AWS command line application](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [aws-vault](https://github.com/99designs/aws-vault#installing).
+  
+* Add your IAM User credentials to `.aws/config` as follows.  This is a generated example, so replace `<IAM User>` and
+  **allow-full-access-from-other-accounts** with the correct user name and role for you.  Select an appropriate role name from the list of roles above.
 
 ```
 [default]
@@ -112,8 +116,16 @@ mfa_serial = arn:aws:iam::063810897000:mfa/<IAM User>
 role_arn = arn:aws:iam::898449181946:role/allow-full-access-from-other-accounts
 ```
 
-* Once configured, you can use AWS vault with Terragrunt, Terraform, the AWS CLI, and anything else that uses the AWS
-  SDK to authenticate. To check if your authentication is working, you can run `aws sts caller-identity`
+* Configure aws-vault.  See [here for aws-vault installation and setup details](https://github.com/99designs/aws-vault).
+
+* Run the following command to add the security profile credentials to aws-vault 
+```
+aws-vault add security
+```
+* If you are working on a mac, you may need to explicitly open your Mac's Keychain Access application at this point and add the aws-vault keychain.  One way you'll recongnise that you need to do this if aws-vault prompts for a password, but will not accept the correct password which you assigned in the last step.  Another indicator is that there is no aws-vault under Custom Keychains in the Keychain Access app.  Open the Keychain Access app, select File/Add Keychain and select the aws-vault.keychain-db file in the resulting dialog to add it.  If added successfully, it should now appear in the app under **Custom Keychains**.
+
+* Once configured, you can use AWS Vault with Terragrunt, Terraform, the AWS CLI, and anything else that uses the AWS
+  SDK to authenticate. To check if your authentication is working, you   can run `aws sts caller-identity`
 
 ```
 aws-vault exec eopdev -- aws sts get-caller-identity
