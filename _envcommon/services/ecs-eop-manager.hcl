@@ -232,7 +232,7 @@ inputs = {
         },
         {
           name  = "SPRING_PROFILES_ACTIVE"
-          value = "prod,ssl,allocations-consumer"
+          value = "prod,ssl,allocations-consumer,hilltop-consumer"
         },
         {
           name  = "CONFIG_DATABASE_HOST"
