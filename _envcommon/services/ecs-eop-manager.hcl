@@ -289,6 +289,10 @@ inputs = {
           name : "KAFKA_SASL_PASSWORD",
           valueFrom : "${dependency.eop_secrets.outputs.kafka_client_credentials_arn}:password::"
         },
+        {
+          name : "CONFIG_ORG_CONTACT_EMAIL",
+          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_ORG_CONTACT_EMAIL::"
+        },
       ]
 
       # The container ports that should be exposed from this container.
