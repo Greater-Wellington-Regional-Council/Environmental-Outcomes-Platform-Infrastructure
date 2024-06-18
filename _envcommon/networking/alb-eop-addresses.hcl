@@ -65,7 +65,7 @@ inputs = {
 
   create_route53_entry = true
   hosted_zone_id       = dependency.route53.outputs.public_hosted_zone_map[local.account_vars.locals.domain_name.name]
-  domain_names         = ["data.${local.account_vars.locals.domain_name.name}"]
+  domain_names         = ["addresses.${local.account_vars.locals.domain_name.name}"]
 
   num_days_after_which_archive_log_data = 7
   num_days_after_which_delete_log_data  = 30
