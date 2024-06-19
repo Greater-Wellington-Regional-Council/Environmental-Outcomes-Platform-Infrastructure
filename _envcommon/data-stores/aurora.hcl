@@ -128,4 +128,6 @@ inputs = {
       }
     ]
   }
+  high_cpu_utilization_period = 300
+  low_memory_available_period = 300
 }
