@@ -36,7 +36,7 @@ resource "aws_iam_role" "ecs_task" {
   # created because the IAM role does not exist. We add a 15 second wait here to give the IAM role a chance to propagate
   # within AWS.
   provisioner "local-exec" {
-    command = "echo 'Sleeping for 30 seconds to wait for IAM role to be created'; sleep 30"
+    command = "echo 'Sleeping for 35 seconds to wait for IAM role to be created'; sleep 35"
   }
 }
 
