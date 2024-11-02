@@ -50,7 +50,7 @@ inputs = {
   server_properties = {
     "auto.create.topics.enable"  = "true"
     "default.replication.factor" = "2"
-    "log.retention.hours"        = "168"
+    "log.retention.hours"        = "175"
   }
   client_sasl_scram_secret_arns = [
     dependency.eop_secrets.outputs.kafka_client_credentials_arn
