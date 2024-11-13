@@ -293,6 +293,18 @@ inputs = {
           name : "CONFIG_ORG_CONTACT_EMAIL",
           valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_ORG_CONTACT_EMAIL::"
         },
+        {
+          name : "CONFIG_LINZ_KOORD_API_KEY",
+          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_LINZ_KOORD_API_KEY::"
+        },
+        {
+          name : "CONFIG_ADDRESSFINDER_API_KEY",
+          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_ADDRESSFINDER_API_KEY::"
+        },
+        {
+          name : "CONFIG_ADDRESSFINDER_API_SECRET",
+          valueFrom : "${dependency.eop_secrets.outputs.manager_config_arn}:CONFIG_ADDRESSFINDER_API_SECRET::"
+        }
       ]
 
       # The container ports that should be exposed from this container.
