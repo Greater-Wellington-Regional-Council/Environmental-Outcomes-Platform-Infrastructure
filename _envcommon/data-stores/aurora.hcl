@@ -128,7 +128,7 @@ inputs = {
       },
       {
         name         = "work_mem"
-        value        = "64MB"
+        value        = "65536" # 64MB
         apply_method = "immediate"
       }
     ]
