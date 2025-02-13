@@ -91,7 +91,7 @@ inputs = {
 
   instance_count = "1"
   engine_mode    = "provisioned"
-  engine_version = "15.4"
+  engine_version = "15.8"
 
   enable_cloudwatch_alarms          = true
   alarms_sns_topic_arns             = [dependency.sns.outputs.topic_arn]
