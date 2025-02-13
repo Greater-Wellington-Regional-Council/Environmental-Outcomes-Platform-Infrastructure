@@ -125,6 +125,11 @@ inputs = {
         name         = "shared_preload_libraries"
         value        = "pg_stat_statements"
         apply_method = "immediate"
+      },
+      {
+        name         = "work_mem"
+        value        = "64MB"
+        apply_method = "immediate"
       }
     ]
   }
