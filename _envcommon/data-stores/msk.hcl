@@ -47,6 +47,10 @@ inputs = {
   allow_connections_from_cidr_blocks     = dependency.vpc.outputs.private_app_subnet_cidr_blocks
   allow_connections_from_security_groups = [dependency.network_bastion.outputs.bastion_host_security_group_id]
   enable_client_sasl_scram               = true
+
+   # Storage Auto-Scaling Settings
+  broker_storage_autoscaling_max_capacity     = 300  # Set max storage to 300GB per broker
+
   server_properties = {
     "auto.create.topics.enable"  = "true"
     "default.replication.factor" = "2"
