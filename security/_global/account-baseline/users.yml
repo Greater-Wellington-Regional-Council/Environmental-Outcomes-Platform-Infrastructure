@@ -24,3 +24,21 @@ wayne.carter@gw.govt.nz:
     - _all-accounts
     - full-access
     - ssh-grunt-sudo-users
+
+marco@somar.co.nz:
+  groups:
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
+
+jeremy@somar.co.nz:
+  groups:
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
+
+chris@somar.co.nz:
+  groups:
+    - _all-accounts
+    - full-access
+    - ssh-grunt-sudo-users
