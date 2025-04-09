@@ -1,5 +1,5 @@
 # Define some config vars that can be imported by the shared terragrunt config. To keep the config dry.
 # redeploy
 locals {
-  container_image_tag = "b1dc58bf17f9c11849a11728454835ca7f7f3812"
+  container_image_tag = "95693a3208b3217d2d16215ca568e3a31555d281"
 }
