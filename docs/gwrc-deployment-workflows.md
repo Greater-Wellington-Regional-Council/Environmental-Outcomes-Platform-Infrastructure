@@ -58,6 +58,7 @@ Frontend deployments (e.g., Plan Limits UI, CCCV) are managed differently from b
    `deploy/{app-name}/{environment}` (e.g., `deploy/cccv/dev`).
 2. Custom deployments can also be initiated via the Amplify UI in AWS.
 
+Production changes need to be peer reviewed, so ensure to create a PR for the `main` branch of the EOP repository, and deploy from main to deploy/{app-name}/prod.
 ---
 
 ## Notes
