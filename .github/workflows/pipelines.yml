@@ -37,7 +37,7 @@ env:
 
 jobs:
   plan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: github.ref != 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
@@ -68,7 +68,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   apply:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
@@ -99,7 +99,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   build_amis:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
         with:
