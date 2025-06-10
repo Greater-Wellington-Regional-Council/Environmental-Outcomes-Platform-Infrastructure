@@ -19,12 +19,6 @@ swapna.josmisam@gw.govt.nz:
     - full-access
     - ssh-grunt-sudo-users
 
-wayne.carter@gw.govt.nz:
-  groups:
-    - _all-accounts
-    - full-access
-    - ssh-grunt-sudo-users
-
 marco@somar.co.nz:
   groups:
     - _all-accounts
