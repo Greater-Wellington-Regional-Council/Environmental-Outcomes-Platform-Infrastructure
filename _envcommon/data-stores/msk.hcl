@@ -49,7 +49,7 @@ inputs = {
   enable_client_sasl_scram               = true
 
    # Storage Auto-Scaling Settings
-  broker_storage_autoscaling_max_capacity     = 300  # Set max storage to 300GB per broker
+  broker_storage_autoscaling_max_capacity     = 600  # Set max storage to 600GB per broker
 
   server_properties = {
     "auto.create.topics.enable"  = "true"
